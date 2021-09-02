@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char    *ft_pwd(void)
+char    *pwd(void)
 {
     char *str;
 	str = malloc(sizeof(PATH_MAX));
@@ -14,12 +14,11 @@ void	screening(char* str, int pid)
 	if (!str)
 		return ;
 	else if (!ft_strncmp(str, "pwd", ft_strlen(str)))
-		printf("%s\n", ft_pwd());
+		ft_pwd();
 	else if (!ft_strncmp(str, "exit", ft_strlen(str)))
-	{
-		write(1, "exit", 4);
-		kill(pid, SIGINT);
-	}
+		ft_exit(pid);
+	else if (!ft_strncmp(str, "echo ", 5))
+		ft_echo(str);
 	else
 		return ;
 }

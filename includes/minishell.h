@@ -10,4 +10,14 @@
 #include "libft.h"
 #include <signal.h>
 
+//commands.c
+void	ft_pwd(void);
+void	ft_exit(int pid);
+void	ft_echo(char *str);
+//commands.c
+
+//main.c
+char    *pwd(void);
+//main.c
+
 #endif
