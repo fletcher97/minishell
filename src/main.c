@@ -1,4 +1,5 @@
 #include "minishell.h"
+
 char    *ft_pwd(void)
 {
     char *str;
@@ -8,25 +9,32 @@ char    *ft_pwd(void)
     return (str);
 }
 
-void	screening(char* str)
+void	screening(char* str, int pid)
 {
 	if (!str)
 		return ;
 	else if (!ft_strncmp(str, "pwd", ft_strlen(str)))
-		printf("%s", ft_pwd());
-	printf("\n");
+		printf("%s\n", ft_pwd());
+	else if (!ft_strncmp(str, "exit", ft_strlen(str)))
+	{
+		write(1, "exit", 4);
+		kill(pid, SIGINT);
+	}
+	else
+		return ;
 }
 
 int main()
 {
 	char	*inpt;
+	int		pid;
 
+	pid = getpid();
 	while (42)
 	{
 		inpt = readline("minishell: ");
 		add_history(inpt);
-		screening(inpt);
+		screening(inpt, pid);
 	}
-	printf("a\n");
 	return (0);
 }
