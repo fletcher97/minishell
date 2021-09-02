@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <limits.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <stdlib.h>
-
+#include "minishell.h"
 char    *ft_pwd(void)
 {
     char *str;
@@ -14,19 +8,24 @@ char    *ft_pwd(void)
     return (str);
 }
 
+void	screening(char* str)
+{
+	if (!str)
+		return ;
+	else if (!ft_strncmp(str, "pwd", ft_strlen(str)))
+		printf("%s", ft_pwd());
+	printf("\n");
+}
 
 int main()
 {
 	char	*inpt;
-	char	*path;
+
 	while (42)
 	{
-		path = ft_pwd();
-		inpt = readline(path);
-		//inpt = readline("Input: ");
+		inpt = readline("minishell: ");
 		add_history(inpt);
-		printf("%s", inpt);
-		printf("\n");
+		screening(inpt);
 	}
 	printf("a\n");
 	return (0);
