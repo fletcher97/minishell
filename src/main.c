@@ -17,10 +17,15 @@ void	screening(char* str, int pid)
 		ft_pwd();
 	else if (!ft_strncmp(str, "exit", ft_strlen(str)))
 		ft_exit(pid);
-	else if (!ft_strncmp(str, "echo ", 5))
+	else if (!ft_strncmp(str, "echo", 4))
 		ft_echo(str);
+	else if (!ft_strncmp(str, "cd", ft_strlen(str)))
+		ft_cd();
 	else
+	{
+		printf("minishell: %s: command not found\n", str);
 		return ;
+	}
 }
 
 int main()

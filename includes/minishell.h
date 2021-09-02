@@ -14,6 +14,7 @@
 void	ft_pwd(void);
 void	ft_exit(int pid);
 void	ft_echo(char *str);
+void	ft_cd(void);
 //commands.c
 
 //main.c
