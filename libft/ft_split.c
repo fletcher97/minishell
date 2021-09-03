@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 12:57:48 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:02:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/03 20:22:07 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ char	**ft_split(const char *s, char c)
 
 	if (!s || c < 0 || c > 127)
 		return (NULL);
+	if (!ft_strrchr(s, ' '))
+	{
+		split = (char **)malloc(sizeof(char *) * 2);
+		split[0] = ft_strdup(s);
+		split[1] = ft_strdup("");
+		return (split);
+	}
 	str = (char *)s;
 	splits = count_splits((char *)s, c);
 	split = (char **)ft_calloc((splits + 1), sizeof(char *));

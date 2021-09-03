@@ -10,10 +10,16 @@
 #include "libft.h"
 #include <signal.h>
 
+typedef struct	s_mini {
+	char	**argv;
+	char	*str;
+	int		pid;
+} t_mini;
+
 //commands.c
 void	ft_pwd(void);
 void	ft_exit(int pid);
-void	ft_echo(char *str);
+void	ft_echo(t_mini *mini);
 void	ft_cd(void);
 //commands.c
 

@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/03 18:36:10 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/03 20:25:43 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char *str)
+void	ft_echo(t_mini *mini)
 {
-	if (!ft_strncmp(str + 4, " ", 1))
+
+	if (!ft_strncmp(mini->argv[0], "echo", 4))
 	{
-		if (!ft_strncmp(str + 5, "-n", 2))
+		if (mini->argv[1])
 		{
-			if (!ft_strncmp(str + 4, " ", 1))
-				printf("%s", str + 8);
+			if (!ft_strncmp(mini->argv[1], "-n", 2))
+			{
+				if (mini->argv[2])
+					printf("%s", mini->argv[2]);
+				else
+					return ;
+			}
 			else
-				return ;
+				printf("%s\n", mini->argv[1]);
 		}
-		else
-			printf("%s\n", str + 5);
 	}
 	else
-		printf("\n");
+		return ;
 }
