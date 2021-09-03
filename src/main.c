@@ -28,7 +28,7 @@ void	screening(char* str, int pid)
 	}
 }
 
-// tesst
+// tesst falmeida
 
 void 	printer(void)
 {
