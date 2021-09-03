@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/03 20:24:15 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/03 21:02:52 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,26 @@
 
 void	screening(t_mini *mini)
 {
-	if (!mini->argv[0])
-		return ;
-	else if (!ft_strncmp(mini->argv[0], "pwd", ft_strlen(mini->argv[0])))
-		ft_pwd();
-	else if (!ft_strncmp(mini->argv[0], "exit", ft_strlen(mini->argv[0])))
-		ft_exit(mini->pid);
-	else if (!ft_strncmp(mini->argv[0], "echo", 4))
-		ft_echo(mini);
-	else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
-		ft_cd();
-	else
+	if (mini->argv)
 	{
-		printf("minishell: %s: command not found\n", mini->argv[0]);
-		return ;
+		if (!ft_strncmp(mini->argv[0], "pwd", ft_strlen(mini->argv[0])))
+			ft_pwd();
+		else if (!ft_strncmp(mini->argv[0], "exit", ft_strlen(mini->argv[0])))
+			ft_exit(mini->pid);
+		else if (!ft_strncmp(mini->argv[0], "echo", ft_strlen(mini->argv[0])))
+			ft_echo(mini->argv);
+		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
+			ft_cd();
+		else if (!ft_strncmp(mini->argv[0], "ls", ft_strlen(mini->argv[0])))
+			ft_ls(mini);
+		else
+		{
+			printf("minishell: %s: command not found\n", mini->argv[0]);
+			return ;
+		}
 	}
+	else
+		return ;
 }
 
 int	find_char(char	*str, char c)
@@ -54,9 +59,12 @@ int main()
 	while (42)
 	{
 		input = readline("minishell: ");
-		add_history(input);
-		mini.argv = ft_split(input, ' ');
-		screening(&mini);
+		if (ft_strlen(input) > 0)
+		{
+			add_history(input);
+			mini.argv = ft_split(input, ' ');
+			screening(&mini);
+		}
 	}
 	return (0);
 }

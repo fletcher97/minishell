@@ -19,8 +19,9 @@ typedef struct	s_mini {
 //commands.c
 void	ft_pwd(void);
 void	ft_exit(int pid);
-void	ft_echo(t_mini *mini);
+void	ft_echo(char **argv);
 void	ft_cd(void);
+void	ft_ls(t_mini *mini);
 //commands.c
 
 //main.c
