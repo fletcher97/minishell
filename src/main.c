@@ -9,8 +9,6 @@ char    *pwd(void)
     return (str);
 }
 
-//Poliveir
-
 void	screening(char* str, int pid)
 {
 	if (!str)
@@ -29,15 +27,6 @@ void	screening(char* str, int pid)
 		return ;
 	}
 }
-
-// tesst
-// filipe
-void 	printer(void)
-{
-	printf("hh");
-}
-
-//test
 
 int main()
 {
