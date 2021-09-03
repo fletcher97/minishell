@@ -28,8 +28,13 @@ void	screening(char* str, int pid)
 	}
 }
 
+<<<<<<< HEAD
 // tesst
 // filipe
+=======
+// tesst falmeida
+
+>>>>>>> 09f0308e70abc7472a123901cbee3bf028c94088
 void 	printer(void)
 {
 	printf("hh");
