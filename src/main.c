@@ -1,13 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
+/*   Updated: 2021/09/03 18:35:12 by falmeida         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-char    *pwd(void)
-{
-    char *str;
-	str = malloc(sizeof(PATH_MAX));
-    getcwd(str, PATH_MAX);
-
-    return (str);
-}
 
 void	screening(char* str, int pid)
 {
@@ -40,6 +43,5 @@ int main()
 		add_history(inpt);
 		screening(inpt, pid);
 	}
-	printer();
 	return (0);
 }
