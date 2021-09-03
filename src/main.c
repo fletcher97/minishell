@@ -28,6 +28,8 @@ void	screening(char* str, int pid)
 	}
 }
 
+// tesst
+
 void 	printer(void)
 {
 	printf("hh");
