@@ -28,6 +28,11 @@ void	screening(char* str, int pid)
 	}
 }
 
+void 	printer(void)
+{
+	printf("hh");
+}
+
 int main()
 {
 	char	*inpt;
@@ -40,5 +45,6 @@ int main()
 		add_history(inpt);
 		screening(inpt, pid);
 	}
+	printer();
 	return (0);
 }
