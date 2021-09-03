@@ -30,8 +30,8 @@ void	screening(char* str, int pid)
 	}
 }
 
-// tesst falmeida
-
+// tesst
+// filipe
 void 	printer(void)
 {
 	printf("hh");
