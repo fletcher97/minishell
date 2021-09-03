@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/03 21:06:33 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/03 22:01:55 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,8 @@ void	screening(t_mini *mini)
 			ft_echo(mini->argv);
 		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
 			ft_cd();
-		else if (!ft_strncmp(mini->argv[0], "ls", ft_strlen(mini->argv[0])))
-			ft_ls(mini);
 		else
-		{
-			printf("minishell: %s: command not found\n", mini->argv[0]);
-			return ;
-		}
+			ft_ls(mini);
 	}
 	else
 		return ;
