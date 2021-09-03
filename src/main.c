@@ -9,6 +9,8 @@ char    *pwd(void)
     return (str);
 }
 
+//Poliveir
+
 void	screening(char* str, int pid)
 {
 	if (!str)
