@@ -37,6 +37,8 @@ void 	printer(void)
 	printf("hh");
 }
 
+//test
+
 int main()
 {
 	char	*inpt;
