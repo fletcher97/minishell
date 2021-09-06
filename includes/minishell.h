@@ -20,7 +20,7 @@ typedef struct	s_mini {
 void	ft_pwd(void);
 void	ft_exit(int pid);
 void	ft_echo(char **argv);
-void	ft_cd(void);
+void	ft_cd(t_mini *mini);
 void	ft_ls(t_mini *mini);
 //commands.c
 

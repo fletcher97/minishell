@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/03 20:55:11 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:32:37 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,38 @@
 
 void	ft_echo(char **argv)
 {
-	if (argv[1])
+	int	i;
+
+	i = 0;
+
+	if (ft_strlen(argv[1]) > 0 && !ft_strncmp(argv[1], "-n", ft_strlen(argv[1])))
 	{
-		if (!ft_strncmp(argv[1], "-n", 2))
+		if (argv[2])
 		{
-			if (argv[2])
-				printf("%s", argv[2]);
-			else
-				return ;
+			i = 2;
+			while (argv[i + 1] != NULL)
+			{
+				printf("%s ", argv[i]);
+				i++;
+			}
+			printf("%s", argv[i]);
 		}
 		else
-			printf("%s\n", argv[1]);
+			return ;
 	}
 	else
-		printf("\n");
+	{
+		if (ft_strlen(argv[1]) > 0)
+		{
+			i = 1;
+			while (argv[i + 1] != NULL)
+			{
+				printf("%s ", argv[i]);
+				i++;
+			}
+			printf("%s\n", argv[i]);
+		}
+		else
+			printf("\n");
+	}
 }

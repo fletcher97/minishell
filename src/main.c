@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/06 11:44:50 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/06 17:17:39 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	screening(t_mini *mini)
 		else if (!ft_strncmp(mini->argv[0], "echo", ft_strlen(mini->argv[0])))
 			ft_echo(mini->argv);
 		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
-			ft_cd();
+			ft_cd(mini);
 		else
 			ft_ls(mini);
 	}
