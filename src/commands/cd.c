@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/06 16:48:55 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/06 18:03:05 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	ft_cd(t_mini *mini)
 {
 	printf("%s\n", mini->argv[1]);
-	chdir("..");
+	chdir(mini->argv[1]);
 }

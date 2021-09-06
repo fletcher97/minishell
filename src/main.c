@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/06 17:17:39 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/06 19:48:05 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,18 @@ void	screening(t_mini *mini)
 			ft_echo(mini->argv);
 		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
 			ft_cd(mini);
+		else if (!ft_strncmp(mini->argv[0], " ", ft_strlen(mini->argv[0])))
+			printf("\n");
 		else
 			ft_ls(mini);
 	}
 	else
+		return ;
+}
+
+void	get_signal(int signal)
+{
+	if (signal == SIGHUP)
 		return ;
 }
 
@@ -42,6 +50,7 @@ int main()
 		input = readline("minishell: ");
 		if (ft_strlen(input) > 0)
 		{
+			signal(mini.pid, get_signal);
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
 			screening(&mini);
