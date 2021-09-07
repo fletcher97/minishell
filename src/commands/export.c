@@ -6,28 +6,44 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 14:31:42 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 17:53:16 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export(t_mini *mini)
+bool	check_env_names(t_mini *mini, char *name)
 {
-	char *str;
-	t_list	head;
-
-	head = *mini->env;
-	str = mini->argv[2];
-	while(mini->env)
+	while(1)
 	{
-		if(!(ft_strncmp(str, mini->env->name, ft_strlen(mini->env->name))))
+		printf("%s %s\n", name, mini->env->name);
+		if(!(ft_strncmp(name, mini->env->name, ft_strlen(mini->env->name))))
 		{
-			mini->env->content = str;
-			return ;
+			printf("%s %s\n", name, mini->env->name);
+			mini->env->content = mini->argv[1];
+			return (true);
 		}
+		if (mini->env->next != NULL)
+			break ;
 		mini->env = mini->env->next;
 	}
-	mini->env = &head;
-	ft_lstadd_back(&mini->env, ft_lstnew(mini->argv[1]));
+	return(false);
+}
+
+void	ft_export(t_mini *mini)
+{
+	t_list	*head;
+	t_list	*temp;
+	char *name;
+
+	head = mini->env;
+	name = get_name(mini->argv[1], '=');
+	printf("%s %s\n", name, mini->env->name);
+	if (!check_env_names(mini, name))
+	{
+		temp = ft_lstnew(mini->argv[1]);
+		temp->name = name;
+		ft_lstadd_back(&mini->env, temp);
+	}
+	mini->env = head;
 }

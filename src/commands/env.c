@@ -6,20 +6,32 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 14:53:32 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 17:45:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_name(t_list *lst, char c)
+void	ft_lstnode_print(t_list *lst, char *name)
+{
+	while (1)
+	{
+		if (!(ft_strncmp(lst->name, name, ft_strlen(name))))
+		{
+			printf("Content=|%s|, Name=|%s|, Next=|%p|\n",lst->content, lst->name, lst->next);
+		}
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+}
+
+char	*get_name(char *str, char c)
 {
 	char	*name;
-	char	*str;
 	int 	x;
 
 	x = 0;
-	str = lst->content;
 	name = malloc(sizeof(char *) * (ft_strlen(str) + 1));
 	while (str[x] && str[x] != c)
 	{
@@ -35,9 +47,11 @@ void	env_add_names(t_list *lst)
 	t_list	*head;
 
 	head = lst;
-	while (lst->next != NULL)
+	while (lst)
 	{
-		lst->name = get_name(lst, '=');
+		lst->name = get_name(lst->content, '=');
+		if (lst->next == NULL)
+			break ;
 		lst = lst->next;
 	}
 	lst = head;
@@ -62,5 +76,5 @@ t_list	*get_env(char **env, t_mini *mini)
 void	ft_env(t_mini *mini)
 {
 	ft_lstprint(mini->env, 'c');
-	ft_lstprint(mini->env, 'n');
+//	ft_lstprint(mini->env, 'n');
 }

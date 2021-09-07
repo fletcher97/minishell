@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include <signal.h>
+#include <stdbool.h>
 
 typedef struct	s_mini {
 	char	**argv;
@@ -18,9 +19,12 @@ typedef struct	s_mini {
 } t_mini;
 
 //utility functions
+void	ft_lstnode_print(t_list *lst, char *name);
 t_list	*get_env(char **env, t_mini *mini);
-char	*get_name(t_list *lst, char c);
+char	*get_name(char *str, char c);
 void	env_add_names(t_list *lst);
+bool	check_env_names(t_mini *mini, char *name);
+bool	lst_str_check(t_list *lst, char *str);
 //utility functions
 
 

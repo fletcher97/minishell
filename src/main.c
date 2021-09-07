@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/07 14:22:48 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 17:45:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,16 @@ void	screening(t_mini *mini)
 			ft_env(mini);
 		else if(!ft_strncmp(mini->argv[0], "export", ft_strlen(mini->argv[0])))
 			ft_export(mini);
+		else if(!ft_strncmp(mini->argv[0], "node", ft_strlen(mini->argv[0])))
+		{
+			if (ft_strlen(mini->argv[1]) > 0)
+				ft_lstnode_print(mini->env, mini->argv[1]);
+		}
 		else if (!ft_strncmp(mini->argv[0], "unset", ft_strlen(mini->argv[0])))
-			ft_unset(mini);
+		{
+			if (ft_strlen(mini->argv[1]) > 0)
+				ft_unset(mini);
+		}
 		else
 			ft_ls(mini);
 	}
