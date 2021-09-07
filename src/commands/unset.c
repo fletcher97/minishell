@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 17:26:32 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:37:33 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	lst_str_check(t_list *lst, char *str)
 	int		x;
 
 	head = lst;
-	ft_lstprint(lst, 'n');
+	//ft_lstprint(lst, 'n');
 	while(1)
 	{
 		name = lst->name;
@@ -27,7 +27,7 @@ bool	lst_str_check(t_list *lst, char *str)
 		if (!(ft_strncmp(str,name, ft_strlen(name))) && x == 0)
 		{
 				lst = head;
-				printf("%s %s\n", str, name);
+			//	printf("%s %s\n", str, name);
 				return (true);
 		}
 		if (lst->next == NULL)
@@ -61,6 +61,6 @@ void	ft_unset(t_mini *mini)
 		temp2 = NULL;
 	temp->next = temp2;
 	free(mini->env->next);
-	mini->env->next = NULL;
+	//mini->env->next = NULL;
 	mini->env = head;
 }

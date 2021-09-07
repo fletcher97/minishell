@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/07 17:45:21 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:43:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ int main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 	char	*input;
-
+	//TESTE
+	char *envt[5]={"primeiro=1","segundo=2","terceiro=3","quarto=5",0};
+	(void)env;
+	//END TESTES
 	(void) argc;
 	(void) argv;
 	mini.pid = getpid();
-	mini.env = get_env(env, &mini);
+	mini.env = get_env(envt, &mini);//alterou env
 	while (42)
 	{
 		input = readline("minishell: ");

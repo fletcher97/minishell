@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 17:53:16 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:47:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	check_env_names(t_mini *mini, char *name)
 			mini->env->content = mini->argv[1];
 			return (true);
 		}
-		if (mini->env->next != NULL)
+		if (mini->env->next == NULL)
 			break ;
 		mini->env = mini->env->next;
 	}
