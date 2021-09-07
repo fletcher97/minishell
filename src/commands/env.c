@@ -6,13 +6,13 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 14:37:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/07 14:53:32 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_name(t_list *lst, char c)
+char	*get_name(t_list *lst, char c)
 {
 	char	*name;
 	char	*str;
@@ -27,10 +27,7 @@ void	get_name(t_list *lst, char c)
 		x++;
 	}
 	name[x] = '\0';
-	lst->name = name;
-	printf("%s\n", lst->name);
-	free(name);
-	name = NULL;
+	return(name);
 }
 
 void	env_add_names(t_list *lst)
@@ -40,8 +37,7 @@ void	env_add_names(t_list *lst)
 	head = lst;
 	while (lst->next != NULL)
 	{
-		get_name(lst, '=');
-		printf("%s\n", lst->name);
+		lst->name = get_name(lst, '=');
 		lst = lst->next;
 	}
 	lst = head;
@@ -66,5 +62,5 @@ t_list	*get_env(char **env, t_mini *mini)
 void	ft_env(t_mini *mini)
 {
 	ft_lstprint(mini->env, 'c');
-//	ft_lstprint(mini->env, 'n');
+	ft_lstprint(mini->env, 'n');
 }

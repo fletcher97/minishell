@@ -19,7 +19,7 @@ typedef struct	s_mini {
 
 //utility functions
 t_list	*get_env(char **env, t_mini *mini);
-void	get_name(t_list *lst, char c);
+char	*get_name(t_list *lst, char c);
 void	env_add_names(t_list *lst);
 //utility functions
 
