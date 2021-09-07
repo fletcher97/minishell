@@ -14,7 +14,15 @@ typedef struct	s_mini {
 	char	**argv;
 	char	*str;
 	int		pid;
+	t_list	*env;
 } t_mini;
+
+//utility functions
+t_list	*get_env(char **env, t_mini *mini);
+void	get_name(t_list *lst, char c);
+void	env_add_names(t_list *lst);
+//utility functions
+
 
 //commands.c
 void	ft_pwd(void);
@@ -22,6 +30,9 @@ void	ft_exit(int pid);
 void	ft_echo(char **argv);
 void	ft_cd(t_mini *mini);
 void	ft_ls(t_mini *mini);
+void	ft_env(t_mini *mini);
+void	ft_export(t_mini *mini);
+void	ft_unset(t_mini *mini);
 //commands.c
 
 //main.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/06 19:48:05 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/07 14:22:48 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void	screening(t_mini *mini)
 			ft_cd(mini);
 		else if (!ft_strncmp(mini->argv[0], " ", ft_strlen(mini->argv[0])))
 			printf("\n");
+		else if(!ft_strncmp(mini->argv[0], "env", ft_strlen(mini->argv[0])))
+			ft_env(mini);
+		else if(!ft_strncmp(mini->argv[0], "export", ft_strlen(mini->argv[0])))
+			ft_export(mini);
+		else if (!ft_strncmp(mini->argv[0], "unset", ft_strlen(mini->argv[0])))
+			ft_unset(mini);
 		else
 			ft_ls(mini);
 	}
@@ -39,12 +45,15 @@ void	get_signal(int signal)
 		return ;
 }
 
-int main()
+int main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 	char	*input;
 
+	(void) argc;
+	(void) argv;
 	mini.pid = getpid();
+	mini.env = get_env(env, &mini);
 	while (42)
 	{
 		input = readline("minishell: ");
