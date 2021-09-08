@@ -6,11 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/09/08 17:42:41 by falmeida         ###   ########.fr       */
-=======
-/*   Updated: 2021/09/08 18:22:47 by fferreir         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2021/09/08 18:43:24 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +63,10 @@ int main(int argc, char **argv, char **env)
 	// END TESTES
 	(void) argc;
 	(void) argv;
-	char **temp;
-	temp = env;
+	//char **temp;
+	//temp = env;
 	mini.pid = getpid();
-	mini.env = get_env(temp, &mini);
+	mini.env = get_env(env, &mini);
 	while (42)
 	{
 		input = readline("minishell: ");
