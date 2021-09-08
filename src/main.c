@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/08 15:07:27 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/08 16:25:53 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int main(int argc, char **argv, char **env)
 	// END TESTES
 	(void) argc;
 	(void) argv;
-	char **temp;
-	temp = env;
+//	char **temp;
+//	temp = env;
 	mini.pid = getpid();
-	mini.env = get_env(temp, &mini);
+	mini.env = get_env(env, &mini);
 	while (42)
 	{
 		input = readline("minishell: ");
