@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:31:53 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 15:21:06 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/08 14:30:45 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	ft_lstprint(t_list *lst, char type)
 	head = lst;
 	while(lst)
 	{
-		if (type == 'c')
+		if (type == 'n' || type == 'a')
+			printf("%s", lst->name);
+		if (type == 'a')
+			printf("=");
+		if (type == 'c' || type == 'a')
 			printf("%s\n", lst->content);
-		else if (type == 'n')
-			printf("%s\n", lst->name);
 		lst = lst->next;
 	}
 	lst = head;

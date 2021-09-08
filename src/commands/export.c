@@ -6,11 +6,31 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 11:29:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/08 14:44:17 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_cpy_after_char(char *s1, char c)
+{
+	char	*s2;
+	int		x;
+	int		y;
+
+	x = 0;
+	s2 = NULL;
+	while (s1[x] && s1[x] != c)
+		x++;
+	x++;
+	y = 0;
+	while(s1[x])
+	{
+		s2[y] = s1[x + y];
+		y++;
+	}
+	return (s2);
+}
 
 bool	check_env_names(t_mini *mini, char *name)
 {
@@ -20,7 +40,7 @@ bool	check_env_names(t_mini *mini, char *name)
 		if(!(ft_strncmp(name, mini->env->name, ft_strlen(mini->env->name))))
 		{
 	//		printf("%s %s\n", name, mini->env->name);
-			mini->env->content = mini->argv[1];
+			mini->env->content = ft_cpy_after_char(mini->argv[1], '=');
 			return (true);
 		}
 		if (mini->env->next == NULL)
