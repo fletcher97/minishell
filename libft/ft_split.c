@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 12:57:48 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 14:25:16 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:09:44 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**ft_split(const char *s, char c)
 	{
 		split = (char **)malloc(sizeof(char *) * 2);
 		split[0] = ft_strdup(s);
-		split[1] = ft_strdup("");
+		split[1] = NULL;
 		return (split);
 	}
 	str = (char *)s;
