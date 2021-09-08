@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/08 16:10:37 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:31:56 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ t_list	*find_name(t_list *lst, char *str)
 	return (lst);
 }
 
+void	change_path(t_mini *mini)
+{
+	char	*str;
+	char	*path;
+	str = NULL;
+
+	mini->env = find_name(mini->env, "OLDPWD");
+	mini->env->content = ft_strdup(getcwd(str, PATH_MAX));
+}
+
 void	ft_cd(t_mini *mini)
 {
 	t_list *tmp;
@@ -34,5 +44,5 @@ void	ft_cd(t_mini *mini)
 		chdir(tmp->content);
 	}
 	else
-		tmp = find_name(tmp, mini->argv[1]);
+		change_path(mini);
 }
