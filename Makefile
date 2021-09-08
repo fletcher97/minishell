@@ -9,7 +9,7 @@ LIB			= $(shell find $(LIB_DIRS) -type f -name "*.a")
 
 OBJS		= $(SRC:.c=.o)
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 RED			= \033[0;31m
 GREEN		= \033[0;32m
 ORANGE		= \033[0;33m
