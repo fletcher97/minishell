@@ -6,20 +6,24 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/09/08 17:42:41 by falmeida         ###   ########.fr       */
+=======
+/*   Updated: 2021/09/08 18:22:47 by fferreir         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	screening(t_mini *mini)
+void	screening(t_mini *mini, char *input)
 {
 	if (mini->argv)
 	{
 		if (!ft_strncmp(mini->argv[0], "pwd", ft_strlen(mini->argv[0])))
 			ft_pwd();
 		else if (!ft_strncmp(mini->argv[0], "exit", ft_strlen(mini->argv[0])))
-			ft_exit(mini->pid);
+			ft_exit(mini, input);
 		else if (!ft_strncmp(mini->argv[0], "echo", ft_strlen(mini->argv[0])))
 			ft_echo(mini->argv);
 		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
@@ -75,8 +79,10 @@ int main(int argc, char **argv, char **env)
 			signal(mini.pid, get_signal);
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
-			screening(&mini);
+			screening(&mini, input);
+			free_argv(&mini);
 		}
 	}
+	free_struct(&mini, input);
 	return (0);
 }
