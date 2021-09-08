@@ -19,12 +19,15 @@ typedef struct	s_mini {
 } t_mini;
 
 //utility functions
+void	node_free_machine(t_mini *mini);
 void	ft_lstnode_print(t_list *lst, char *name);
 t_list	*get_env(char **env, t_mini *mini);
 char	*get_name(char *str, char c);
 void	env_add_names(t_list *lst);
 bool	check_env_names(t_mini *mini, char *name);
 bool	lst_str_check(t_list *lst, char *str);
+bool	str_len_check(char *s1, char *s2);
+bool	str_cmp_both_len(char *s1, char *s2);
 //utility functions
 
 

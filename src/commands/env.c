@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 17:45:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:57:49 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_lstnode_print(t_list *lst, char *name)
 	{
 		if (!(ft_strncmp(lst->name, name, ft_strlen(name))))
 		{
-			printf("Content=|%s|, Name=|%s|, Next=|%p|\n",lst->content, lst->name, lst->next);
+			printf("Content=|%s|, Name=|%s|, ADD=|%p| Next=|%p|\n",lst->content, lst->name,  lst, lst->next);
 		}
 		if (lst->next == NULL)
 			break ;
@@ -76,5 +76,5 @@ t_list	*get_env(char **env, t_mini *mini)
 void	ft_env(t_mini *mini)
 {
 	ft_lstprint(mini->env, 'c');
-//	ft_lstprint(mini->env, 'n');
+	//ft_lstprint(mini->env, 'n');
 }
