@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 14:55:17 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:43:40 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_lstnode_print(t_list *lst, char *name)
 	{
 		if (!(ft_strncmp(lst->name, name, ft_strlen(name))))
 		{
-			printf("Content=|%s|, Name=|%s|, ADD=|%p| Next=|%p|\n",lst->content, lst->name,  lst, lst->next);
+			if (!(ft_strncmp(lst->name, name, ft_strlen(lst->name))))
+				printf("Content=|%s|, Name=|%s|, ADD=|%p| Next=|%p|\n",lst->content, lst->name,  lst, lst->next);
 		}
 		if (lst->next == NULL)
 			break ;
