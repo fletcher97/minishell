@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/06 15:05:02 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:51:12 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_ls(t_mini *mini)
 	argv[2] = NULL;
 
 	if (!ft_strncmp(mini->argv[0], "ls", ft_strlen(mini->argv[0])))
-		argv[1] = getenv("PWD");
+		argv[1] = getcwd(mini->str, PATH_MAX);
 	total = ft_strjoin(path, command);
 	if (fork() == 0)
 	{
