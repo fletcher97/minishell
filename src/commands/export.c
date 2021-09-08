@@ -28,7 +28,7 @@ bool	check_env_names(t_mini *mini, char *name)
 		mini->env = mini->env->next;
 	}
 	return(false);
-}
+} 
 
 void	ft_export(t_mini *mini)
 {
