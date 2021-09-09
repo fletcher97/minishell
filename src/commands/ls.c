@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/09 16:07:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:08:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_ls(t_mini *mini)
 	argv[1] = mini->argv[1];
 	argv[2] = NULL;
 
-	if (!ft_strncmp(mini->argv[0], "ls", ft_strlen(mini->argv[0])))
+	if (str_cmp_both_len(mini->argv[0], "ls"))
 		argv[1] = getcwd(mini->str, PATH_MAX);
 	total = ft_strjoin(path, command);
 	if (fork() == 0)

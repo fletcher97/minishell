@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 13:22:08 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:03:41 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	node_free_machine(t_mini *mini)
 {
 	free(mini->env->name);
-//	free(mini->env);
 	mini->env->name = NULL;
 	mini->env = NULL;
 }

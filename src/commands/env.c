@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 16:12:25 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:13:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ void	ft_lstnode_print(t_list *lst, char *name)
 {
 	while (1)
 	{
-		if (!(ft_strncmp(lst->name, name, ft_strlen(name))))
-		{
-			if (!(ft_strncmp(lst->name, name, ft_strlen(lst->name))))
-				printf("Content=|%s|, Name=|%s|, ADD=|%p| Next=|%p|\n",lst->content, lst->name,  lst, lst->next);
-		}
+		if (str_cmp_both_len(lst->name, name))
+			printf("Content=|%s|, Name=|%s|, ADD=|%p| Next=|%p|\n",lst->content,
+				lst->name,  lst, lst->next);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
@@ -45,13 +43,10 @@ char	*get_name(char *str, char c)
 	char	*name;
 	int 	x;
 
-	x = 0;
+	x = -1;
 	name = malloc(sizeof(char *) * (ft_strlen(str) + 1));
-	while (str[x] && str[x] != c)
-	{
+	while (str[++x] && str[x] != c)
 		name[x] = str[x];
-		x++;
-	}
 	name[x] = '\0';
 	return(name);
 }

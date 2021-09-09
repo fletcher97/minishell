@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/09 16:03:26 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 17:16:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	screening(t_mini *mini, char *input)
 {
+	int x = 0;
+	
+	while (mini->argv[++x])
+		;
 	if (mini->argv)
 	{
 		if (!ft_strncmp(mini->argv[0], "pwd", ft_strlen(mini->argv[0])))
@@ -37,7 +41,7 @@ void	screening(t_mini *mini, char *input)
 		}
 		else if (!ft_strncmp(mini->argv[0], "unset", ft_strlen(mini->argv[0])))
 		{
-			if (ft_strlen(mini->argv[1]) > 0)
+			if (x > 1)
 				ft_unset(mini);
 		}
 		else
@@ -72,19 +76,29 @@ int main(int argc, char **argv, char **env)
 	while (42)
 	{
 		input = readline("minishell: ");
+	//	printf("input = |%s| |%zu|\n", input, strlen(input));
 		if (ft_strlen(input) != 0)
 		{
 			signal(mini.pid, get_signal);
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
 			screening(&mini, input);
-			if (mini.exit == true)
-				break ;
+			// if (mini.exit == true)
+			// {
+			// 	printf("exiting...\n");
+			// 	free_struct(&mini, input);
+			// 	exit (0);
+			// }
 			free_argv(&mini);
 			free(input);
 			input = NULL;
 		}
+		if (mini.exit == true)
+		{
+			free_struct(&mini, input);
+			free_lst(mini.env);
+			exit(0);
+		}
 	}
-	free_struct(&mini, input);
 	return (0);
 }

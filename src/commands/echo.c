@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/09 18:00:53 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:05:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	ft_echo(char **argv)
 	j = 0;
 	while (argv[i])
 		i++;
-	if (i >= 2 && ft_strlen(argv[1]) > 0 && !ft_strncmp(argv[1], "-n",
-			ft_strlen(argv[1])))
+	if (i >= 2 && ft_strlen(argv[1]) > 0 && str_cmp_both_len(argv[1], "-n"))
 		echo_n_flag(argv, i, j);
 	else
 		echo_no_flag(argv, i, j);
