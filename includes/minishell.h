@@ -15,8 +15,13 @@ typedef struct	s_mini {
 	char	**argv;
 	char	*str;
 	int		pid;
+	bool	exit;
 	t_list	*env;
 } t_mini;
+
+//error management
+void	error_output(t_mini *mini, char type);
+//error management
 
 //free utility
 void	free_lst(t_list *lst);
@@ -37,7 +42,6 @@ bool	lst_str_check(t_list *lst, char *str);
 bool	str_len_check(char *s1, char *s2);
 bool	str_cmp_both_len(char *s1, char *s2);
 //utility functions
-
 
 //commands.c
 void	ft_pwd(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/06 15:05:02 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/09 14:09:28 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_ls(t_mini *mini)
 	if (fork() == 0)
 	{
 		if ((execve(total, argv, NULL) == -1))
-			printf("minishell: %s: command not found\n", mini->argv[0]);
+			error_output(mini, 'c');
 	}
 	else
 		wait(NULL);
