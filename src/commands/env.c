@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 15:06:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 15:34:11 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_list	*get_env(char **env, t_mini *mini)
 	mini->env = NULL;
 	while (env[++x] != NULL)
 	{
-		temp = ft_lstnew_pp(ft_split(env[x], '='));
+		temp = ft_lstnew_pp(ft_split(env[x], '='));./
 		ft_lstadd_back(&mini->env,temp);
 	}
 	return(mini->env);
