@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 18:19:03 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:22:06 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,15 @@ void	free_argv(t_mini *mini)
 
 void	free_lst(t_list *lst)
 {
+	if (lst == NULL)
+	{
+		free(lst);
+		lst = NULL;
+		return ;
+	}
 	while(1)
 	{
+		printf("%s %p\n",lst->content,lst->content);
 		free(lst->content);
 		lst->content = NULL;
 		free(lst->name);
@@ -50,10 +57,9 @@ void	free_lst(t_list *lst)
 
 void	free_struct(t_mini *mini, char *input)
 {
-	free_lst(mini->env);
 	free(mini->env);
 	mini->env = NULL;
-	free(input);
+//	free(input);
 	input = NULL;
-	free_argv(mini);
+//	free_argv(mini);
 }

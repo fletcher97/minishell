@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 16:21:48 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:10:42 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ bool	check_env_names(t_mini *mini, char *name, char *content)
 {
 	while(1)
 	{
-	//	printf("%s %s\n", name, mini->env->name);
-		if(!(ft_strncmp(name, mini->env->name, ft_strlen(mini->env->name))))
+		if(str_cmp_both_len(name, mini->env->name))
 		{
 			free(mini->env->content);
 			mini->env->content = content;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/08 18:50:38 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:19:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*find_name(t_list *lst, char *str)
 {
 	while (lst)
 	{
-		if (!(ft_strncmp(lst->name, str, ft_strlen(lst->name))))
+		if (str_cmp_both_len(lst->name, str))
 			return (lst);
 		lst = lst->next;
 	}

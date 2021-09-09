@@ -47,6 +47,8 @@ bool	str_cmp_both_len(char *s1, char *s2);
 void	ft_pwd(void);
 void	ft_exit(t_mini *mini, char *input);
 void	ft_echo(char **argv);
+void	echo_n_flag(char **argv, int i, int j);
+void	echo_no_flag(char **argv, int i, int j);
 void	ft_cd(t_mini *mini);
 void	ft_ls(t_mini *mini);
 void	ft_env(t_mini *mini);
