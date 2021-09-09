@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   error_mng.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 13:29:21 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 15:02:49 by fferreir         ###   ########.fr       */
+/*   Created: 2021/09/09 14:00:39 by fferreir          #+#    #+#             */
+/*   Updated: 2021/09/09 14:11:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-t_list	*ft_lstlast(t_list *lst)
+void	error_output(t_mini *mini, char type)
 {
-	if (!lst)
-		return (NULL);
-	while (lst && lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+	if (type == 'c')
+		printf("minishell: command not found: %s\n", mini->argv[0]);
 }
+
