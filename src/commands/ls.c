@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/09 18:08:36 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/10 12:49:30 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,5 @@ void	ft_ls(t_mini *mini)
 	}
 	else
 		wait(NULL);
+	free(total);
 }
-
-
