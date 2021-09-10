@@ -11,11 +11,21 @@
 #include <signal.h>
 #include <stdbool.h>
 
+typedef struct	s_cd {
+
+	t_list	*tmp;
+	char	*pwd;
+	char	*path1;
+	char	*path2;
+	char	*backup;
+} t_cd;
+
 typedef struct	s_mini {
 	char	**argv;
 	char	*str;
 	int		pid;
 	bool	exit;
+	t_cd	*cd;
 	t_list	*env;
 } t_mini;
 

@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:42 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/09 16:24:02 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/10 10:30:02 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *pwd(void)
+char	*pwd(void)
 {
-    char *str;
-	str = getenv("PWD");
+	char *str;
 
-    return (str);
+	str = NULL;
+	str = getcwd(str, PATH_MAX);
+	return (str);
 }
 
 void	ft_pwd(void)
