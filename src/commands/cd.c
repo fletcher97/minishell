@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 13:15:20 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:47:01 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,17 @@ void	change_path(t_mini *mini, t_cd *cd)
 {
 	char	*str;
 
-	get_path2(mini);
+	//get_path2(mini);
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
 	cd->tmp = mini->env;
 	cd->pwd = ft_strdup(str);
-	mini->env = find_name(mini->env, "OLDPWD");
-	mini->env->content = ft_strdup(getcwd(cd->pwd, PATH_MAX));
+	//mini->env = find_name(mini->env, "OLDPWD");
+	//mini->env->content = ft_strdup(getcwd(cd->pwd, PATH_MAX));
 	cd->path1 = get_path(mini, cd);
-	cd->path2 = ft_strjoin(mini->env->content, cd->path1);
 	chdir(cd->path1);
-	mini->env = cd->tmp;
+	printf("%s\n", cd->path1);
+	check_env_names(mini, "PWD", cd->path1);
 }
 
 int	len_char_back(char *str, char c)
@@ -126,17 +126,16 @@ void	ft_cd_back(t_cd *cd)
 
 void	ft_cd(t_mini *mini)
 {
-	t_cd	*cd;
+	t_cd	cd;
 
-	cd = mini->cd;
-	cd->tmp = mini->env;
+	cd.tmp = mini->env;
 	if (!mini->argv[1])
 	{
-		cd->tmp = find_name(cd->tmp, "HOME");
-		chdir(cd->tmp->content);
+		cd.tmp = find_name(cd.tmp, "HOME");
+		chdir(cd.tmp->content);
 	}
 	else if (!ft_strncmp(mini->argv[1], "..", ft_strlen(mini->argv[1])))
-		ft_cd_back(cd);
+		ft_cd_back(&cd);
 	else
-		change_path(mini, cd);
+		change_path(mini, &cd);
 }
