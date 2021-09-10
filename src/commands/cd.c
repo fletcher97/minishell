@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 20:47:01 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/10 21:19:22 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,24 +115,28 @@ void	ft_cd_back(t_cd *cd)
 	str = getcwd(str, PATH_MAX);
 	if (!ft_strncmp(str, cd->tmp->content, ft_strlen(str)))
 	{
-
 		cd->path1 = ft_substr(str, 0, len_char_back(str, '/'));
-		printf("%s\n", cd->path1);
+		//printf("%s\n", cd->path1);
 		chdir(cd->path1);
 	}
 	else
+	{
+		
 		chdir(cd->tmp->content);
+	}
 }
 
 void	ft_cd(t_mini *mini)
 {
 	t_cd	cd;
+	char	*path;
 
 	cd.tmp = mini->env;
 	if (!mini->argv[1])
 	{
-		cd.tmp = find_name(cd.tmp, "HOME");
-		chdir(cd.tmp->content);
+		path = return_env_content(mini->env, "HOME");
+		check_env_names(mini, "PWD", path);
+		chdir(path);
 	}
 	else if (!ft_strncmp(mini->argv[1], "..", ft_strlen(mini->argv[1])))
 		ft_cd_back(&cd);
