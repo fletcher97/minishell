@@ -30,25 +30,30 @@ void	free_argv(t_mini *mini);
 //free utility
 
 //utility functions
-int find_char(char *s1, char c);
+int		find_char(char *s1, char c);
 void	node_free_machine(t_mini *mini);
 void	ft_lstnode_print(t_list *lst, char *name);
-char	*get_name(char *str, char c);
 t_list	*ft_lstnew_pp(char **content);
-t_list	*get_env(char **env, t_mini *mini);
-void	env_add_names(t_list *lst);
-bool	check_env_names(t_mini *mini, char *name, char *content);
 bool	lst_str_check(t_list *lst, char *str);
 bool	str_len_check(char *s1, char *s2);
 bool	str_cmp_both_len(char *s1, char *s2);
 //utility functions
 
+//env funcitons
+t_list	*get_env(char **env, t_mini *mini);
+bool	check_env_names(t_mini *mini, char *name, char *content);
+void	env_add_names(t_list *lst);
+char	*get_name(char *str, char c);
+char	*return_env_content(t_list *lst, char *name);
+char	*env_flag_check(t_mini *mini, int i);
+//env functions
+
 //commands.c
 void	ft_pwd(void);
 void	ft_exit(t_mini *mini, char *input);
-void	ft_echo(char **argv);
-void	echo_n_flag(char **argv, int i, int j);
-void	echo_no_flag(char **argv, int i, int j);
+void	ft_echo(t_mini *mini);
+void	echo_n_flag(t_mini *mini, int i, int j);
+void	echo_no_flag(t_mini *mini, int i, int j);
 void	ft_cd(t_mini *mini);
 void	ft_ls(t_mini *mini);
 void	ft_env(t_mini *mini);

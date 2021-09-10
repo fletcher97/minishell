@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/09 17:16:36 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/10 10:56:28 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	screening(t_mini *mini, char *input)
 {
 	int x = 0;
-	
+
 	while (mini->argv[++x])
 		;
 	if (mini->argv)
@@ -25,7 +25,7 @@ void	screening(t_mini *mini, char *input)
 		else if (!ft_strncmp(mini->argv[0], "exit", ft_strlen(mini->argv[0])))
 			ft_exit(mini, input);
 		else if (!ft_strncmp(mini->argv[0], "echo", ft_strlen(mini->argv[0])))
-			ft_echo(mini->argv);
+			ft_echo(mini);
 		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
 			ft_cd(mini);
 		else if (!ft_strncmp(mini->argv[0], " ", ft_strlen(mini->argv[0])))

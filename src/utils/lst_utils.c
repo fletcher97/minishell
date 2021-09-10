@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 18:22:06 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:30:20 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void	free_argv(t_mini *mini)
 	x = 0;
 	while (mini->argv[x] != NULL)
 		x++;
-	y = 0;
-	while (y < x)
+	y = -1;
+	while (++y < x)
 	{
 		free(mini->argv[y]);
 		mini->argv[y] = NULL;
-		y++;
 	}
 	free(mini->argv);
 }
