@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 10:56:28 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/13 17:59:40 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	//char **temp;
 	//temp = env;
+	mini.head = malloc(sizeof(t_list));
 	mini.pid = getpid();
 	mini.env = get_env(env, &mini);
 	mini.exit = false;

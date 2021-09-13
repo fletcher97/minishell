@@ -27,6 +27,7 @@ typedef struct	s_mini {
 	bool	exit;
 	t_cd	*cd;
 	t_list	*env;
+	t_list	*head;
 } t_mini;
 
 //error management
