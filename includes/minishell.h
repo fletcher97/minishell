@@ -72,6 +72,8 @@ void	ft_export(t_mini *mini);
 void	ft_unset(t_mini *mini);
 //commands.c
 
+void	get_signal(int signal);
+
 //main.c
 char    *pwd(void);
 //main.c

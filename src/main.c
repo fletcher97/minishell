@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/14 11:51:38 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/14 14:21:19 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,6 @@ void	screening(t_mini *mini, char *input)
 		return ;
 }
 
-void	get_signal(int signal)
-{
-	if (signal == SIGHUP)
-		return ;
-}
-
 int main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
@@ -74,13 +68,15 @@ int main(int argc, char **argv, char **env)
 	mini.env = get_env(env, &mini);
 	mini.exit = false;
 
+	signal(SIGINT , get_signal);
+	signal(SIGQUIT , get_signal);
 	while (42)
 	{
 		input = readline("minishell: ");
 	//	printf("input = |%s| |%zu|\n", input, strlen(input));
-		if (ft_strlen(input) != 0)
+
+		if (input && ft_strlen(input) != 0)
 		{
-			signal(mini.pid, get_signal);
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
 			screening(&mini, input);

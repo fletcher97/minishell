@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/14 11:30:47 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:24:04 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	get_path2(t_mini *mini)
 		while (mini->argv[i][j])
 		{
 			path[k] = mini->argv[i][j++];
-			printf("%c\n", path[k]);
+			//printf("%c\n", path[k]);
 			k++;
 		}
 		i++;
@@ -129,18 +129,22 @@ void	ft_cd(t_mini *mini)
 {
 	t_cd	cd;
 	char	*str;
+	char	*home;
+
+	home = NULL;
 	str = NULL;
 	mini->head = mini->env;
 	cd.tmp = mini->env;
+	home = getcwd(home, PATH_MAX);
 	if (!mini->argv[1])
 	{
+		mini->cd->backup = return_env_content(mini->env, "PWD");
 		str = return_env_content(mini->env, "HOME");
-		mini->env = mini->head;
-		check_env_names(mini , "OLDPWD", return_env_content(mini->env, "PWD"));
-		mini->env = mini->head;
+		chdir(str);
 		check_env_names(mini , "PWD", str);
 		mini->env = mini->head;
-		chdir(str);
+		check_env_names(mini , "OLDPWD", home);
+		mini->env = mini->head;
 
 	}
 	else if (!ft_strncmp(mini->argv[1], "..", ft_strlen(mini->argv[1])))

@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/14 11:52:06 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:29:02 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ t_list	*ft_lstnew_pp(char **content)
 
 void	ft_lstnode_print(t_list *lst, char *name)
 {
+	t_list	*head;
+
+	head = lst;
 	while (1)
 	{
 		if (str_cmp_both_len(lst->name, name))
@@ -36,6 +39,7 @@ void	ft_lstnode_print(t_list *lst, char *name)
 			break ;
 		lst = lst->next;
 	}
+	lst = head;
 }
 
 char	*get_name(char *str, char c)
