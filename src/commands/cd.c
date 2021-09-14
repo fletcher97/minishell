@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/13 18:59:45 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:30:47 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,14 @@ void	ft_cd(t_mini *mini)
 	cd.tmp = mini->env;
 	if (!mini->argv[1])
 	{
+		str = return_env_content(mini->env, "HOME");
+		mini->env = mini->head;
 		check_env_names(mini , "OLDPWD", return_env_content(mini->env, "PWD"));
-
-		printf("%s\n", str);
-		
-		check_env_names(mini, "", str);
+		mini->env = mini->head;
+		check_env_names(mini , "PWD", str);
+		mini->env = mini->head;
 		chdir(str);
 
-		mini->env = mini->head;
 	}
 	else if (!ft_strncmp(mini->argv[1], "..", ft_strlen(mini->argv[1])))
 		ft_cd_back(mini, &cd);

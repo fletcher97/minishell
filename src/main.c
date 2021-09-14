@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/13 17:59:40 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/14 11:51:38 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	screening(t_mini *mini, char *input)
 		else if (!ft_strncmp(mini->argv[0], " ", ft_strlen(mini->argv[0])))
 			printf("\n");
 		else if(!ft_strncmp(mini->argv[0], "env", ft_strlen(mini->argv[0])))
-			ft_env(mini);
+				ft_env(mini);
 		else if(!ft_strncmp(mini->argv[0], "export", ft_strlen(mini->argv[0])))
 			ft_export(mini);
 		else if(!ft_strncmp(mini->argv[0], "node", ft_strlen(mini->argv[0])))
