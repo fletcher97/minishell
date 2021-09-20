@@ -30,7 +30,7 @@ libft:
 			@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME):	$(OBJS)
-			@$(CC) -o $(NAME) $(FLAGS) -lreadline $(INCLUDE) $(LIB) $(OBJS)
+			@$(CC) -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(FLAGS) $(INCLUDE) $(LIB) $(OBJS)
 
 clean:
 			@rm -f $(OBJS)

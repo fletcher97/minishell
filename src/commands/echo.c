@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 12:06:44 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:25:55 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ void	print_env_content(t_list *lst, char *name)
 
 char	*return_env_content(t_list *lst, char *name)
 {
-	while (true)
+	while (lst)
 	{
 		if (str_cmp_both_len(lst->name, name))
-			return (lst->content);
-		if (lst->next == NULL)
-			return("\0");
+			break ;
 		lst = lst->next;
 	}
+	return (lst->content);
 }
 
 char	*env_flag_check(t_mini *mini, int i)

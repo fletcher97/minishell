@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstprint.c                                      :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/07 11:31:53 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/14 11:54:18 by falmeida         ###   ########.fr       */
+/*   Created: 2021/09/14 12:00:13 by falmeida          #+#    #+#             */
+/*   Updated: 2021/09/20 11:26:13 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstprint(t_list *lst, char type)
+void	get_signal(int signal)
 {
-	t_list	*head;
-
-	head = lst;
-	while(lst)
+	//signal == SIGQUIT
+	if (signal == SIGINT)
 	{
-		if (type == 'n' || type == 'a')
-			printf("%s", lst->name);
-		if (type == 'a')
-			printf("=");
-		if (type == 'c' || type == 'a')
-			printf("%s\n", lst->content);
-		lst = lst->next;
+		write(1,"\n", 1);
+		//rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-	lst = head;
 }

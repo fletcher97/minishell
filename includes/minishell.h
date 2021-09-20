@@ -27,6 +27,7 @@ typedef struct	s_mini {
 	bool	exit;
 	t_cd	*cd;
 	t_list	*env;
+	t_list	*head;
 } t_mini;
 
 //error management
@@ -70,6 +71,8 @@ void	ft_env(t_mini *mini);
 void	ft_export(t_mini *mini);
 void	ft_unset(t_mini *mini);
 //commands.c
+
+void	get_signal(int signal);
 
 //main.c
 char    *pwd(void);

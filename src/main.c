@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/13 15:44:37 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/20 13:16:59 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	screening(t_mini *mini, char *input)
 		else if (!ft_strncmp(mini->argv[0], " ", ft_strlen(mini->argv[0])))
 			printf("\n");
 		else if(!ft_strncmp(mini->argv[0], "env", ft_strlen(mini->argv[0])))
-			ft_env(mini);
+				ft_env(mini);
 		else if(!ft_strncmp(mini->argv[0], "export", ft_strlen(mini->argv[0])))
 			ft_export(mini);
 		else if(!ft_strncmp(mini->argv[0], "node", ft_strlen(mini->argv[0])))
@@ -51,12 +51,6 @@ void	screening(t_mini *mini, char *input)
 		return ;
 }
 
-void	get_signal(int signal)
-{
-	if (signal == SIGHUP)
-		return ;
-}
-
 int main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
@@ -69,18 +63,20 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	//char **temp;
 	//temp = env;
+	mini.head = malloc(sizeof(t_list));
 	mini.pid = getpid();
 	mini.env = get_env(env, &mini);
 	mini.exit = false;
 
-	//while (42)
+	//signal(SIGINT , get_signal);
+	//signal(SIGQUIT , get_signal);
+	while (42)
 	{
-	//	input = readline("minishell: ");
+		input = readline("minishell: ");
 	//	printf("input = |%s| |%zu|\n", input, strlen(input));
-	//	if (ft_strlen(input) != 0)
-	while ((input = readline("minishell: ")))
+
+		if (input && ft_strlen(input) != 0)
 		{
-			signal(mini.pid, get_signal);
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
 			screening(&mini, input);

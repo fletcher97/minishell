@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 18:10:42 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:34:45 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,23 @@ int find_char(char *s1, char c)
 
 bool	check_env_names(t_mini *mini, char *name, char *content)
 {
+	t_list	*head;
+
+	head = mini->env;
 	while(1)
 	{
 		if(str_cmp_both_len(name, mini->env->name))
 		{
-			free(mini->env->content);
+			//free(mini->env->content); Double free problems here
 			mini->env->content = content;
+			mini->env = head;
 			return (true);
 		}
 		if (mini->env->next == NULL)
 			break ;
 		mini->env = mini->env->next;
 	}
+	mini->env = head;
 	return(false);
 }
 
