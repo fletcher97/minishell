@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 10:56:28 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:44:37 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ int main(int argc, char **argv, char **env)
 	mini.env = get_env(env, &mini);
 	mini.exit = false;
 
-	while (42)
+	//while (42)
 	{
-		input = readline("minishell: ");
+	//	input = readline("minishell: ");
 	//	printf("input = |%s| |%zu|\n", input, strlen(input));
-		if (ft_strlen(input) != 0)
+	//	if (ft_strlen(input) != 0)
+	while ((input = readline("minishell: ")))
 		{
 			signal(mini.pid, get_signal);
 			add_history(input);

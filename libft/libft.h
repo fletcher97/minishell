@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/07 14:30:14 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:20:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ size_t				ft_strlen(const char *str);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
+
+char				*ft_strcpy(char *src, char *dst);
 
 char				*ft_strchr(const char *str, int c);
 

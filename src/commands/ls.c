@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 12:49:30 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:59:13 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_ls(t_mini *mini)
 	{
 		if ((execve(total, argv, NULL) == -1))
 			error_output(mini, 'c');
+		kill(getpid(), SIGINT);
 	}
 	else
 		wait(NULL);
