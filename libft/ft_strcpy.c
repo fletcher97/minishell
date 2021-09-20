@@ -6,11 +6,9 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 15:45:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/10 20:17:17 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/20 13:20:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 #include "libft.h"
 
@@ -19,9 +17,9 @@ char	*ft_strcpy(char *src, char *dst)
 	int	x;
 
 	x = 0;
-	while (str[x])
+	while (src[x])
 	{
-		dst[x] = str[x];
+		dst[x] = src[x];
 		x++;
 	}
 	dst[x] = '\0';

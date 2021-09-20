@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/14 16:29:02 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/20 13:27:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*get_name(char *str, char c)
 	int 	x;
 
 	x = -1;
+	if (!str)
+		return(NULL);
 	name = malloc(sizeof(char *) * (ft_strlen(str) + 1));
 	while (str[++x] && str[x] != c)
 		name[x] = str[x];
