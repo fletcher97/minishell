@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 12:49:30 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/20 12:05:34 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_ls(t_mini *mini)
 	char *total;
 	char* argv[3];
 
+	if (!mini->argv[0])
+		return ;
 	argv[0] = mini->argv[0];
 	argv[1] = mini->argv[1];
 	argv[2] = NULL;

@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 12:57:48 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/08 18:09:44 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/20 17:16:58 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+typedef struct s_quote {
+	int	first;
+	int	next;
+}	t_quote;
+
+int	find_first_quote(char *s, int i)
+{
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\"')
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	find_second_quote(char *s, int j)
+{
+	j++;
+	while (s[j] != '\0')
+	{
+		if(s[j] == '\"')
+			return (j);
+		j++;
+	}
+	return (-1);
+}
 
 static int	count_splits(char *s, char c)
 {
@@ -27,6 +55,11 @@ static int	count_splits(char *s, char c)
 			break ;
 		while (s[x] && s[x] != c)
 			x++;
+		if (x >= find_first_quote(s, x) && x <= find_second_quote(s, find_first_quote(s, x)))
+		{
+			while (x <= find_second_quote(s, find_first_quote(s, x)))
+				x++;
+		}
 		count++;
 	}
 	return (count);
@@ -37,16 +70,30 @@ static int	sub_len(char *s, char c, int x)
 	int	count;
 
 	count = 0;
-	while (s[x] && s[x] != c)
+
+	if (x >= find_first_quote(s, x) && x <= find_second_quote(s, find_first_quote(s, x)))
 	{
-		count++;
-		x++;
+		while (x <= find_second_quote(s, find_first_quote(s, x)))
+		{
+			count++;
+				x++;
+		}
 	}
+	else
+	{
+		while (s[x] && s[x] != c)
+		{
+			count++;
+			x++;
+		}
+	}
+
 	return (count);
 }
 
 static char	**split_func(char **split, char *s, char c)
 {
+	t_quote quote;
 	int	x;
 	int	y;
 	int	z;
@@ -60,11 +107,20 @@ static char	**split_func(char **split, char *s, char c)
 			x++;
 		if (s[x] && s[x] != c)
 		{
-			split[y] = (char *)ft_calloc((sub_len(s, c, x) + 1), sizeof(char));
+			split[y] = (char *)ft_calloc((sub_len(s, c, x) + 100), sizeof(char));
 			while (s[x] && s[x] != c)
 			{
-				split[y][z] = s[x++];
-				z++;
+				if (x >= find_first_quote(s, x) && x <= find_second_quote(s, find_first_quote(s, x)))
+				{
+					quote.next = find_second_quote(s, find_first_quote(s, x));
+					while (x <= quote.next)
+					{
+						split[y][z] = s[x++];
+						z++;
+					}
+				}
+				else
+					split[y][z++] = s[x++];
 			}
 			split[y][z] = '\0';
 			y++;

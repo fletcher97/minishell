@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/20 11:27:17 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/20 12:05:13 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,30 @@ void	screening(t_mini *mini, char *input)
 {
 	int x = 0;
 
-	while (mini->argv[++x])
-		;
+	// while (mini->argv[++x])
+	// 	;
 	if (mini->argv)
 	{
-		if (!ft_strncmp(mini->argv[0], "pwd", ft_strlen(mini->argv[0])))
+		if (str_cmp_both_len(mini->argv[0], "pwd"))
 			ft_pwd();
-		else if (!ft_strncmp(mini->argv[0], "exit", ft_strlen(mini->argv[0])))
+		else if (str_cmp_both_len(mini->argv[0], "exit"))
 			ft_exit(mini, input);
-		else if (!ft_strncmp(mini->argv[0], "echo", ft_strlen(mini->argv[0])))
+		else if (str_cmp_both_len(mini->argv[0], "echo"))
 			ft_echo(mini);
-		else if (!ft_strncmp(mini->argv[0], "cd", ft_strlen(mini->argv[0])))
+		else if (str_cmp_both_len(mini->argv[0], "cd"))
 			ft_cd(mini);
-		else if (!ft_strncmp(mini->argv[0], " ", ft_strlen(mini->argv[0])))
+		else if (str_cmp_both_len(mini->argv[0], " "))
 			printf("\n");
-		else if(!ft_strncmp(mini->argv[0], "env", ft_strlen(mini->argv[0])))
+		else if(str_cmp_both_len(mini->argv[0], "env"))
 				ft_env(mini);
-		else if(!ft_strncmp(mini->argv[0], "export", ft_strlen(mini->argv[0])))
+		else if(str_cmp_both_len(mini->argv[0], "export"))
 			ft_export(mini);
-		else if(!ft_strncmp(mini->argv[0], "node", ft_strlen(mini->argv[0])))
+		else if(str_cmp_both_len(mini->argv[0], "node"))
 		{
 			if (ft_strlen(mini->argv[1]) > 0)
 				ft_lstnode_print(mini->env, mini->argv[1]);
 		}
-		else if (!ft_strncmp(mini->argv[0], "unset", ft_strlen(mini->argv[0])))
+		else if (str_cmp_both_len(mini->argv[0], "unset"))
 		{
 			if (x > 1)
 				ft_unset(mini);
