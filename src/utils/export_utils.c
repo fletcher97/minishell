@@ -63,11 +63,11 @@ t_list *duplicate_list(t_list *lst)
 	return(dup_lst);
 }
 
-int	env_sorted(t_mini *mini)
+int	env_sorted()
 {
 	t_list	*lst;
 
-	lst = duplicate_list(mini->env);
+	lst = duplicate_list(mini.env);
 	while (!checker(lst))
 	{
 		sorter(lst);
