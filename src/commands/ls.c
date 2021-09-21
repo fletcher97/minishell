@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 20:54:06 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/13 15:59:13 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 13:58:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_ls(t_mini *mini)
 	char *total;
 	char* argv[3];
 
+	if (!mini->argv[0])
+		return ;
 	argv[0] = mini->argv[0];
 	argv[1] = mini->argv[1];
 	argv[2] = NULL;

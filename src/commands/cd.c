@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/14 16:24:04 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:08:27 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void	ft_cd_back(t_mini *mini, t_cd *cd)
 	}
 	else
 	{
-		chdir(cd->tmp->content);
+		if (!(chdir(cd->tmp->content)))
+			printf("cd: no such file or directory: %s\n", cd->tmp->content);
 	}
 	mini->env = mini->head;
 }
@@ -130,12 +131,16 @@ void	ft_cd(t_mini *mini)
 	t_cd	cd;
 	char	*str;
 	char	*home;
+	int		i;
 
 	home = NULL;
 	str = NULL;
 	mini->head = mini->env;
 	cd.tmp = mini->env;
 	home = getcwd(home, PATH_MAX);
+	i = 0;
+	while (mini->argv[i] != NULL)
+		printf("%s\n", mini->argv[i++]);
 	if (!mini->argv[1])
 	{
 		mini->cd->backup = return_env_content(mini->env, "PWD");
@@ -147,7 +152,7 @@ void	ft_cd(t_mini *mini)
 		mini->env = mini->head;
 
 	}
-	else if (!ft_strncmp(mini->argv[1], "..", ft_strlen(mini->argv[1])))
+	else if (str_cmp_both_len(mini->argv[1], ".."))
 		ft_cd_back(mini, &cd);
 	else
 		change_path(mini, &cd);
