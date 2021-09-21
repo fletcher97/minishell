@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:15 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:16:11 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:31:30 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*return_env_content(t_list *lst, char *name)
 {
 	while (lst)
 	{
-		if (str_cmp_both_len(lst->name, name))
+		if (ft_strcmp(lst->name, name))
 			break ;
 		lst = lst->next;
 	}
@@ -97,7 +97,7 @@ void	ft_echo()
 	j = 0;
 	while (mini.argv[i])
 		i++;
-	if (i >= 2 && str_cmp_both_len(mini.argv[1], "-n"))
+	if (i >= 2 && ft_strcmp(mini.argv[1], "-n"))
 		echo_n_flag(i, j);
 	else
 		echo_no_flag(i, j);

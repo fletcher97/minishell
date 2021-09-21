@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:29:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:32:59 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,29 @@
 
 void	screening(char *input)
 {
-	int x = 0;
-
-	// while (mini->argv[++x])
-	// 	;
 	if (mini.argv)
 	{
-		if (str_cmp_both_len(mini.argv[0], "pwd"))
+		if (ft_strcmp(mini.argv[0], "pwd"))
 			ft_pwd();
-		else if (str_cmp_both_len(mini.argv[0], "exit"))
+		else if (ft_strcmp(mini.argv[0], "exit"))
 			ft_exit(input);
-		else if (str_cmp_both_len(mini.argv[0], "echo"))
+		else if (ft_strcmp(mini.argv[0], "echo"))
 			ft_echo();
-		else if (str_cmp_both_len(mini.argv[0], "cd"))
+		else if (ft_strcmp(mini.argv[0], "cd"))
 			ft_cd();
-		else if (str_cmp_both_len(mini.argv[0], " "))
+		else if (ft_strcmp(mini.argv[0], " "))
 			printf("\n");
-		else if(str_cmp_both_len(mini.argv[0], "env"))
+		else if(ft_strcmp(mini.argv[0], "env"))
 				ft_env();
-		else if(str_cmp_both_len(mini.argv[0], "export"))
+		else if(ft_strcmp(mini.argv[0], "export"))
 			ft_export();
-		else if(str_cmp_both_len(mini.argv[0], "node"))
+		else if(ft_strcmp(mini.argv[0], "node"))
 		{
 			if (ft_strlen(mini.argv[1]) > 0)
 				ft_lstnode_print(mini.env, mini.argv[1]);
 		}
-		else if (str_cmp_both_len(mini.argv[0], "unset"))
-		{
-			if (x > 0)
-				ft_unset();
-		}
+		else if (ft_strcmp(mini.argv[0], "unset"))
+			ft_unset();
 		else
 			ft_ls();
 	}

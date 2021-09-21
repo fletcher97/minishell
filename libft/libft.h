@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 14:10:07 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:26:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -42,6 +43,8 @@ int					ft_memcmp(const void *s1, const void *s2, size_t n);
 
 size_t				ft_strlen(const char *str);
 
+bool				ft_lencmp(char *s1, char *s2);
+
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -56,6 +59,8 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t len);
 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
+
+bool				ft_strcmp(char *s1, char *s2);
 
 int					ft_atoi(const char *str);
 
@@ -101,9 +106,13 @@ char				**ft_split(char const *s, char c);
 
 t_list				*ft_lstnew(void *content);
 
+t_list				*ft_lstnew_pp(char **content);
+
 void				ft_lstadd_front(t_list **lst, t_list *new);
 
 t_list				*ft_lstnew(void *content);
+
+t_list				*ft_lstnew_pp(char **content);
 
 t_list				*ft_lstdup_2p(t_list *lst);
 
@@ -131,5 +140,9 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),
 void				ft_lstprint(t_list *lst, char type);
 
 void				ft_lstnode_print_2p(t_list *lst);
+
+void				ft_lstnode_print(t_list *lst, char *name);
+
+
 
 #endif

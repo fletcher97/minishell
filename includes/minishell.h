@@ -46,8 +46,6 @@ void	free_dp_list(t_list *lst);
 //utility functions
 int		find_char(char *s1, char c);
 void	node_free_machine();
-void	ft_lstnode_print(t_list *lst, char *name);
-t_list	*ft_lstnew_pp(char **content);
 bool	lst_str_check(t_list *lst, char *str);
 bool	str_len_check(char *s1, char *s2);
 bool	str_cmp_both_len(char *s1, char *s2);
@@ -56,6 +54,7 @@ int		env_sorted();
 void	sorter(t_list *lst);
 void	swap(t_list *A, t_list *B, t_list *C);
 bool	checker(t_list *lst);
+bool	check_char(char *str, char c);
 //utility functions
 
 //env functions

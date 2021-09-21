@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:29:41 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:27:39 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,26 @@ int find_char(char *s1, char c)
 	int x;
 
 	x = 0;
-	if (ft_strlen(s1) == 0)
-		return(0);
-	printf("str = %s\n", s1);
 	while(s1[x] && s1[x] != c)
 		x++;
 	return(x);
+}
+
+bool	check_char(char *str, char c)
+{
+	int x;
+
+	x = 0;
+	if (!str)
+		return(0);
+	while (str[x])
+	{
+		if (str[x] == c)
+			return(true);
+		x++;
+	}
+	return(false);
+
 }
 
 bool	check_env_names(char *name, char *content)
@@ -32,7 +46,7 @@ bool	check_env_names(char *name, char *content)
 	head = mini.env;
 	while(1)
 	{
-		if(str_cmp_both_len(name, mini.env->name))
+		if(ft_strcmp(name, mini.env->name))
 		{
 			//free(mini.env->content); Double free problems here
 			mini.env->content = content;
@@ -60,9 +74,8 @@ int	ft_export()
 	name = get_name(arg, '=');
 	if (!name)
 		return(env_sorted(mini));
-	if (!find_char(arg, '='))
+	if (!check_char(arg, '='))
 		return(0);
-	//	return(sorted_env_list(mini, ft_lstsize(mini->env)));
 	content = ft_substr(arg, find_char(arg,'=') + 1, ft_strlen(arg));
 	if (!check_env_names(name, content))
 	{

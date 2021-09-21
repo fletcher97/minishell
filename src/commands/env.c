@@ -3,44 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 16:17:04 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:15:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_list	*ft_lstnew_pp(char **content)
-{
-	t_list	*new;
-
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->name = content[0];
-	new->content = content[1];
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_lstnode_print(t_list *lst, char *name)
-{
-	t_list	*head;
-
-	head = lst;
-	while (1)
-	{
-		if (str_cmp_both_len(lst->name, name))
-			printf("Content=|%s|, Name=|%s|, PREV=|%p| ADD=|%p| Next=|%p|\n",
-				lst->content,lst->name, lst->prev, lst, lst->next);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	lst = head;
-}
 
 char	*get_name(char *str, char c)
 {

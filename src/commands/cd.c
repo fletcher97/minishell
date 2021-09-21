@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 16:14:25 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 17:31:01 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*find_name(t_list *lst, char *str)
 {
 	while (lst)
 	{
-		if (str_cmp_both_len(lst->name, str))
+		if (ft_strcmp(lst->name, str))
 			return (lst);
 		lst = lst->next;
 	}
@@ -77,7 +77,7 @@ void	ft_cd_back(t_cd *cd)
 	cd->backup = return_env_content(cd->tmp, "OLDPWD");
 	str = getcwd(str, PATH_MAX);
 	old_pwd = str;
-	if (!ft_strncmp(str, cd->backup, str_cmp_both_len(str, cd->backup)))
+	if (!ft_strncmp(str, cd->backup, ft_strcmp(str, cd->backup)))
 	{
 		cd->path1 = ft_substr(str, 0, len_char_back(str, '/'));
 		chdir(cd->path1);
@@ -115,7 +115,7 @@ void	ft_cd()
 		mini.env = mini.head;
 
 	}
-	else if (str_cmp_both_len(mini.argv[1], ".."))
+	else if (ft_strcmp(mini.argv[1], ".."))
 		ft_cd_back(&cd);
 	else
 		change_path(&cd);
