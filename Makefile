@@ -30,6 +30,7 @@ libft:
 			@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME):	$(OBJS)
+			@echo "\n$(GREEN)Compiling Minishell:$(NC)"
 			@$(CC) -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(FLAGS) $(INCLUDE) $(LIB) $(OBJS)
 
 clean:

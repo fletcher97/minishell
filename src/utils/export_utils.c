@@ -73,7 +73,7 @@ int	env_sorted(t_mini *mini)
 		sorter(lst);
 		lst = ft_lsthead_2p(lst);
 	}
-	ft_lstprint(lst, 'd');
+	ft_lstprint(lst, 'a');
 	if (lst)
 		free_dp_list(lst);
 	return(1);
