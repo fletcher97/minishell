@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:42 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/10 10:30:02 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 16:19:19 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	ft_pwd(void)
 	printf("%s\n", pwd());
 }
 
-void	ft_exit(t_mini *mini, char *input)
+void	ft_exit(char *input)
 {
-	free_struct(mini, input);
-	mini->exit = true;
+	free_struct(input);
+	mini.exit = true;
 	write(1, "exit\n", 4);
-	kill(mini->pid, SIGINT);
+	kill(mini.pid, SIGINT);
 }

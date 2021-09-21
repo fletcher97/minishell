@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 12:41:00 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 16:17:04 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,22 @@ void	env_add_names(t_list *lst)
 	lst = head;
 }
 
-t_list	*get_env(char **env, t_mini *mini)
+t_list	*get_env(char **env)
 {
 	t_list	*temp;
 	int x;
 
 	x = -1;
-	mini->env = NULL;
+	mini.env = NULL;
 	while (env[++x] != NULL)
 	{
 		temp = ft_lstnew_pp(ft_split(env[x], '='));
-		ft_lstadd_back(&mini->env,temp);
+		ft_lstadd_back(&mini.env,temp);
 	}
-	return(mini->env);
+	return(mini.env);
 }
 
-void	ft_env(t_mini *mini)
+void	ft_env()
 {
-	ft_lstprint(mini->env, 'a');
+	ft_lstprint(mini.env, 'a');
 }

@@ -63,17 +63,17 @@ t_list *duplicate_list(t_list *lst)
 	return(dup_lst);
 }
 
-int	env_sorted(t_mini *mini)
+int	env_sorted()
 {
 	t_list	*lst;
 
-	lst = duplicate_list(mini->env);
+	lst = duplicate_list(mini.env);
 	while (!checker(lst))
 	{
 		sorter(lst);
 		lst = ft_lsthead_2p(lst);
 	}
-	ft_lstprint(lst, 'd');
+	ft_lstprint(lst, 'a');
 	if (lst)
 		free_dp_list(lst);
 	return(1);
