@@ -38,6 +38,7 @@ void	error_output(t_mini *mini, char type);
 void	free_lst(t_list *lst);
 void	free_struct(t_mini *mini, char *input);
 void	free_argv(t_mini *mini);
+void	free_dp_list(t_list *lst);
 //free utility
 
 //utility functions
@@ -48,9 +49,14 @@ t_list	*ft_lstnew_pp(char **content);
 bool	lst_str_check(t_list *lst, char *str);
 bool	str_len_check(char *s1, char *s2);
 bool	str_cmp_both_len(char *s1, char *s2);
+void	sorter(t_list *lst);
+int		env_sorted(t_mini *mini);
+void	sorter(t_list *lst);
+void	swap(t_list *A, t_list *B, t_list *C);
+bool	checker(t_list *lst);
 //utility functions
 
-//env funcitons
+//env functions
 t_list	*get_env(char **env, t_mini *mini);
 bool	check_env_names(t_mini *mini, char *name, char *content);
 void	env_add_names(t_list *lst);
@@ -68,7 +74,7 @@ void	echo_no_flag(t_mini *mini, int i, int j);
 void	ft_cd(t_mini *mini);
 void	ft_ls(t_mini *mini);
 void	ft_env(t_mini *mini);
-void	ft_export(t_mini *mini);
+int		ft_export(t_mini *mini);
 void	ft_unset(t_mini *mini);
 //commands.c
 

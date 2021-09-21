@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 12:51:41 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 14:10:07 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_list
 {
 	void			*content;
 	void			*name;
+	struct s_list	*prev;
 	struct s_list	*next;
 }					t_list;
 
@@ -44,6 +45,8 @@ size_t				ft_strlen(const char *str);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
+
+char				*ft_strcpy(char *src, char *dst);
 
 char				*ft_strchr(const char *str, int c);
 
@@ -102,13 +105,19 @@ void				ft_lstadd_front(t_list **lst, t_list *new);
 
 t_list				*ft_lstnew(void *content);
 
+t_list				*ft_lstdup_2p(t_list *lst);
+
 void				ft_lstadd_front(t_list **lst, t_list *new);
 
 int					ft_lstsize(t_list *lst);
 
 t_list				*ft_lstlast(t_list *lst);
 
+t_list				*ft_lsthead_2p(t_list *lst);
+
 void				ft_lstadd_back(t_list **lst, t_list *new);
+
+void				ft_lstadd_back_2p(t_list **lst, t_list *new);
 
 void				ft_lstdelone(t_list *lst, void (*del)(void*));
 
@@ -120,4 +129,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),
 						void (*del)(void*));
 
 void				ft_lstprint(t_list *lst, char type);
+
+void				ft_lstnode_print_2p(t_list *lst);
+
 #endif

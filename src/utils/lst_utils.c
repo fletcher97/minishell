@@ -6,11 +6,26 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:32:09 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 18:30:20 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 13:52:50 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	free_dp_list(t_list *lst)
+{
+	t_list *temp;
+
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		temp = lst->next;
+		free(lst);
+		lst = NULL;
+		lst = temp;
+	}
+}
 
 void	free_argv(t_mini *mini)
 {

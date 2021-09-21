@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/14 16:34:45 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:23:59 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	check_env_names(t_mini *mini, char *name, char *content)
 	return(false);
 }
 
-void	ft_export(t_mini *mini)
+int	ft_export(t_mini *mini)
 {
 	t_list	*head;
 	t_list	*temp;
@@ -55,6 +55,9 @@ void	ft_export(t_mini *mini)
 	head = mini->env;
 	arg = mini->argv[1];
 	name = get_name(arg, '=');
+	if (!name)
+		return(env_sorted(mini));
+	//	return(sorted_env_list(mini, ft_lstsize(mini->env)));
 	content = ft_substr(arg, find_char(arg,'=') + 1, ft_strlen(arg));
 	if (!check_env_names(mini, name, content))
 	{
@@ -63,4 +66,5 @@ void	ft_export(t_mini *mini)
 		ft_lstadd_back(&mini->env, temp);
 	}
 	mini->env = head;
+	return(1);
 }
