@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_find_quote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 15:27:31 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 12:54:14 by falmeida         ###   ########.fr       */
+/*   Created: 2021/09/21 12:50:27 by falmeida          #+#    #+#             */
+/*   Updated: 2021/09/21 12:50:48 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-size_t	ft_strlen(const char *str)
+int	find_quote(char *s, int i)
 {
-	size_t	x;
-
-	if (!str)
-		return (0);
-	x = 0;
-	while (str[x])
-		x++;
-	return (x);
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\"')
+			return (i);
+		i++;
+	}
+	return (-1);
 }

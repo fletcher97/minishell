@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 12:57:48 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/20 18:24:23 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 12:50:05 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,10 @@
 typedef struct s_quote {
 	int	first;
 	int	next;
+	int	x;
+	int	y;
+	int	z;
 }	t_quote;
-
-int	find_quote(char *s, int i)
-{
-	while (s[i] != '\0')
-	{
-		if (s[i] == '\"')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 static int	count_splits(char *s, char c)
 {
@@ -56,7 +48,7 @@ static int	count_splits(char *s, char c)
 	return (count);
 }
 
-static int	sub_len(char *s, char c, int x)
+static int	sub_l(char *s, char c, int x)
 {
 	t_quote	quote;
 	int		count;
@@ -83,43 +75,46 @@ static int	sub_len(char *s, char c, int x)
 	return (count);
 }
 
+char	**fill_str(t_quote *q, char *s, char **split, char c)
+{
+	int	quotes;
+
+	quotes = 0;
+	q->first = find_quote(s, q->x);
+	q->next = find_quote(s, find_quote(s, q->x + 1));
+	while (s[q->x] && s[q->x] != c)
+	{
+		if (q->x >= q->first && q->x <= q->next)
+		{
+			while (q->x <= q->next)
+				split[q->y][q->z++] = s[q->x++];
+		}
+		else
+			split[q->y][q->z++] = s[q->x++];
+	}
+	split[q->y][q->z] = '\0';
+	return (split);
+}
+
 static char	**split_func(char **split, char *s, char c)
 {
-	t_quote	quote;
-	int		x;
-	int		y;
-	int		z;
+	t_quote	q;
 
-	x = 0;
-	y = 0;
-	while (s[x])
+	q.x = 0;
+	q.y = 0;
+	while (s[q.x])
 	{
-		z = 0;
-		while (s[x] && s[x] == c)
-			x++;
-		if (s[x] && s[x] != c)
+		q.z = 0;
+		while (s[q.x] && s[q.x] == c)
+			q.x++;
+		if (s[q.x] && s[q.x] != c)
 		{
-			split[y] = (char *)ft_calloc(sub_len(s, c, x) + 1, sizeof(char));
-			while (s[x] && s[x] != c)
-			{
-				quote.first = find_quote(s, x);
-				quote.next = find_quote(s, find_quote(s, x + 1));
-				if (x >= quote.first && x <= quote.next)
-				{
-					while (x <= quote.next)
-					{
-						split[y][z] = s[x++];
-						z++;
-					}
-				}
-				else
-					split[y][z++] = s[x++];
-			}
-			split[y][z] = '\0';
-			y++;
+			split[q.y] = (char *)ft_calloc(sub_l(s, c, q.x) + 1, sizeof(char));
+			fill_str(&q, s, split, c);
+			q.y++;
 		}
 	}
-	split[y] = 0;
+	split[q.y] = 0;
 	return (split);
 }
 
