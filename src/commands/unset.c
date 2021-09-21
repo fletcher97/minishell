@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 18:03:41 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 16:14:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_unset(t_mini *mini)
 	else
 		temp2 = NULL;
 	temp->next = temp2;
+//	printf("N= |%s - %p|\n", mini->env->name, mini->env);
 	node_free_machine(mini);
 	mini->env = head;
 }

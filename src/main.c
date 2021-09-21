@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 14:11:09 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 16:14:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	screening(t_mini *mini, char *input)
 		}
 		else if (str_cmp_both_len(mini->argv[0], "unset"))
 		{
-			if (x > 1)
+			if (x > 0)
 				ft_unset(mini);
 		}
 		else

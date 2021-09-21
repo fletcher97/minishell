@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/20 16:23:59 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 16:20:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int find_char(char *s1, char c)
 	int x;
 
 	x = 0;
+	if (ft_strlen(s1) == 0)
+		return(0);
+	printf("str = %s\n", s1);
 	while(s1[x] && s1[x] != c)
 		x++;
 	return(x);
@@ -57,6 +60,8 @@ int	ft_export(t_mini *mini)
 	name = get_name(arg, '=');
 	if (!name)
 		return(env_sorted(mini));
+	if (!find_char(arg, '='))
+		return(0);
 	//	return(sorted_env_list(mini, ft_lstsize(mini->env)));
 	content = ft_substr(arg, find_char(arg,'=') + 1, ft_strlen(arg));
 	if (!check_env_names(mini, name, content))
