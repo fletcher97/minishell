@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_find_quote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/14 12:00:13 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 13:40:09 by falmeida         ###   ########.fr       */
+/*   Created: 2021/09/21 12:50:27 by falmeida          #+#    #+#             */
+/*   Updated: 2021/09/21 12:50:48 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	get_signal(int signal)
+int	find_quote(char *s, int i)
 {
-	//signal == SIGQUIT
-	if (signal == SIGINT)
+	while (s[i] != '\0')
 	{
-		write(1,"\n", 1);
-		//rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		if (s[i] == '\"')
+			return (i);
+		i++;
 	}
+	return (-1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 13:58:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 14:11:09 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,9 @@ int main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 	char	*input;
-	// TESTE
-	//char *envt[5]={"primeiro=1","segundo=2","terceiro=3","quarto=5",0};
-	//(void)env;
-	// END TESTES
+
 	(void) argc;
 	(void) argv;
-	//char **temp;
-	//temp = env;
 	mini.head = malloc(sizeof(t_list));
 	mini.pid = getpid();
 	mini.env = get_env(env, &mini);
@@ -74,19 +69,11 @@ int main(int argc, char **argv, char **env)
 	while (42)
 	{
 		input = readline("minishell: ");
-	//	printf("input = |%s| |%zu|\n", input, strlen(input));
-
 		if (input && ft_strlen(input) != 0)
 		{
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
 			screening(&mini, input);
-			// if (mini.exit == true)
-			// {
-			// 	printf("exiting...\n");
-			// 	free_struct(&mini, input);
-			// 	exit (0);
-			// }
 			free_argv(&mini);
 			free(input);
 			input = NULL;

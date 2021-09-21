@@ -6,7 +6,7 @@
 /*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:36:18 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/20 14:08:27 by falmeida         ###   ########.fr       */
+/*   Updated: 2021/09/21 13:04:38 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,8 @@ void	ft_cd(t_mini *mini)
 	cd.tmp = mini->env;
 	home = getcwd(home, PATH_MAX);
 	i = 0;
-	while (mini->argv[i] != NULL)
-		printf("%s\n", mini->argv[i++]);
 	if (!mini->argv[1])
 	{
-		mini->cd->backup = return_env_content(mini->env, "PWD");
 		str = return_env_content(mini->env, "HOME");
 		chdir(str);
 		check_env_names(mini , "PWD", str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: falmeida <falmeida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 13:40:02 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 14:10:07 by falmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int					ft_isprint(int c);
 int					ft_toupper(int c);
 
 int					ft_tolower(int c);
+
+int					find_quote(char *s, int i);
 
 void				*ft_calloc(size_t count, size_t size);
 
