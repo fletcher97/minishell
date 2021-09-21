@@ -38,6 +38,7 @@ void	error_output(t_mini *mini, char type);
 void	free_lst(t_list *lst);
 void	free_struct(t_mini *mini, char *input);
 void	free_argv(t_mini *mini);
+void	free_dp_list(t_list *lst);
 //free utility
 
 //utility functions
@@ -51,7 +52,7 @@ bool	str_cmp_both_len(char *s1, char *s2);
 void	sorter(t_list *lst);
 int		env_sorted(t_mini *mini);
 void	sorter(t_list *lst);
-t_list	*swap(t_list *B, t_list *A);
+void	swap(t_list *A, t_list *B, t_list *C);
 bool	checker(t_list *lst);
 //utility functions
 

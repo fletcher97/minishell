@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 13:29:21 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/09 15:02:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 11:36:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstlast(t_list *lst)
 {
 	if (!lst)
 		return (NULL);
-	while (lst && lst->next != NULL)
+	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
 }

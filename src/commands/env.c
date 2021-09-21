@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:24:46 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/20 13:27:21 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/21 12:41:00 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	ft_lstnode_print(t_list *lst, char *name)
 	while (1)
 	{
 		if (str_cmp_both_len(lst->name, name))
-			printf("Content=|%s|, Name=|%s|, ADD=|%p| Next=|%p|\n",lst->content,
-				lst->name,  lst, lst->next);
+			printf("Content=|%s|, Name=|%s|, PREV=|%p| ADD=|%p| Next=|%p|\n",
+				lst->content,lst->name, lst->prev, lst, lst->next);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
