@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:43:55 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 17:26:34 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/22 13:05:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <sys/wait.h>
 
 typedef struct s_list
 {

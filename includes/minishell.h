@@ -7,9 +7,10 @@
 #include <readline/history.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
 #include <signal.h>
 #include <stdbool.h>
+#include <sys/wait.h>
+#include "libft.h"
 
 typedef struct	s_cd {
 
@@ -33,7 +34,7 @@ typedef struct	s_mini {
 t_mini	mini;
 
 //error management
-void	error_output(char type);
+void	error_output(char type, int i);
 //error management
 
 //free utility
@@ -56,6 +57,12 @@ void	swap(t_list *A, t_list *B, t_list *C);
 bool	checker(t_list *lst);
 bool	check_char(char *str, char c);
 //utility functions
+
+//parser functions
+int		resolve_special(int i, int j);
+int		find_special(void);
+//parset functions
+
 
 //env functions
 t_list	*get_env(char **env);

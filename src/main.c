@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 17:32:59 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/22 12:25:51 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void	screening(char *input)
 {
+	find_special();
 	if (mini.argv)
 	{
 		if (ft_strcmp(mini.argv[0], "pwd"))

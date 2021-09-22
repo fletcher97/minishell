@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:48:40 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 17:28:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/22 10:47:57 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,11 @@
 void	node_free_machine()
 {
 	free(mini.env->name);
+	free(mini.env->content);
 	mini.env->name = NULL;
+	mini.env->content = NULL;
 	mini.env = NULL;
 }
-
-// bool	str_len_check(char *s1, char *s2)
-// {
-// 	if ((ft_strlen(s1) - ft_strlen(s2)) == 0)
-// 		return (true);
-// 	return(false);
-// }
-
-// bool	str_cmp_both_len(char *s1, char *s2)
-// {
-// 	if (!str_len_check(s1, s2))
-// 		return (false);
-// 	if (!(ft_strncmp(s1,s2, ft_strlen(s1))))
-// 	{
-// 		if (!(ft_strncmp(s1,s2, ft_strlen(s2))))
-// 			return (true);
-// 	}
-// 	return (false);
-// }
 
 bool	lst_str_check(t_list *lst, char *str)
 {
@@ -50,7 +33,6 @@ bool	lst_str_check(t_list *lst, char *str)
 		if (ft_strcmp(name, str))
 		{
 				lst = head;
-	//			printf("%s %s\n", str, name);
 				return (true);
 		}
 		if (lst->next == NULL)
@@ -81,7 +63,6 @@ void	ft_unset()
 	else
 		temp2 = NULL;
 	temp->next = temp2;
-//	printf("N= |%s - %p|\n", mini.env->name, mini->env);
 	node_free_machine();
 	mini.env = head;
 }

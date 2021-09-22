@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 11:41:30 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/21 17:27:39 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/22 10:43:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ bool	check_char(char *str, char c)
 {
 	int x;
 
-	x = 0;
+	x = -1;
 	if (!str)
 		return(0);
-	while (str[x])
+	while (str[++x])
 	{
 		if (str[x] == c)
 			return(true);
-		x++;
 	}
 	return(false);
-
 }
 
 bool	check_env_names(char *name, char *content)
@@ -48,7 +46,7 @@ bool	check_env_names(char *name, char *content)
 	{
 		if(ft_strcmp(name, mini.env->name))
 		{
-			//free(mini.env->content); Double free problems here
+			free(mini.env->content);
 			mini.env->content = content;
 			mini.env = head;
 			return (true);

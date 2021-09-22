@@ -36,6 +36,7 @@ void	sorter(t_list *lst)
 bool	checker(t_list *lst)
 {
 	int ret;
+	
 	while (lst->next != NULL)
 	{
 		ret = ft_strncmp(lst->name, lst->next->name, ft_strlen(lst->name));
