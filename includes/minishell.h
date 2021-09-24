@@ -26,6 +26,7 @@ typedef struct	s_mini {
 	char	*str;
 	int		pid;
 	bool	exit;
+	int		nbr_arg;
 	t_cd	*cd;
 	t_list	*env;
 	t_list	*head;
@@ -45,6 +46,8 @@ void	free_dp_list(t_list *lst);
 //free utility
 
 //utility functions
+void	struct_init(char **env);
+int		args_counter();
 int		find_char(char *s1, char c);
 void	node_free_machine();
 bool	lst_str_check(t_list *lst, char *str);
@@ -63,6 +66,10 @@ int		resolve_special(int i, int j);
 int		find_special(void);
 //parset functions
 
+//Pipe functions
+int screening_pipe(int i);
+int	piper(int i);
+//Pipe functions
 
 //env functions
 t_list	*get_env(char **env);
@@ -73,6 +80,7 @@ char	*return_env_content(t_list *lst, char *name);
 char	*env_flag_check(int i);
 //env functions
 
+
 //commands.c
 void	ft_pwd(void);
 void	ft_exit(char *input);
@@ -80,7 +88,7 @@ void	ft_echo();
 void	echo_n_flag(int i, int j);
 void	echo_no_flag(int i, int j);
 void	ft_cd();
-void	ft_ls();
+void	ft_ls(int i);
 void	ft_env();
 int		ft_export();
 void	ft_unset();

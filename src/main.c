@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/22 12:25:51 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/24 16:03:30 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,56 @@
 
 void	screening(char *input)
 {
-	find_special();
-	if (mini.argv)
+	int i;
+
+	i = 0;
+	i = find_special();
+	if (mini.argv && i == 0)
 	{
-		if (ft_strcmp(mini.argv[0], "pwd"))
+		if (ft_strcmp(mini.argv[i], "pwd"))
 			ft_pwd();
-		else if (ft_strcmp(mini.argv[0], "exit"))
+		else if (ft_strcmp(mini.argv[i], "exit"))
 			ft_exit(input);
-		else if (ft_strcmp(mini.argv[0], "echo"))
+		else if (ft_strcmp(mini.argv[i], "echo"))
 			ft_echo();
-		else if (ft_strcmp(mini.argv[0], "cd"))
+		else if (ft_strcmp(mini.argv[i], "cd"))
 			ft_cd();
-		else if (ft_strcmp(mini.argv[0], " "))
+		else if (ft_strcmp(mini.argv[i], " "))
 			printf("\n");
-		else if(ft_strcmp(mini.argv[0], "env"))
+		else if(ft_strcmp(mini.argv[i], "env"))
 				ft_env();
-		else if(ft_strcmp(mini.argv[0], "export"))
+		else if(ft_strcmp(mini.argv[i], "export"))
 			ft_export();
-		else if(ft_strcmp(mini.argv[0], "node"))
+		else if(ft_strcmp(mini.argv[i], "node"))
 		{
-			if (ft_strlen(mini.argv[1]) > 0)
-				ft_lstnode_print(mini.env, mini.argv[1]);
+			if (ft_strlen(mini.argv[i]) > 0)
+				ft_lstnode_print(mini.env, mini.argv[i + 1]);
 		}
-		else if (ft_strcmp(mini.argv[0], "unset"))
+		else if (ft_strcmp(mini.argv[i], "unset"))
 			ft_unset();
 		else
-			ft_ls();
+			ft_ls(i);
 	}
 	else
 		return ;
+}
+
+void	struct_init(char **env)
+{
+	mini.head = malloc(sizeof(t_list));
+	mini.pid = getpid();
+	mini.env = get_env(env);
+	mini.exit = false;
+}
+
+int		args_counter()
+{
+	int i;
+
+	i = 0;
+	while (mini.argv[i])
+		i++;
+	return(i);
 }
 
 int main(int argc, char **argv, char **env)
@@ -54,11 +75,8 @@ int main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	mini.head = malloc(sizeof(t_list));
-	mini.pid = getpid();
-	mini.env = get_env(env);
-	mini.exit = false;
 
+	struct_init(env);
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
 	while (42)
@@ -68,6 +86,7 @@ int main(int argc, char **argv, char **env)
 		{
 			add_history(input);
 			mini.argv = ft_split(input, ' ');
+			mini.nbr_arg = args_counter();
 			screening(input);
 			free_argv();
 			free(input);

@@ -2,22 +2,21 @@
 
 int	resolve_special(int i, int j)
 {
-	(void) j;
-	if (i == 0)
+	if (j == 0)
 		error_output('s', i);
 //		redirect_output(i, j);
-	else if (i == 1)
+	else if (j == 1)
 		error_output('s', i);
 //		redirect_input(i, j);
-	else if (i == 2)
+	else if (j == 2)
 		error_output('s', i);
 //		read_input_from(i, j);
-	else if (i == 3)
+	else if (j == 3)
 		error_output('s', i);
 //		append_output(i ,j);
-	else if (i == 4)
-		error_output('s', i);
-//		pipe_output(i, j);
+	else if (j == 4)
+//		error_output('s', i);
+		piper(i);
 	else
 		error_output('s', i);
 	return(i);
@@ -36,8 +35,11 @@ int	find_special(void)
 		while (++j < 12 )
 		{
 			if (ft_strcmp(mini.argv[i], special[j]))
+			{
 				i = resolve_special(i, j);
+				return(i);
+			}
 		}
 	}
-	return(1);
+	return(0);
 }
