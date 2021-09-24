@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/24 16:03:30 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/09/24 18:59:14 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	screening(char *input)
 	int i;
 
 	i = 0;
-	i = find_special();
+	if ((i = find_special()) == -1)
+		return ;
 	if (mini.argv && i == 0)
 	{
 		if (ft_strcmp(mini.argv[i], "pwd"))
@@ -46,8 +47,6 @@ void	screening(char *input)
 		else
 			ft_ls(i);
 	}
-	else
-		return ;
 }
 
 void	struct_init(char **env)
@@ -72,16 +71,20 @@ int main(int argc, char **argv, char **env)
 {
 
 	char	*input;
-
 	(void) argc;
 	(void) argv;
+	int i = 0;
 
 	struct_init(env);
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
 	while (42)
 	{
+		if (i == 3)
+			exit(1);
 		input = readline("minishell: ");
+		printf("input = %s\n", input);
+		i++;
 		if (input && ft_strlen(input) != 0)
 		{
 			add_history(input);
@@ -91,6 +94,7 @@ int main(int argc, char **argv, char **env)
 			free_argv();
 			free(input);
 			input = NULL;
+			i--;
 		}
 		if (mini.exit == true)
 		{

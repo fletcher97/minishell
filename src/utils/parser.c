@@ -14,12 +14,12 @@ int	resolve_special(int i, int j)
 	else if (j == 3)
 		error_output('s', i);
 //		append_output(i ,j);
-	else if (j == 4)
+	else if (j == 4 && i != 0)
 //		error_output('s', i);
 		piper(i);
 	else
 		error_output('s', i);
-	return(i);
+	return(0);
 }
 
 int	find_special(void)
@@ -37,7 +37,7 @@ int	find_special(void)
 			if (ft_strcmp(mini.argv[i], special[j]))
 			{
 				i = resolve_special(i, j);
-				return(i);
+				return(-1);
 			}
 		}
 	}

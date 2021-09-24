@@ -34,18 +34,21 @@ int	piper(int i)
 	if (pid == 0)
 	{
 		// Child
+		i -= 1;
 		dup2(pipefd[1], STDOUT_FILENO); // STDOUT para write pipe
 		close(pipefd[0]);
+		screening_pipe(i);
 		close(pipefd[1]);
-		screening_pipe(--i);
+		exit(1);
 	}
 	else
 	{
-		wait(NULL);
-		dup2(pipefd[0], STDIN_FILENO);
-		close(pipefd[0]);
+		i += 1;
 		close(pipefd[1]);
-		screening_pipe(i++);
+		dup2(pipefd[0], STDIN_FILENO);
+		wait(NULL);
+		screening_pipe(i);
+		close(pipefd[0]);
 	}
 	return(0);
 }
