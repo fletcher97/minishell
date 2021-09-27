@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/03 18:35:11 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/24 18:59:14 by fferreir         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 
@@ -78,11 +66,11 @@ int main(int argc, char **argv, char **env)
 	struct_init(env);
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
-	while (42)
+	while ((input = readline("minishell: ")))
 	{
-		if (i == 3)
-			exit(1);
-		input = readline("minishell: ");
+		// if (i == 4)
+		// 	exit(1);
+	//	input = readline("minishell: ");
 		printf("input = %s\n", input);
 		i++;
 		if (input && ft_strlen(input) != 0)
