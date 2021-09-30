@@ -1,17 +1,9 @@
 #include "minishell.h"
 
-char	*pwd(void)
-{
-	char *str;
-
-	str = NULL;
-	str = getcwd(str, PATH_MAX);
-	return (str);
-}
-
 void	ft_pwd(void)
 {
-	printf("%s\n", pwd());
+	print_env_content(mini.env, "PWD", 'n');
+	printf("\n");
 }
 
 void	ft_exit(char *input)

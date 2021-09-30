@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 #include "libft.h"
+#include "vec.h"
 
 typedef struct	s_cd {
 
@@ -51,8 +52,6 @@ int		args_counter();
 int		find_char(char *s1, char c);
 void	node_free_machine();
 bool	lst_str_check(t_list *lst, char *str);
-bool	str_len_check(char *s1, char *s2);
-bool	str_cmp_both_len(char *s1, char *s2);
 void	sorter(t_list *lst);
 int		env_sorted();
 void	sorter(t_list *lst);
@@ -66,10 +65,10 @@ int		resolve_special(int i, int j);
 int		find_special(void);
 //parset functions
 
-//Pipe functions
+//pipe functions
 int screening_pipe(int i);
 int	piper(int i);
-//Pipe functions
+//pipe functions
 
 //env functions
 t_list	*get_env(char **env);
@@ -78,10 +77,11 @@ void	env_add_names(t_list *lst);
 char	*get_name(char *str, char c);
 char	*return_env_content(t_list *lst, char *name);
 char	*env_flag_check(int i);
+void	print_env_content(t_list *lst, char *name, char free_name);
 //env functions
 
 
-//commands.c
+//cmd functions
 void	ft_pwd(void);
 void	ft_exit(char *input);
 void	ft_echo();
@@ -92,12 +92,12 @@ void	ft_ls(int i);
 void	ft_env();
 int		ft_export();
 void	ft_unset();
-//commands.c
+//cmd functions
 
+//signal functions
 void	get_signal(int signal);
+//signal functions
 
-//main.c
-char    *pwd(void);
-//main.c
+
 
 #endif

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	print_env_content(t_list *lst, char *name)
+void	print_env_content(t_list *lst, char *name, char free_name)
 {
 	char *content;
 
@@ -8,9 +8,13 @@ void	print_env_content(t_list *lst, char *name)
 	if (return_env_content(lst, name))
 	{
 		content = return_env_content(lst, name);
-		printf("%s",content);
+		if (content == NULL)
+			printf("\n");
+		else
+			printf("%s", content);
 	}
-	free(name);
+	if (free_name == 'y')
+		free(name);
 }
 
 char	*return_env_content(t_list *lst, char *name)
@@ -19,6 +23,8 @@ char	*return_env_content(t_list *lst, char *name)
 	{
 		if (ft_strcmp(lst->name, name))
 			break ;
+		if (lst->next == NULL)
+			return(NULL);
 		lst = lst->next;
 	}
 	return (lst->content);
@@ -49,7 +55,7 @@ void	echo_no_flag(int i, int j)
 		while (i > j)
 		{
 			if (env_flag_check(j) != NULL)
-				print_env_content(mini.env, env_flag_check(j));
+				print_env_content(mini.env, env_flag_check(j), 'y');
 			else
 				printf("%s", mini.argv[j]);
 			if (i > 1 + j++)
@@ -67,7 +73,7 @@ void	echo_n_flag(int i, int j)
 		while (i > j)
 		{
 			if (env_flag_check(j) != NULL)
-				print_env_content(mini.env, env_flag_check(j));
+				print_env_content(mini.env, env_flag_check(j), 'y');
 			else
 				printf("%s", mini.argv[j]);
 			if (i > 1 + j++)

@@ -11,7 +11,7 @@ void	screening(char *input)
 		return ;
 	if (mini.argv && i == 0)
 	{
-		if (ft_strcmp(mini.argv[i], "pwd"))
+		if (ft_strcmp(mini.argv[i], "pwd") || ft_strcmp(mini.argv[i], "PWD"))
 			ft_pwd();
 		else if (ft_strcmp(mini.argv[i], "exit"))
 			ft_exit(input);
@@ -61,18 +61,15 @@ int main(int argc, char **argv, char **env)
 	char	*input;
 	(void) argc;
 	(void) argv;
-	int i = 0;
 
 	struct_init(env);
 	//signal(SIGINT , get_signal);
 	//signal(SIGQUIT , get_signal);
+//	while (42)
 	while ((input = readline("minishell: ")))
 	{
-		// if (i == 4)
-		// 	exit(1);
 	//	input = readline("minishell: ");
-		printf("input = %s\n", input);
-		i++;
+	//	printf("input = %s\n", input);
 		if (input && ft_strlen(input) != 0)
 		{
 			add_history(input);
@@ -82,7 +79,6 @@ int main(int argc, char **argv, char **env)
 			free_argv();
 			free(input);
 			input = NULL;
-			i--;
 		}
 		if (mini.exit == true)
 		{
