@@ -12,7 +12,7 @@ echo "Testing norminette"
 test=$(norminette | grep Error)
 if [ "$test" != "" ]
 then
-	echo "ERROR: Norminette failed. Run \`norminette src inc | grep Error` to see what's wrong."
+	echo "ERROR: Norminette failed. Run \`norminette src inc | grep Error\` to see what's wrong."
 	exit 1
 fi
 
