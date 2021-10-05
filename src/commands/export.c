@@ -1,53 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 22:30:22 by mgueifao          #+#    #+#             */
+/*   Updated: 2021/10/05 22:30:25 by mgueifao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int find_char(char *s1, char c)
+int	find_char(char *s1, char c)
 {
-	int x;
+	int	x;
 
 	x = 0;
-	while(s1[x] && s1[x] != c)
+	while (s1[x] && s1[x] != c)
 		x++;
-	return(x);
+	return (x);
 }
 
 bool	check_char(char *str, char c)
 {
-	int x;
+	int	x;
 
 	x = -1;
 	if (!str)
-		return(0);
+		return (0);
 	while (str[++x])
 	{
 		if (str[x] == c)
-			return(true);
+			return (true);
 	}
-	return(false);
+	return (false);
 }
 
 bool	check_env_names(char *name, char *content)
 {
 	t_list	*head;
 
-	head = mini.env;
-	while(1)
+	head = g_mini.env;
+	while (1)
 	{
-		if(ft_strcmp(name, mini.env->name))
+		if (ft_strcmp(name, g_mini.env->name))
 		{
-			free(mini.env->content);
-			mini.env->content = content;
-			mini.env = head;
+			free(g_mini.env->content);
+			g_mini.env->content = content;
+			g_mini.env = head;
 			return (true);
 		}
-		if (mini.env->next == NULL)
+		if (g_mini.env->next == NULL)
 			break ;
-		mini.env = mini.env->next;
+		g_mini.env = g_mini.env->next;
 	}
-	mini.env = head;
-	return(false);
+	g_mini.env = head;
+	return (false);
 }
 
-int	ft_export()
+// env_sorted had g_mini as param
+int	ft_export(void)
 {
 	t_list	*head;
 	t_list	*temp;
@@ -55,20 +68,20 @@ int	ft_export()
 	char	*content;
 	char	*arg;
 
-	head = mini.env;
-	arg = mini.argv[1];
+	head = g_mini.env;
+	arg = g_mini.argv[1];
 	name = get_name(arg, '=');
 	if (!name)
-		return(env_sorted(mini));
+		return (env_sorted());
 	if (!check_char(arg, '='))
-		return(0);
-	content = ft_substr(arg, find_char(arg,'=') + 1, ft_strlen(arg));
+		return (0);
+	content = ft_substr(arg, find_char(arg, '=') + 1, ft_strlen(arg));
 	if (!check_env_names(name, content))
 	{
 		temp = ft_lstnew(content);
 		temp->name = name;
-		ft_lstadd_back(&mini.env, temp);
+		ft_lstadd_back(&g_mini.env, temp);
 	}
-	mini.env = head;
-	return(1);
+	g_mini.env = head;
+	return (1);
 }

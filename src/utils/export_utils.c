@@ -1,56 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 22:57:27 by mgueifao          #+#    #+#             */
+/*   Updated: 2021/10/05 22:57:29 by mgueifao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	swap(t_list *A, t_list *B, t_list *C)
+void	swap(t_list *a, t_list *b, t_list *c)
 {
-	t_list *D;
+	t_list	*d;
 
-	D = C->next;
-	if (A != NULL)
-		A->next = C;
-	C->next = B;
-	B->next = D;
-	B->prev = C;
-	C->prev = A;
-	if (D != NULL)
-		D->prev = B;
+	d = c->next;
+	if (a != NULL)
+		a->next = c;
+	c->next = b;
+	b->next = d;
+	b->prev = c;
+	c->prev = a;
+	if (d != NULL)
+		d->prev = b;
 }
 
 void	sorter(t_list *lst)
 {
-	int ret;
+	int	ret;
 
-	while(lst->next != NULL)
+	while (lst->next != NULL)
 	{
 		ret = ft_strncmp(lst->name, lst->next->name, ft_strlen(lst->name));
-
-		if (ret > 0 || (ret == 0 && ft_strlen(lst->name) > ft_strlen(lst->next->name)))
+		if (ret > 0 || (ret == 0
+				&& ft_strlen(lst->name) > ft_strlen(lst->next->name)))
 		{
 			swap(lst->prev, lst, lst->next);
 			break ;
 		}
 		lst = lst->next;
 	}
-
 }
 
 bool	checker(t_list *lst)
 {
-	int ret;
-	
+	int	ret;
+
 	while (lst->next != NULL)
 	{
 		ret = ft_strncmp(lst->name, lst->next->name, ft_strlen(lst->name));
 		if (ret > 0)
-			return(false);
+			return (false);
 		lst = lst->next;
 	}
-	return(true);
+	return (true);
 }
 
-t_list *duplicate_list(t_list *lst)
+t_list	*duplicate_list(t_list *lst)
 {
-	t_list *temp;
-	t_list *dup_lst;
+	t_list	*temp;
+	t_list	*dup_lst;
 
 	dup_lst = NULL;
 	while (lst)
@@ -61,14 +72,14 @@ t_list *duplicate_list(t_list *lst)
 			break ;
 		lst = lst->next;
 	}
-	return(dup_lst);
+	return (dup_lst);
 }
 
-int	env_sorted()
+int	env_sorted(void)
 {
 	t_list	*lst;
 
-	lst = duplicate_list(mini.env);
+	lst = duplicate_list(g_mini.env);
 	while (!checker(lst))
 	{
 		sorter(lst);
@@ -77,5 +88,5 @@ int	env_sorted()
 	ft_lstprint(lst, 'a');
 	if (lst)
 		free_dp_list(lst);
-	return(1);
+	return (1);
 }

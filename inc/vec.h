@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 23:18:57 by mgueifao          #+#    #+#             */
+/*   Updated: 2021/10/05 23:19:05 by mgueifao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VEC_H
 # define VEC_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 
 /**
  * Vec - a dybamically growable array of any type.
@@ -11,14 +23,19 @@
  * The Vec struct is a "thick pointer".
  * Users of Vec should not access there members directly!
  * Instead, use the operations exposed in the function below.
+ *
+ * item_size:	size of an item in bytes
+ * length:		number of items in Vec
+ * capacity:	number of items buffer can store
+ * buffer:		head memory storing items
  */
 typedef struct s_vec
 {
-	const size_t	item_size;	/* size of an item in bytes */
-	size_t			lenght;		/* number of items in Vec*/
-	size_t			capacity;	/* number of items buffer can store */
-	void			*buffer;	/* head memory storing items */
-} t_vec;
+	const size_t	item_size;
+	size_t			lenght;
+	size_t			capacity;
+	void			*buffer;
+}				t_vec;
 
 /* Constructor / Destructor */
 

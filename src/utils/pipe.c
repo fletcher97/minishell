@@ -1,22 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 22:57:44 by mgueifao          #+#    #+#             */
+/*   Updated: 2021/10/05 22:57:46 by mgueifao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int screening_pipe(int i)
+int	screening_pipe(int i)
 {
-	if (mini.argv)
+	if (g_mini.argv)
 	{
-		if (ft_strcmp(mini.argv[i], "pwd"))
+		if (ft_strcmp(g_mini.argv[i], "pwd"))
 			ft_pwd();
-		else if (ft_strcmp(mini.argv[i], "echo"))
+		else if (ft_strcmp(g_mini.argv[i], "echo"))
 			ft_echo();
-		else if (ft_strcmp(mini.argv[i], "cd"))
+		else if (ft_strcmp(g_mini.argv[i], "cd"))
 			ft_cd();
-		else if (ft_strcmp(mini.argv[i], " "))
+		else if (ft_strcmp(g_mini.argv[i], " "))
 			printf("\n");
-		else if(ft_strcmp(mini.argv[i], "env"))
-				ft_env();
-		else if(ft_strcmp(mini.argv[i], "export"))
+		else if (ft_strcmp(g_mini.argv[i], "env"))
+			ft_env();
+		else if (ft_strcmp(g_mini.argv[i], "export"))
 			ft_export();
-		else if (ft_strcmp(mini.argv[i], "unset"))
+		else if (ft_strcmp(g_mini.argv[i], "unset"))
 			ft_unset();
 		else
 			ft_ls(i);
@@ -24,18 +36,18 @@ int screening_pipe(int i)
 	return (i);
 }
 
+// STDOUT para write pipe
 int	piper(int i)
 {
-	int pipefd[2];
-	int pid;
+	int	pipefd[2];
+	int	pid;
 
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
 	{
-		// Child
 		i -= 1;
-		dup2(pipefd[1], STDOUT_FILENO); // STDOUT para write pipe
+		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);
 		screening_pipe(i);
 		close(pipefd[1]);
@@ -50,5 +62,5 @@ int	piper(int i)
 		screening_pipe(i);
 		close(pipefd[0]);
 	}
-	return(0);
+	return (0);
 }

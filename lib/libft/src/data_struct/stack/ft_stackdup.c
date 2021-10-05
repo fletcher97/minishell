@@ -14,7 +14,7 @@
 #include "ft_stack.h"
 
 static void	populate(t_stack_elem **dest, t_stack_elem *src,
-	 t_content (*d)(t_content))
+	t_content (*d)(t_content))
 {
 	if (!src)
 	{

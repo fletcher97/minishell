@@ -1,15 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
+/*   Updated: 2021/10/05 22:29:46 by mgueifao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_list	*find_name(t_list *lst, char *str)
-{
-	while (lst)
-	{
-		if (ft_strcmp(lst->name, str))
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
-}
+#include "minishell.h"
 
 char	*get_path(t_cd *cd)
 {
@@ -17,14 +18,14 @@ char	*get_path(t_cd *cd)
 	int		i;
 
 	i = 1;
-	path = ft_strjoin("/", mini.argv[i]);
-	while (mini.argv[i + 1] != NULL)
+	path = ft_strjoin("/", g_mini.argv[i]);
+	while (g_mini.argv[i + 1] != NULL)
 	{
-		path = ft_strjoin(path , " ");
-		path = ft_strjoin(path , mini.argv[i + 1]);
+		path = ft_strjoin(path, " ");
+		path = ft_strjoin(path, g_mini.argv[i + 1]);
 		i++;
 	}
-	path = ft_strjoin(cd->pwd , path);
+	path = ft_strjoin(cd->pwd, path);
 	return (path);
 }
 
@@ -34,13 +35,13 @@ void	change_path(t_cd *cd)
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
-	cd->tmp = mini.env;
+	cd->tmp = g_mini.env;
 	cd->pwd = ft_strdup(str);
 	cd->path1 = get_path(cd);
 	chdir(cd->path1);
 	check_env_names("PWD", cd->path1);
 	check_env_names("OLDPWD", cd->pwd);
-	mini.env = mini.head;
+	g_mini.env = g_mini.head;
 }
 
 int	len_char_back(char *str, char c)
@@ -59,9 +60,9 @@ void	ft_cd_back(t_cd *cd)
 {
 	char	*str;
 	char	*old_pwd;
-	str = NULL;
-	mini.head = mini.env;
 
+	str = NULL;
+	g_mini.head = g_mini.env;
 	cd->backup = return_env_content(cd->tmp, "OLDPWD");
 	str = getcwd(str, PATH_MAX);
 	old_pwd = str;
@@ -75,12 +76,13 @@ void	ft_cd_back(t_cd *cd)
 	else
 	{
 		if (!(chdir(cd->tmp->content)))
-			printf("cd: no such file or directory: %s\n", cd->tmp->content);
+			printf("cd: no such file or directory: %s\n", \
+				(char *)cd->tmp->content);
 	}
-	mini.env = mini.head;
+	g_mini.env = g_mini.head;
 }
 
-void	ft_cd()
+void	ft_cd(void)
 {
 	t_cd	cd;
 	char	*str;
@@ -89,21 +91,20 @@ void	ft_cd()
 
 	home = NULL;
 	str = NULL;
-	mini.head = mini.env;
-	cd.tmp = mini.env;
+	g_mini.head = g_mini.env;
+	cd.tmp = g_mini.env;
 	home = getcwd(home, PATH_MAX);
 	i = 0;
-	if (!mini.argv[1])
+	if (!g_mini.argv[1])
 	{
-		str = return_env_content(mini.env, "HOME");
+		str = return_env_content(g_mini.env, "HOME");
 		chdir(str);
 		check_env_names("PWD", str);
-		mini.env = mini.head;
+		g_mini.env = g_mini.head;
 		check_env_names("OLDPWD", home);
-		mini.env = mini.head;
-
+		g_mini.env = g_mini.head;
 	}
-	else if (ft_strcmp(mini.argv[1], ".."))
+	else if (ft_strcmp(g_mini.argv[1], ".."))
 		ft_cd_back(&cd);
 	else
 		change_path(&cd);

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
+/*   Updated: 2021/10/05 22:30:07 by mgueifao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_env_content(t_list *lst, char *name, char free_name)
 {
-	char *content;
+	char	*content;
 
 	content = NULL;
 	if (return_env_content(lst, name))
@@ -24,7 +36,7 @@ char	*return_env_content(t_list *lst, char *name)
 		if (ft_strcmp(lst->name, name))
 			break ;
 		if (lst->next == NULL)
-			return(NULL);
+			return (NULL);
 		lst = lst->next;
 	}
 	return (lst->content);
@@ -33,66 +45,51 @@ char	*return_env_content(t_list *lst, char *name)
 char	*env_flag_check(int i)
 {
 	char	*env_name;
-	int j;
+	int		j;
 
 	j = 0;
 	env_name = NULL;
-	while (mini.argv[i][j])
+	while (g_mini.argv[i][j])
 		j++;
-	if (j > 0 && mini.argv[i][0] == '$')
+	if (j > 0 && g_mini.argv[i][0] == '$')
 	{
-		env_name = ft_substr(mini.argv[i], 1, j);
+		env_name = ft_substr(g_mini.argv[i], 1, j);
 		return (env_name);
 	}
 	return (NULL);
 }
 
-void	echo_no_flag(int i, int j)
+void	echo_flag(int i, int j, int k)
 {
-	if (i > 1)
+	if (i > k)
 	{
-		j = 1;
+		j = k;
 		while (i > j)
 		{
 			if (env_flag_check(j) != NULL)
-				print_env_content(mini.env, env_flag_check(j), 'y');
+				print_env_content(g_mini.env, env_flag_check(j), 'y');
 			else
-				printf("%s", mini.argv[j]);
+				printf("%s", g_mini.argv[j]);
 			if (i > 1 + j++)
 				printf(" ");
 		}
-		printf("\n");
+		if (k == 1)
+			printf("\n");
 	}
 }
 
-void	echo_n_flag(int i, int j)
-{
-	if (i > 2)
-	{
-		j = 2;
-		while (i > j)
-		{
-			if (env_flag_check(j) != NULL)
-				print_env_content(mini.env, env_flag_check(j), 'y');
-			else
-				printf("%s", mini.argv[j]);
-			if (i > 1 + j++)
-				printf(" ");
-		}
-	}
-}
-
-void	ft_echo()
+void	ft_echo(void)
 {
 	int	i;
 	int	j;
+	int	k;
 
 	i = 0;
 	j = 0;
-	while (mini.argv[i])
+	k = 1;
+	while (g_mini.argv[i])
 		i++;
-	if (i >= 2 && ft_strcmp(mini.argv[1], "-n"))
-		echo_n_flag(i, j);
-	else
-		echo_no_flag(i, j);
+	if (i >= 2 && ft_strcmp(g_mini.argv[1], "-n"))
+		k = 2;
+	echo_flag(i, j, k);
 }
