@@ -1,8 +1,7 @@
 #!/bin/sh
 
 echo "Testing compilation"
-ret=$(make compile-test)
-if $ret;
+if ! make compile-test;
 then
 	echo "ERROR: Code must compile with no errors. Run \`make compile-test\` to see what's wrong."
 	exit 1
