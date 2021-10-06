@@ -3,11 +3,16 @@
 ################################################################################
 
 # Makefile by fletcher97
-# Version: 2.2
+# Version: 2.3
+# Repo: www.github.com/fletcher97/utils
+
+# v2.3: A rule to check if a program can be compiled was added in other to be
+# used for git hooks. A folder with hooks can be found in the same repository
+# this makefile came from.
 
 # As of version 2.2 this Makefile expects an asan.c file to be present in the
 # asan folder inside the SRC_ROOT directory. A copy of the file is provided
-# with the Makefile
+# with the Makefile. Also it now uses clang instead of gcc.
 
 # This makefile can be copied to a directory and it will generate the file
 # structure and initialize a git repository with the .init rule. Any variables
@@ -77,7 +82,7 @@ ASAN += -fsanitize=undefined
 ASAN += -fsanitize=leak
 # Thread sanitizing flags
 TSAN := -fsanitize=thread
-# Memory sanitizer flags
+# Memory sanitizing flags
 MSAN := -fsanitize=memory -fsanitize-memory-track-origins
 
 ################################################################################
@@ -247,8 +252,13 @@ re: fclean all
 debug: CFLAGS += ${DFLAGS}
 debug: $$(call get_lib_target,$${DEFAULT_LIBS},$$@) all
 
+obj/asan/asan.o: src/asan/asan.c
+	${AT}mkdir -p ${@D} ${BLOCK}
+	${AT}${CC} -o $@ -c $< ${BLOCK}
+
 debug_asan: CFLAGS += ${DFLAGS} ${ASAN}
-debug_asan: $$(call get_lib_target,$${DEFAULT_LIBS},$$@) all
+debug_asan: ASAN_FILE = obj/asan/asan.o
+debug_asan: $$(call get_lib_target,$${DEFAULT_LIBS},$$@) obj/asan/asan.o all
 
 debug_tsan: CFLAGS += ${DFLAGS} ${TSAN}
 debug_tsan: $$(call get_lib_target,$${DEFAULT_LIBS},$$@) all
@@ -288,6 +298,9 @@ debug_msan_re: fclean debug_msan
 # Meta target to force a target to be executed
 .FORCE: ;
 
+# Print a specifique variable
+print-%: ; @echo $*=$($*)
+
 # List all the targets in alphabetical order
 targets:
 	${AT}${MAKE} LC_ALL=C -pRrq -f ${CURRENT_FILE} : 2>/dev/null\
@@ -295,6 +308,8 @@ targets:
 			{if ($$1 !~ "^[#]") {print $$1}}\
 			{if ($$1 ~ "# makefile") {print $$2}}'\
 		| sort
+
+compile-test: ${addprefix compile-test/,${NAMES}}
 
 ################################################################################
 # .PHONY
@@ -307,7 +322,7 @@ targets:
 .PHONY: debug debug_re debug_asan debug_asan_re debug_tsan debug_tsan_re
 
 # Phony utility targets
-.PHONY: targets .FORCE
+.PHONY: targets .FORCE compile-test
 
 # Phony execution targets
 .PHONY: re all
@@ -372,6 +387,13 @@ ${1}/${2}: .FORCE
 	make -C ${1} ${2}
 endef
 
+define make_compile_test_def
+compile-test/${1}: .FORCE
+	$${AT}printf "\033[33m[TESTING $${@F}]\033[0m\n" $${BLOCK}
+	$${AT}$${CC} $${CFLAGS} -fsyntax-only $${INCS} $${ASAN_FILE}\
+		$$(call get_files,$${@F},$${SRCS_LIST}) $${BLOCK}
+endef
+
 ################################################################################
 # Target Generator
 ################################################################################
@@ -391,6 +413,9 @@ $(subst ${SRC_ROOT},${DEP_ROOT},${src:.c=.d}))))
 
 $(foreach lib,${DEFAULT_LIBS},$(foreach target,${DEFAULT_LIB_RULES},$(eval\
 $(call make_lib_def,${lib},${target}))))
+
+$(foreach name,$(NAMES),$(eval\
+$(call make_compile_test_def,${name})))
 
 ################################################################################
 # Includes
