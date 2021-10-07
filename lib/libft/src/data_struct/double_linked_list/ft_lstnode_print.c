@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstnode_print.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 16:05:23 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 13:55:50 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/07 15:25:06 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 18:27:44 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
+#include <stdio.h>
+#include "ft_list.h"
+#include "ft_string.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstnode_print(t_dl_list *lst, char *name)
 {
-	t_list	*temp;
+	t_dl_list	*head;
 
-	if (!lst || !del)
-		return ;
-	while (*lst)
+	head = lst;
+	while (1)
 	{
-		temp = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = temp;
+		if (ft_strcmp(lst->name, name))
+			printf("Content=|%s|, Name=|%s|, PREV=|%p| ADD=|%p| Next=|%p|\n",
+				lst->content, lst->name, lst->prev, lst, lst->next);
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
 	}
+	lst = head;
 }

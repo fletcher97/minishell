@@ -110,7 +110,7 @@ INC_DIRS += ${LIBFT_INC}
 LIBS += -L${LIBFT_ROOT}bin -lft
 
 # Libraries for which to create default targets. All libraries in this list will
-# have targets created autimatically. The targets that are created are set in
+# have targets created automatically. The targets that are created are set in
 # DEFAULT_LIB_RULES. The targets will have to format <library root>//<target>
 # and it will invoke make as follows:
 # `make -C <library root> <rule>`

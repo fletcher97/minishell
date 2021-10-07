@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/26 19:01:08 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:03:35 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 18:09:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+int	args_counter(void)
 {
-	char	*dst;
-	int		len;
-	int		x;
+	int	i;
 
-	len = ft_strlen(s1);
-	dst = (char *)malloc(sizeof(char) * (len + 1));
-	if (dst == NULL)
-		return (NULL);
-	x = 0;
-	while (x < len)
-	{
-		dst[x] = (char)s1[x];
-		x++;
-	}
-	dst[len] = '\0';
-	return (dst);
+	i = 0;
+	while (g_mini.argv[i])
+		i++;
+	return (i);
 }

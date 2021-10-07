@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_quote.c                                    :+:      :+:    :+:   */
+/*   ft_lstadd_back_dl.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 12:50:27 by falmeida          #+#    #+#             */
-/*   Updated: 2021/09/21 15:57:46 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/07 15:23:51 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 16:44:10 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	find_quote(char *s, int i)
+#include <stddef.h>
+
+#include "ft_list.h"
+
+void	ft_lstadd_back_dl(t_dl_list **lst, t_dl_list *new)
 {
-	while (s[i] != '\0')
+	t_dl_list	*temp;
+
+	if (!new || !lst)
+		return ;
+	if (!*lst)
 	{
-		if (s[i] == '\"')
-			return (i);
-		i++;
+		*lst = new;
+		return ;
 	}
-	return (-1);
+	else
+	{
+		temp = ft_lstlast_dl(*lst);
+		temp->next = new;
+		new->prev = temp;
+	}
 }

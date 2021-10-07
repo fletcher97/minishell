@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fletcher <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/05 23:17:25 by fletcher         ###   ########.fr       */
+/*   Updated: 2021/10/07 19:44:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,24 @@
 
 t_mini	g_mini;
 
-void	screening(char *input)
+void	screening_two(int i)
+{
+	if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
+		ft_pwd();
+	if (ft_strcmp(g_mini.argv[i], "export"))
+		ft_export();
+	else if (ft_strcmp(g_mini.argv[i], "node"))
+	{
+		if (ft_strlen(g_mini.argv[i]) > 0)
+			ft_lstnode_print(g_mini.env, g_mini.argv[i + 1]);
+	}
+	else if (ft_strcmp(g_mini.argv[i], "unset"))
+		ft_unset();
+	else
+		ft_ls(i);
+}
+
+void	screening_one(char *input)
 {
 	int	i;
 
@@ -23,9 +40,7 @@ void	screening(char *input)
 		return ;
 	if (g_mini.argv && i == 0)
 	{
-		if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
-			ft_pwd();
-		else if (ft_strcmp(g_mini.argv[i], "exit"))
+		if (ft_strcmp(g_mini.argv[i], "exit"))
 			ft_exit(input);
 		else if (ft_strcmp(g_mini.argv[i], "echo"))
 			ft_echo();
@@ -35,36 +50,28 @@ void	screening(char *input)
 			printf("\n");
 		else if (ft_strcmp(g_mini.argv[i], "env"))
 			ft_env();
-		else if (ft_strcmp(g_mini.argv[i], "export"))
-			ft_export();
-		else if (ft_strcmp(g_mini.argv[i], "node"))
-		{
-			if (ft_strlen(g_mini.argv[i]) > 0)
-				ft_lstnode_print(g_mini.env, g_mini.argv[i + 1]);
-		}
-		else if (ft_strcmp(g_mini.argv[i], "unset"))
-			ft_unset();
 		else
-			ft_ls(i);
+			screening_two(i);
 	}
 }
 
 void	struct_init(char **env)
 {
-	g_mini.head = malloc(sizeof(t_list));
+	g_mini.head = malloc(sizeof(t_dl_list));
 	g_mini.pid = getpid();
 	g_mini.env = get_env(env);
 	g_mini.exit = false;
 }
 
-int	args_counter(void)
+void	input_loop(char *input)
 {
-	int	i;
-
-	i = 0;
-	while (g_mini.argv[i])
-		i++;
-	return (i);
+	add_history(input);
+	g_mini.argv = ft_split(input, ' ');
+	g_mini.nbr_arg = args_counter();
+	screening_one(input);
+	free_argv();
+	free(input);
+	input = NULL;
 }
 
 // before while
@@ -84,15 +91,7 @@ int	main(int argc, char **argv, char **env)
 	while (input)
 	{
 		if (input && ft_strlen(input) != 0)
-		{
-			add_history(input);
-			g_mini.argv = ft_split(input, ' ');
-			g_mini.nbr_arg = args_counter();
-			screening(input);
-			free_argv();
-			free(input);
-			input = NULL;
-		}
+			input_loop(input);
 		if (g_mini.exit == true)
 		{
 			free_struct(input);

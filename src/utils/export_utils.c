@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:27 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:57:29 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/07 17:16:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	swap(t_list *a, t_list *b, t_list *c)
+void	swap(t_dl_list *a, t_dl_list *b, t_dl_list *c)
 {
-	t_list	*d;
+	t_dl_list	*d;
 
 	d = c->next;
 	if (a != NULL)
@@ -27,7 +27,7 @@ void	swap(t_list *a, t_list *b, t_list *c)
 		d->prev = b;
 }
 
-void	sorter(t_list *lst)
+void	sorter(t_dl_list *lst)
 {
 	int	ret;
 
@@ -44,7 +44,7 @@ void	sorter(t_list *lst)
 	}
 }
 
-bool	checker(t_list *lst)
+bool	checker(t_dl_list *lst)
 {
 	int	ret;
 
@@ -58,16 +58,16 @@ bool	checker(t_list *lst)
 	return (true);
 }
 
-t_list	*duplicate_list(t_list *lst)
+t_dl_list	*duplicate_list(t_dl_list *lst)
 {
-	t_list	*temp;
-	t_list	*dup_lst;
+	t_dl_list	*temp;
+	t_dl_list	*dup_lst;
 
 	dup_lst = NULL;
 	while (lst)
 	{
-		temp = ft_lstdup_2p(lst);
-		ft_lstadd_back_2p(&dup_lst, temp);
+		temp = ft_lstdup_dl(lst);
+		ft_lstadd_back_dl(&dup_lst, temp);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
@@ -77,13 +77,13 @@ t_list	*duplicate_list(t_list *lst)
 
 int	env_sorted(void)
 {
-	t_list	*lst;
+	t_dl_list	*lst;
 
 	lst = duplicate_list(g_mini.env);
 	while (!checker(lst))
 	{
 		sorter(lst);
-		lst = ft_lsthead_2p(lst);
+		lst = ft_lsthead_dl(lst);
 	}
 	ft_lstprint(lst, 'a');
 	if (lst)

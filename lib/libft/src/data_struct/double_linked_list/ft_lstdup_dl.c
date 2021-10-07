@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_lstdup_dl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 15:45:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:05:22 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/07 15:24:14 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 16:48:08 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include "ft_norm.h"
+#include "ft_stdlib.h"
+#include "ft_list.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+t_dl_list	*ft_lstdup_dl(t_dl_list *lst)
 {
-	size_t	x;
+	t_dl_list	*new;
 
-	x = 0;
-	if (!dst)
-		return (0);
-	if (dstsize > 0)
-	{
-		while (src[x] && x < (dstsize - 1))
-		{
-			dst[x] = src[x];
-			x++;
-		}
-		dst[x] = '\0';
-	}
-	while (src[x])
-		x++;
-	return (x);
+	new = (t_dl_list *)malloc(sizeof(t_dl_list));
+	if (!new)
+		return (NULL);
+	new->name = lst->name;
+	new->content = lst->content;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
 }

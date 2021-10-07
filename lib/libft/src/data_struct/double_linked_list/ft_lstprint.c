@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/24 17:18:24 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 14:03:06 by fferreir         ###   ########.fr       */
+/*   Created: 2021/09/07 11:31:53 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 17:02:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
+#include <stdio.h>
+#include "ft_list.h"
 
-char	*ft_strchr(const char *str, int c)
+void	ft_lstprint(t_dl_list *lst, char type)
 {
-	int	x;
+	t_dl_list	*head;
 
-	x = 0;
-	while (str[x] && str[x] != (const char)c)
+	head = lst;
+	while (lst)
 	{
-		x++;
+		if (type == 'n' || type == 'a')
+			printf("%s", lst->name);
+		if (type == 'a')
+			printf("=");
+		if (type == 'c' || type == 'a')
+			printf("%s\n", lst->content);
+		if (type == 'd')
+			ft_lstnode_print_dl(lst);
+		lst = lst->next;
 	}
-	if (str[x] == (char)c)
-		return ((char *)&str[x]);
-	return (NULL);
+	lst = head;
 }

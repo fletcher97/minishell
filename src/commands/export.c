@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:30:25 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:01:10 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	check_char(char *str, char c)
 
 bool	check_env_names(char *name, char *content)
 {
-	t_list	*head;
+	t_dl_list	*head;
 
 	head = g_mini.env;
 	while (1)
@@ -62,25 +62,23 @@ bool	check_env_names(char *name, char *content)
 // env_sorted had g_mini as param
 int	ft_export(void)
 {
-	t_list	*head;
-	t_list	*temp;
-	char	*name;
-	char	*content;
-	char	*arg;
+	t_dl_list	*head;
+	t_dl_list	*temp;
+	char		*content[2];
+	char		*arg;
 
 	head = g_mini.env;
 	arg = g_mini.argv[1];
-	name = get_name(arg, '=');
-	if (!name)
+	content[0] = get_name(arg, '=');
+	if (!content[0])
 		return (env_sorted());
 	if (!check_char(arg, '='))
 		return (0);
-	content = ft_substr(arg, find_char(arg, '=') + 1, ft_strlen(arg));
-	if (!check_env_names(name, content))
+	content[1] = ft_substr(arg, find_char(arg, '=') + 1, ft_strlen(arg));
+	if (!check_env_names(content[0], content[1]))
 	{
-		temp = ft_lstnew(content);
-		temp->name = name;
-		ft_lstadd_back(&g_mini.env, temp);
+		temp = ft_lstnew_dl(content);
+		ft_lstadd_back_dl(&g_mini.env, temp);
 	}
 	g_mini.env = head;
 	return (1);

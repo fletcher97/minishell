@@ -142,7 +142,7 @@ SRC_ROOT := src/
 # DIRS := folder1/:folder2/
 # DIRS += folder1/:folder3/:folder4/
 DIRS := ctype/:data_struct/list/:norm/:stdio/:stdlib/:string/:conv/:$\
-	data_struct/stack/:sort/
+	data_struct/stack/:sort/:/data_struct/double_linked_list/
 
 SRC_DIRS_LIST := $(addprefix ${SRC_ROOT},${DIRS})
 SRC_DIRS_LIST := $(foreach dl,${SRC_DIRS_LIST},$(subst :,:${SRC_ROOT},${dl}))

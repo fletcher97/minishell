@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lsthead_dl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/25 17:54:04 by fferreir          #+#    #+#             */
-/*   Updated: 2021/08/23 13:51:09 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/07 15:24:27 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 16:45:00 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int c)
-{
-	int	x;
+#include <stddef.h>
 
-	x = 0;
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	return (0);
+#include "ft_list.h"
+
+t_dl_list	*ft_lsthead_dl(t_dl_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->prev != NULL)
+		lst = lst->prev;
+	return (lst);
 }

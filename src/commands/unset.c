@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:38 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:30:41 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:01:18 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	node_free_machine(void)
 	g_mini.env = NULL;
 }
 
-bool	lst_str_check(t_list *lst, char *str)
+bool	lst_str_check(t_dl_list *lst, char *str)
 {
-	t_list	*head;
-	char	*name;
+	t_dl_list	*head;
+	char		*name;
 
 	head = lst;
 	while (1)
@@ -45,9 +45,9 @@ bool	lst_str_check(t_list *lst, char *str)
 
 void	ft_unset(void)
 {
-	t_list	*head;
-	t_list	*temp;
-	t_list	*temp2;
+	t_dl_list	*head;
+	t_dl_list	*temp;
+	t_dl_list	*temp2;
 
 	head = g_mini.env;
 	temp = NULL;

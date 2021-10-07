@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:57:32 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/07 17:05:16 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_dp_list(t_list *lst)
+void	free_dp_list(t_dl_list *lst)
 {
-	t_list	*temp;
+	t_dl_list	*temp;
 
 	if (!lst)
 		return ;
@@ -44,7 +44,7 @@ void	free_argv(void)
 	free(g_mini.argv);
 }
 
-void	free_lst(t_list *lst)
+void	free_lst(t_dl_list *lst)
 {
 	if (lst == NULL)
 	{

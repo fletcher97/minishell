@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_dl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/17 15:45:11 by fferreir          #+#    #+#             */
-/*   Updated: 2021/09/20 13:20:52 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/07 15:24:48 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/07 16:48:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include "ft_norm.h"
+#include "ft_stdlib.h"
+#include "ft_list.h"
 
-char	*ft_strcpy(char *src, char *dst)
+t_dl_list	*ft_lstnew_dl(char **content)
 {
-	int	x;
+	t_dl_list	*new;
 
-	x = 0;
-	while (src[x])
-	{
-		dst[x] = src[x];
-		x++;
-	}
-	dst[x] = '\0';
-	return(dst);
+	new = (t_dl_list *)malloc(sizeof(t_dl_list));
+	if (!new)
+		return (NULL);
+	new->name = content[0];
+	new->content = content[1];
+	new->next = NULL;
+	return (new);
 }

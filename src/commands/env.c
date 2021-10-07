@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:10 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:30:17 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:24:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ char	*get_name(char *str, char c)
 	return (name);
 }
 
-void	env_add_names(t_list *lst)
+// Something ...
+// Or other
+void	env_add_names(t_dl_list *lst)
 {
-	t_list	*head;
+	t_dl_list	*head;
 
 	head = lst;
 	while (lst)
@@ -42,17 +44,17 @@ void	env_add_names(t_list *lst)
 	lst = head;
 }
 
-t_list	*get_env(char **env)
+t_dl_list	*get_env(char **env)
 {
-	t_list	*temp;
-	int		x;
+	t_dl_list	*temp;
+	int			x;
 
 	x = -1;
 	g_mini.env = NULL;
 	while (env[++x] != NULL)
 	{
-		temp = ft_lstnew_pp(ft_split(env[x], '='));
-		ft_lstadd_back(&g_mini.env, temp);
+		temp = ft_lstnew_dl(ft_split(env[x], '='));
+		ft_lstadd_back_dl(&g_mini.env, temp);
 	}
 	return (g_mini.env);
 }
