@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_mng.c                                        :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:49:03 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/11 18:05:39 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/11 19:30:18 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error_mng.h"
+#ifndef ENV_H
+# define ENV_H
 
-void	error_output(char type, int i)
-{
-	if (i < 0)
-		i = 0;
-	if (type == 'c')
-		printf("minishell: command not found: %s\n", g_mini.argv[i]);
-	if (type == 's')
-		printf("minishell: special character not define: %s\n", g_mini.argv[i]);
-}
+# include <stdlib.h>
+# include "ft_string.h"
+# include "minishell.h"
+
+char		*get_name(char *str, char c);
+t_dl_list	*get_env(char **env);
+void		ft_env(void);
+
+#endif

@@ -6,13 +6,13 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 19:44:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 17:51:16 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "cd.h"
 
-char	*get_path(t_cd *cd)
+static char	*get_path(t_cd *cd)
 {
 	char	*path;
 	int		i;
@@ -29,7 +29,7 @@ char	*get_path(t_cd *cd)
 	return (path);
 }
 
-void	change_path(t_cd *cd)
+static void	change_path(t_cd *cd)
 {
 	char	*str;
 
@@ -44,7 +44,7 @@ void	change_path(t_cd *cd)
 	g_mini.env = g_mini.head;
 }
 
-int	len_char_back(char *str, char c)
+static int	len_char_back(char *str, char c)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ int	len_char_back(char *str, char c)
 	return (i);
 }
 
-void	ft_cd_back(t_cd *cd)
+static void	ft_cd_back(t_cd *cd)
 {
 	char	*str;
 	char	*old_pwd;

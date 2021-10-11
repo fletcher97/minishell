@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/07 18:09:26 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 18:57:47 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "main_utils.h"
 
 int	args_counter(void)
 {

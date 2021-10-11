@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   free_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 22:30:33 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:30:36 by mgueifao         ###   ########.fr       */
+/*   Created: 2021/10/11 18:19:15 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/11 19:29:42 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef FREE_UTILS_H
+# define FREE_UTILS_H
 
-// first instruction:	signal == SIGQUIT
-// after write:			rl_replace_line("", 0);
-void	get_signal(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+# include <stdio.h>
+# include "ft_stdlib.h"
+# include "minishell.h"
+
+void	free_dp_list(t_dl_list *lst);
+void	free_argv(void);
+void	free_lst(t_dl_list *lst);
+void	free_struct(char *input);
+
+#endif

@@ -6,13 +6,13 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:27 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 17:16:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 18:55:48 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "export_utils.h"
 
-void	swap(t_dl_list *a, t_dl_list *b, t_dl_list *c)
+static void	swap(t_dl_list *a, t_dl_list *b, t_dl_list *c)
 {
 	t_dl_list	*d;
 
@@ -27,7 +27,7 @@ void	swap(t_dl_list *a, t_dl_list *b, t_dl_list *c)
 		d->prev = b;
 }
 
-void	sorter(t_dl_list *lst)
+static void	sorter(t_dl_list *lst)
 {
 	int	ret;
 
@@ -44,7 +44,7 @@ void	sorter(t_dl_list *lst)
 	}
 }
 
-bool	checker(t_dl_list *lst)
+static int	checker(t_dl_list *lst)
 {
 	int	ret;
 
@@ -52,13 +52,13 @@ bool	checker(t_dl_list *lst)
 	{
 		ret = ft_strncmp(lst->name, lst->next->name, ft_strlen(lst->name));
 		if (ret > 0)
-			return (false);
+			return (0);
 		lst = lst->next;
 	}
-	return (true);
+	return (1);
 }
 
-t_dl_list	*duplicate_list(t_dl_list *lst)
+static t_dl_list	*duplicate_list(t_dl_list *lst)
 {
 	t_dl_list	*temp;
 	t_dl_list	*dup_lst;

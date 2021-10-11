@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:57:42 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/11 19:19:41 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
 // after error_output
 //		redirect_output(i, j);
@@ -18,7 +18,7 @@
 //		read_input_from(i, j);
 //		append_output(i ,j);
 //		error_output('s', i);
-int	resolve_special(int i, int j)
+static int	resolve_special(int i, int j)
 {
 	if (j == 0)
 		error_output('s', i);

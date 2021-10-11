@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 16:25:38 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 18:03:10 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "echo.h"
 
 void	print_env_content(t_dl_list *lst, char *name, char free_name)
 {
@@ -42,7 +42,7 @@ char	*return_env_content(t_dl_list *lst, char *name)
 	return (lst->content);
 }
 
-char	*env_flag_check(int i)
+static char	*env_flag_check(int i)
 {
 	char	*env_name;
 	int		j;
@@ -59,7 +59,7 @@ char	*env_flag_check(int i)
 	return (NULL);
 }
 
-void	echo_flag(int i, int j, int k)
+static void	echo_flag(int i, int j, int k)
 {
 	if (i > k)
 	{

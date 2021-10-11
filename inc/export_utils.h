@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_mng.c                                        :+:      :+:    :+:   */
+/*   export_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:49:03 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/11 18:53:14 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/11 18:56:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error_mng.h"
+#ifndef EXPORT_UTILS_H
+# define EXPORT_UTILS_H
 
-void	error_output(char type, int i)
-{
-	if (i < 0)
-		i = 0;
-	if (type == 'c')
-		printf("minishell: command not found: %s\n", g_mini.argv[i]);
-	if (type == 's')
-		printf("minishell: special character not define: %s\n", g_mini.argv[i]);
-}
+# include "ft_list.h"
+# include "ft_string.h"
+# include "free_utils.h"
+
+int	env_sorted(void);
+
+#endif

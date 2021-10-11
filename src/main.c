@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/07 19:44:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 19:24:50 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 t_mini	g_mini;
 
-void	screening_two(int i)
+static void	screening_two(int i)
 {
 	if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
 		ft_pwd();
-	if (ft_strcmp(g_mini.argv[i], "export"))
+	else if (ft_strcmp(g_mini.argv[i], "export"))
 		ft_export();
 	else if (ft_strcmp(g_mini.argv[i], "node"))
 	{
@@ -31,7 +31,7 @@ void	screening_two(int i)
 		ft_ls(i);
 }
 
-void	screening_one(char *input)
+static void	screening_one(char *input)
 {
 	int	i;
 
@@ -55,15 +55,15 @@ void	screening_one(char *input)
 	}
 }
 
-void	struct_init(char **env)
+static void	struct_init(char **env)
 {
 	g_mini.head = malloc(sizeof(t_dl_list));
 	g_mini.pid = getpid();
 	g_mini.env = get_env(env);
-	g_mini.exit = false;
+	g_mini.exit = 0;
 }
 
-void	input_loop(char *input)
+static void	input_loop(char *input)
 {
 	add_history(input);
 	g_mini.argv = ft_split(input, ' ');
@@ -92,7 +92,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
-		if (g_mini.exit == true)
+		if (g_mini.exit == 1)
 		{
 			free_struct(input);
 			free_lst(g_mini.env);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:44 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:57:46 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/11 19:03:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "piper.h"
 
-int	screening_pipe(int i)
+static int	screening_pipe(int i)
 {
 	if (g_mini.argv)
 	{

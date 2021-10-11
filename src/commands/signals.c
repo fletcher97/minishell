@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_mng.c                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:49:03 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/11 18:44:41 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/11 18:44:44 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error_mng.h"
+#include "signals.h"
 
-void	error_output(char type, int i)
+// first instruction:	signal == SIGQUIT
+// after write:			rl_replace_line("", 0);
+void	get_signal(int signal)
 {
-	if (i < 0)
-		i = 0;
-	if (type == 'c')
-		printf("minishell: command not found: %s\n", g_mini.argv[i]);
-	if (type == 's')
-		printf("minishell: special character not define: %s\n", g_mini.argv[i]);
+	if (signal == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }

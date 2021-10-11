@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_mng.c                                        :+:      :+:    :+:   */
+/*   piper.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:49:03 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/11 19:03:10 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/11 19:14:12 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error_mng.h"
+#ifndef PIPER_H
+# define PIPER_H
 
-void	error_output(char type, int i)
-{
-	if (i < 0)
-		i = 0;
-	if (type == 'c')
-		printf("minishell: command not found: %s\n", g_mini.argv[i]);
-	if (type == 's')
-		printf("minishell: special character not define: %s\n", g_mini.argv[i]);
-}
+# include "pwd.h"
+# include "echo.h"
+# include "cd.h"
+# include "env.h"
+# include "export.h"
+# include "unset.h"
+# include "ls.h"
+
+int	piper(int i);
+
+#endif

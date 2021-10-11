@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_mng.c                                        :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:49:03 by fferreir         ###   ########.fr       */
+/*   Created: 2021/10/11 18:42:27 by fferreir          #+#    #+#             */
+/*   Updated: 2021/10/11 19:30:47 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error_mng.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-void	error_output(char type, int i)
-{
-	if (i < 0)
-		i = 0;
-	if (type == 'c')
-		printf("minishell: command not found: %s\n", g_mini.argv[i]);
-	if (type == 's')
-		printf("minishell: special character not define: %s\n", g_mini.argv[i]);
-}
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <unistd.h>
+
+void	get_signal(int signal);
+
+#endif

@@ -6,13 +6,13 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:38 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 18:01:18 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 19:09:12 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "unset.h"
 
-void	node_free_machine(void)
+static void	node_free_machine(void)
 {
 	free(g_mini.env->name);
 	free(g_mini.env->content);
@@ -21,7 +21,7 @@ void	node_free_machine(void)
 	g_mini.env = NULL;
 }
 
-bool	lst_str_check(t_dl_list *lst, char *str)
+static int	lst_str_check(t_dl_list *lst, char *str)
 {
 	t_dl_list	*head;
 	char		*name;
@@ -33,14 +33,14 @@ bool	lst_str_check(t_dl_list *lst, char *str)
 		if (ft_strcmp(name, str))
 		{
 			lst = head;
-			return (true);
+			return (1);
 		}
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
 	}
 	lst = head;
-	return (false);
+	return (0);
 }
 
 void	ft_unset(void)

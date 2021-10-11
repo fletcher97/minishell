@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:10 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 18:24:21 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 18:07:19 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 char	*get_name(char *str, char c)
 {
@@ -25,23 +25,6 @@ char	*get_name(char *str, char c)
 		name[x] = str[x];
 	name[x] = '\0';
 	return (name);
-}
-
-// Something ...
-// Or other
-void	env_add_names(t_dl_list *lst)
-{
-	t_dl_list	*head;
-
-	head = lst;
-	while (lst)
-	{
-		lst->name = get_name(lst->content, '=');
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	lst = head;
 }
 
 t_dl_list	*get_env(char **env)

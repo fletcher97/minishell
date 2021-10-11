@@ -6,38 +6,25 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 18:01:10 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/11 19:28:50 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "export.h"
 
-int	find_char(char *s1, char c)
+static int	find_char(char *s1, char c)
 {
 	int	x;
 
 	x = 0;
+	if (!s1)
+		return (x);
 	while (s1[x] && s1[x] != c)
 		x++;
 	return (x);
 }
 
-bool	check_char(char *str, char c)
-{
-	int	x;
-
-	x = -1;
-	if (!str)
-		return (0);
-	while (str[++x])
-	{
-		if (str[x] == c)
-			return (true);
-	}
-	return (false);
-}
-
-bool	check_env_names(char *name, char *content)
+int	check_env_names(char *name, char *content)
 {
 	t_dl_list	*head;
 
@@ -49,17 +36,16 @@ bool	check_env_names(char *name, char *content)
 			free(g_mini.env->content);
 			g_mini.env->content = content;
 			g_mini.env = head;
-			return (true);
+			return (1);
 		}
 		if (g_mini.env->next == NULL)
 			break ;
 		g_mini.env = g_mini.env->next;
 	}
 	g_mini.env = head;
-	return (false);
+	return (0);
 }
 
-// env_sorted had g_mini as param
 int	ft_export(void)
 {
 	t_dl_list	*head;
@@ -72,7 +58,7 @@ int	ft_export(void)
 	content[0] = get_name(arg, '=');
 	if (!content[0])
 		return (env_sorted());
-	if (!check_char(arg, '='))
+	if (!find_char(arg, '='))
 		return (0);
 	content[1] = ft_substr(arg, find_char(arg, '=') + 1, ft_strlen(arg));
 	if (!check_env_names(content[0], content[1]))
