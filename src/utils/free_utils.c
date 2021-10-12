@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 17:27:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 18:43:01 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_argv(void)
 //the content is set on the heap.
 void	free_dl_list(t_dl_list *lst)
 {
-	t_dl_list *temp;
+	t_dl_list	*temp;
 
 	if (lst == NULL)
 	{

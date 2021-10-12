@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/12 18:39:30 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 18:44:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void	screening_two(int i)
 			ft_lstnode_print(g_mini.env, g_mini.argv[i + 1]);
 	}
 	else if (ft_strcmp(g_mini.argv[i], "unset"))
-		ft_unset(g_mini.env , g_mini.argv, i);
+		ft_unset(g_mini.env, g_mini.argv, i);
 	else
 		ft_ls(i);
 }
 
-static void	screening_one()
+static void	screening_one(char **argv)
 {
 	int	i;
 
@@ -40,15 +40,15 @@ static void	screening_one()
 		return ;
 	if (g_mini.argv && i == 0)
 	{
-		if (ft_strcmp(g_mini.argv[i], "exit"))
+		if (ft_strcmp(argv[i], "exit"))
 			ft_exit();
-		else if (ft_strcmp(g_mini.argv[i], "echo"))
-			ft_echo(g_mini.argv);
-		else if (ft_strcmp(g_mini.argv[i], "cd"))
-			ft_cd(g_mini.argv);
-		else if (ft_strcmp(g_mini.argv[i], " "))
+		else if (ft_strcmp(argv[i], "echo"))
+			ft_echo(argv);
+		else if (ft_strcmp(argv[i], "cd"))
+			ft_cd(argv);
+		else if (ft_strcmp(argv[i], " "))
 			printf("\n");
-		else if (ft_strcmp(g_mini.argv[i], "env"))
+		else if (ft_strcmp(argv[i], "env"))
 			ft_env(g_mini.env);
 		else
 			screening_two(i);
@@ -72,7 +72,7 @@ static void	input_loop(char *input)
 {
 	add_history(input);
 	g_mini.argv = ft_split(input, ' ');
-	screening_one();
+	screening_one(g_mini.argv);
 	free_argv();
 	free(input);
 	input = NULL;

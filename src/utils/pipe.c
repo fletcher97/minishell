@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:44 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 17:42:21 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 18:42:48 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	screening_pipe(int i)
 		else if (ft_strcmp(g_mini.argv[i], "export"))
 			ft_export(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], "unset"))
-			ft_unset(g_mini.env , g_mini.argv, i);
+			ft_unset(g_mini.env, g_mini.argv, i);
 		else
 			ft_ls(i);
 	}
