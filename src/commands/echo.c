@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:03:10 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:34:05 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,34 @@ char	*return_env_content(t_dl_list *lst, char *name)
 	return (lst->content);
 }
 
-static char	*env_flag_check(int i)
+static char	*env_flag_check(char **argv, int i)
 {
 	char	*env_name;
 	int		j;
 
 	j = 0;
 	env_name = NULL;
-	while (g_mini.argv[i][j])
+	while (argv[i][j])
 		j++;
-	if (j > 0 && g_mini.argv[i][0] == '$')
+	if (j > 0 && argv[i][0] == '$')
 	{
-		env_name = ft_substr(g_mini.argv[i], 1, j);
+		env_name = ft_substr(argv[i], 1, j);
 		return (env_name);
 	}
 	return (NULL);
 }
 
-static void	echo_flag(int i, int j, int k)
+static void	echo_flag(char **argv, int i, int j, int k)
 {
 	if (i > k)
 	{
 		j = k;
 		while (i > j)
 		{
-			if (env_flag_check(j) != NULL)
-				print_env_content(g_mini.env, env_flag_check(j), 'y');
+			if (env_flag_check(argv, j) != NULL)
+				print_env_content(g_mini.env, env_flag_check(argv, j), 'y');
 			else
-				printf("%s", g_mini.argv[j]);
+				printf("%s", argv[j]);
 			if (i > 1 + j++)
 				printf(" ");
 		}
@@ -78,7 +78,7 @@ static void	echo_flag(int i, int j, int k)
 	}
 }
 
-void	ft_echo(void)
+void	ft_echo(char **argv)
 {
 	int	i;
 	int	j;
@@ -87,9 +87,9 @@ void	ft_echo(void)
 	i = 0;
 	j = 0;
 	k = 1;
-	while (g_mini.argv[i])
+	while (argv[i])
 		i++;
-	if (i >= 2 && ft_strcmp(g_mini.argv[1], "-n"))
+	if (i >= 2 && ft_strcmp(argv[1], "-n"))
 		k = 2;
-	echo_flag(i, j, k);
+	echo_flag(argv, i, j, k);
 }

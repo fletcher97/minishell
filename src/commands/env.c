@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:10 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:07:19 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:41:07 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_dl_list	*get_env(char **env)
 	return (g_mini.env);
 }
 
-void	ft_env(void)
+void	ft_env(t_dl_list *env)
 {
-	ft_lstprint(g_mini.env, 'a');
+	ft_lstprint(env, 'a');
 }

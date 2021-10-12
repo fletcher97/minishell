@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 18:19:15 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/11 19:29:42 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 17:27:11 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # include "ft_stdlib.h"
 # include "minishell.h"
 
-void	free_dp_list(t_dl_list *lst);
+void	free_list_nodes(t_dl_list *lst);
 void	free_argv(void);
-void	free_lst(t_dl_list *lst);
-void	free_struct(char *input);
+void	free_dl_list(t_dl_list *lst);
 
 #endif

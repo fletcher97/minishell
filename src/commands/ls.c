@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 18:10:14 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:59:07 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_ls(int i)
 	if (!g_mini.argv[i])
 		return ;
 	argv = (char *[]){g_mini.argv[i], g_mini.argv[i + 1], NULL};
-	if (ft_strcmp(g_mini.argv[i], "ls"))
+	if (ft_strcmp(argv[i], "ls"))
 	{
 		path = "/bin/";
 		argv[1] = getcwd(g_mini.str, PATH_MAX);
 	}
-	total = ft_strjoin(path, argv[0]);
+	total = ft_strjoin(path, argv[i]);
 	if (fork() == 0)
 	{
 		if ((execve(total, argv, NULL) == -1))

@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 16:36:06 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/11 19:21:08 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:26:58 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 # include "ft_string.h"
 # include "minishell.h"
 
-void	ft_cd(void);
+void	ft_cd(char **argv);
 
 #endif

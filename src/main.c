@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/11 19:24:50 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 18:39:30 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@ t_mini	g_mini;
 static void	screening_two(int i)
 {
 	if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
-		ft_pwd();
+		ft_pwd(g_mini.env);
 	else if (ft_strcmp(g_mini.argv[i], "export"))
-		ft_export();
+		ft_export(g_mini.argv);
 	else if (ft_strcmp(g_mini.argv[i], "node"))
 	{
 		if (ft_strlen(g_mini.argv[i]) > 0)
 			ft_lstnode_print(g_mini.env, g_mini.argv[i + 1]);
 	}
 	else if (ft_strcmp(g_mini.argv[i], "unset"))
-		ft_unset();
+		ft_unset(g_mini.env , g_mini.argv, i);
 	else
 		ft_ls(i);
 }
 
-static void	screening_one(char *input)
+static void	screening_one()
 {
 	int	i;
 
@@ -41,20 +41,22 @@ static void	screening_one(char *input)
 	if (g_mini.argv && i == 0)
 	{
 		if (ft_strcmp(g_mini.argv[i], "exit"))
-			ft_exit(input);
+			ft_exit();
 		else if (ft_strcmp(g_mini.argv[i], "echo"))
-			ft_echo();
+			ft_echo(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], "cd"))
-			ft_cd();
+			ft_cd(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], " "))
 			printf("\n");
 		else if (ft_strcmp(g_mini.argv[i], "env"))
-			ft_env();
+			ft_env(g_mini.env);
 		else
 			screening_two(i);
 	}
 }
 
+//Struct init function is used to initiate the stuct variable and cut down some
+//lines in the main function body.
 static void	struct_init(char **env)
 {
 	g_mini.head = malloc(sizeof(t_dl_list));
@@ -63,12 +65,14 @@ static void	struct_init(char **env)
 	g_mini.exit = 0;
 }
 
+//The input loop is used to cut down some lines on the main function body.
+//PS: Removed "g_mini.nbr_arg = args_counter();" because the variable is not
+//being used atm.
 static void	input_loop(char *input)
 {
 	add_history(input);
 	g_mini.argv = ft_split(input, ' ');
-	g_mini.nbr_arg = args_counter();
-	screening_one(input);
+	screening_one();
 	free_argv();
 	free(input);
 	input = NULL;
@@ -80,6 +84,9 @@ static void	input_loop(char *input)
 // while start
 //	input = readline("minishell: ");
 //	printf("input = %s\n", input);
+//The main function is responsible for receiving the input from the user and
+//manage it. It will make sure the program has a promp until the used call for
+//exit or sends the signal do quit.
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -94,8 +101,7 @@ int	main(int argc, char **argv, char **env)
 			input_loop(input);
 		if (g_mini.exit == 1)
 		{
-			free_struct(input);
-			free_lst(g_mini.env);
+			free_dl_list(g_mini.env);
 			exit(0);
 		}
 		input = readline("minishell: ");

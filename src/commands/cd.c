@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 17:51:16 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:26:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	ft_cd_back(t_cd *cd)
 	g_mini.env = g_mini.head;
 }
 
-void	ft_cd(void)
+void	ft_cd(char **argv)
 {
 	t_cd	cd;
 	char	*str;
@@ -95,7 +95,7 @@ void	ft_cd(void)
 	cd.tmp = g_mini.env;
 	home = getcwd(home, PATH_MAX);
 	i = 0;
-	if (!g_mini.argv[1])
+	if (!argv[1])
 	{
 		str = return_env_content(g_mini.env, "HOME");
 		chdir(str);
@@ -104,7 +104,7 @@ void	ft_cd(void)
 		check_env_names("OLDPWD", home);
 		g_mini.env = g_mini.head;
 	}
-	else if (ft_strcmp(g_mini.argv[1], ".."))
+	else if (ft_strcmp(argv[1], ".."))
 		ft_cd_back(&cd);
 	else
 		change_path(&cd);

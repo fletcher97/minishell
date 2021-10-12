@@ -6,18 +6,15 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 19:19:41 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 17:37:45 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-// after error_output
-//		redirect_output(i, j);
-//		redirect_input(i, j);
-//		read_input_from(i, j);
-//		append_output(i ,j);
-//		error_output('s', i);
+//The resolve special function is just a sorter. It will redirect the input to
+//the right function, depending on the integer it received.
+//Each integer corresponds to an special character like pipe, redirect, etc.
 static int	resolve_special(int i, int j)
 {
 	if (j == 0)
@@ -35,6 +32,11 @@ static int	resolve_special(int i, int j)
 	return (0);
 }
 
+//The find special function will search for special characters on a string.
+//It receives a table with arguments (argv) and look for them in each argument.
+//If a special char is found, it will order it to be executed and then return
+//the value '-1' (minus one). It returns '0' (zero) otherwise.
+//This value will be used by the main function sorter.
 int	find_special(void)
 {
 	char	**special;

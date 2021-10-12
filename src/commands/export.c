@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 19:28:50 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:47:45 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int	check_env_names(char *name, char *content)
 	return (0);
 }
 
-int	ft_export(void)
+//The simple export call will list all our internal environmental variable,
+//ordered alphabetically.
+int	ft_export(char **argv)
 {
 	t_dl_list	*head;
 	t_dl_list	*temp;
@@ -54,7 +56,7 @@ int	ft_export(void)
 	char		*arg;
 
 	head = g_mini.env;
-	arg = g_mini.argv[1];
+	arg = argv[1];
 	content[0] = get_name(arg, '=');
 	if (!content[0])
 		return (env_sorted());

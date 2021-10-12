@@ -6,37 +6,42 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:44 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 19:03:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 17:42:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "piper.h"
 
+//The screening pipe function is a sorter. It will receive and integer
+//regarding the argument it is working (command) and it will call the matching
+//command function.
 static int	screening_pipe(int i)
 {
 	if (g_mini.argv)
 	{
 		if (ft_strcmp(g_mini.argv[i], "pwd"))
-			ft_pwd();
+			ft_pwd(g_mini.env);
 		else if (ft_strcmp(g_mini.argv[i], "echo"))
-			ft_echo();
+			ft_echo(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], "cd"))
-			ft_cd();
+			ft_cd(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], " "))
 			printf("\n");
 		else if (ft_strcmp(g_mini.argv[i], "env"))
-			ft_env();
+			ft_env(g_mini.env);
 		else if (ft_strcmp(g_mini.argv[i], "export"))
-			ft_export();
+			ft_export(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], "unset"))
-			ft_unset();
+			ft_unset(g_mini.env , g_mini.argv, i);
 		else
 			ft_ls(i);
 	}
 	return (i);
 }
 
-// STDOUT para write pipe
+//The piper function will execute 2 commands separated by a pipe.
+//Right now the parse will not let it do multiple pipes. For that, we will need
+//to set up a while loop so it go through all the commands on a list.
 int	piper(int i)
 {
 	int	pipefd[2];

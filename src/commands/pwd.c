@@ -6,22 +6,27 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:29 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 19:26:56 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/12 17:00:23 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pwd.h"
 
-void	ft_pwd(void)
+//Print the content of the environmental variable "PWD" from the internal
+//env list (dual linked list).
+
+void	ft_pwd(t_dl_list *env)
 {
-	print_env_content(g_mini.env, "PWD", 'n');
+	print_env_content(env, "PWD", 'n');
 	printf("\n");
 }
 
-void	ft_exit(char *input)
+//Exit function is used to flag the exit call to make sure that the main func
+//free up our struct and exit the program successfully.
+//free_struct function is being called inside the main loop now when the exit
+//is called.
+void	ft_exit(void)
 {
-	free_struct(input);
 	g_mini.exit = 1;
 	write(1, "exit\n", 4);
-	kill(g_mini.pid, SIGINT);
 }
