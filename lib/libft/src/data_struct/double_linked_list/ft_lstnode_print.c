@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnode_print.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:25:06 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/07 18:27:44 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/13 21:45:42 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_lstnode_print(t_dl_list *lst, char *name)
 	{
 		if (ft_strcmp(lst->name, name))
 			printf("Content=|%s|, Name=|%s|, PREV=|%p| ADD=|%p| Next=|%p|\n",
-				lst->content, lst->name, lst->prev, lst, lst->next);
+				(char *)lst->content, (char *)lst->name, lst->prev, lst,
+				lst->next);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
