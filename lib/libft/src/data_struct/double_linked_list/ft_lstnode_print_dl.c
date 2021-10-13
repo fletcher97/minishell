@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnode_print_dl.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:24:57 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/07 19:47:17 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/13 21:46:14 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 void	ft_lstnode_print_dl(t_dl_list *lst)
 {
-	printf("C= |%s - %p|", lst->name, lst->name);
+	printf("C= |%s - %p|", (char *)lst->name, lst->name);
 	if (lst->prev != NULL)
-		printf(" , P= |%s - %p|", lst->prev->name, lst->prev->name);
+		printf(" , P= |%s - %p|", (char *)lst->prev->name, lst->prev->name);
 	else
 		printf(" , P= |null|");
 	if (lst->next != NULL)
-		printf(" , N= |%s - %p|", lst->next->name, lst->next->name);
+		printf(" , N= |%s - %p|", (char *)lst->next->name, lst->next->name);
 	else
 		printf(" , N= |null|");
 	printf("\n");
