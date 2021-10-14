@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/12 18:44:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 16:20:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	screening_two(int i)
 	else if (ft_strcmp(g_mini.argv[i], "unset"))
 		ft_unset(g_mini.env, g_mini.argv, i);
 	else
-		ft_ls(i);
+		ft_execve(g_mini.argv, i);
 }
 
 static void	screening_one(char **argv)

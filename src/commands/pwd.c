@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:29 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 17:00:23 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pwd.h"
+#include "commands.h"
 
 //Print the content of the environmental variable "PWD" from the internal
 //env list (dual linked list).

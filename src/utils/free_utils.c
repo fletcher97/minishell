@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 18:43:01 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:46 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "free_utils.h"
+#include "utilities.h"
 
 //The free list node will receive a dual linked list and it will free up all its
 //nodes. No malloc used on the nodes content will be freed.

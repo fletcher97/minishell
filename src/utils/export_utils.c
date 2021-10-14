@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:27 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 17:27:40 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:41 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export_utils.h"
+#include "utilities.h"
 
 //Swap function is used to swap 2 nodes position on a dual linked list.
 static void	swap(t_dl_list *a, t_dl_list *b, t_dl_list *c)

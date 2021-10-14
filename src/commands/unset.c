@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:38 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 16:36:04 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:18 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "unset.h"
+#include "commands.h"
 
 //Deletes the node where the environmental variable is allocated.
 static void	node_destroyer(t_dl_list *list)

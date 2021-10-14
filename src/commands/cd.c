@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 15:26:38 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:27:48 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cd.h"
+#include "commands.h"
 
 static char	*get_path(t_cd *cd)
 {

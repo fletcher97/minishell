@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls.c                                               :+:      :+:    :+:   */
+/*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 15:59:07 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 16:19:24 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls.h"
+#include "commands.h"
 
-void	ft_ls(int i)
+//The execve function is used to execute various commands such as ls, wc, grep
+//etc. This commands are not mandatory but will improve the user experience and
+//they will help during the program evaluation.
+void	ft_execve(char **argv, int i)
 {
 	char	*path;
 	char	*total;
-	char	**argv;
+	char	**cmd;
 
 	path = "/usr/bin/";
 	g_mini.str = NULL;
-	if (!g_mini.argv[i])
+	if (!argv[i])
 		return ;
-	argv = (char *[]){g_mini.argv[i], g_mini.argv[i + 1], NULL};
-	if (ft_strcmp(argv[i], "ls"))
+	cmd = (char *[]){argv[i], argv[i + 1], NULL};
+	if (ft_strcmp(cmd[i], "ls"))
 	{
 		path = "/bin/";
-		argv[1] = getcwd(g_mini.str, PATH_MAX);
+		cmd[1] = getcwd(g_mini.str, PATH_MAX);
 	}
 	total = ft_strjoin(path, argv[i]);
 	if (fork() == 0)
 	{
-		if ((execve(total, argv, NULL) == -1))
+		if ((execve(total, cmd, NULL) == -1))
 			error_output('c', 0);
 		kill(getpid(), SIGINT);
 	}

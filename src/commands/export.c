@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 16:47:45 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:02 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "export.h"
+#include "commands.h"
 
 static int	find_char(char *s1, char c)
 {
