@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:10 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 15:41:07 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:27:58 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "commands.h"
 
 char	*get_name(char *str, char c)
 {

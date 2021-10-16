@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 15:34:05 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:27:55 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "echo.h"
+#include "commands.h"
 
 void	print_env_content(t_dl_list *lst, char *name, char free_name)
 {

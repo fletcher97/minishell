@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:44 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 18:42:48 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 16:19:54 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "piper.h"
+#include "utilities.h"
 
 //The screening pipe function is a sorter. It will receive and integer
 //regarding the argument it is working (command) and it will call the matching
@@ -34,7 +34,7 @@ static int	screening_pipe(int i)
 		else if (ft_strcmp(g_mini.argv[i], "unset"))
 			ft_unset(g_mini.env, g_mini.argv, i);
 		else
-			ft_ls(i);
+			ft_execve(g_mini.argv, i);
 	}
 	return (i);
 }

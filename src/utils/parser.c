@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 17:37:45 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "utilities.h"
 
 //The resolve special function is just a sorter. It will redirect the input to
 //the right function, depending on the integer it received.

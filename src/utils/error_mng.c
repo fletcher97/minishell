@@ -6,11 +6,11 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/12 16:55:58 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:28:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error_mng.h"
+#include "utilities.h"
 
 //Error output function is used to output an error msg based on the error type
 //it received.

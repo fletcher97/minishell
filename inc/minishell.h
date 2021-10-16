@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/11 19:24:17 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 15:29:25 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,8 @@
 # include "ft_string.h"
 # include "ft_list.h"
 
-# include "pwd.h"
-# include "echo.h"
-# include "cd.h"
-# include "env.h"
-# include "export.h"
-# include "unset.h"
-# include "ls.h"
-# include "parser.h"
-# include "free_utils.h"
-# include "main_utils.h"
+# include "commands.h"
+# include "utilities.h"
 
 typedef struct s_cd
 {
