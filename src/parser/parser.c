@@ -6,15 +6,12 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 02:33:35 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 02:44:42 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "error_mng.h"
-
-# define CHAR_UNHANDLED 1
-# define QUOTES_OPEN 2
+#include "utilities.h"
 
 void	proc_q(const char *str, t_commands *cmd)
 {
@@ -25,7 +22,7 @@ void	proc_q(const char *str, t_commands *cmd)
 	q1 = 0;
 	q2 = 0;
 	curr = str;
-	while(*curr)
+	while (*curr)
 	{
 		if (*curr == '\'' && !q2)
 			q1 = !q1;
@@ -48,7 +45,7 @@ void	split_cmd( const char *str, t_commands *cmd)
 		{
 			q = !q;
 			str++;
-			continue;
+			continue ;
 		}
 		if (!q && *str == ';')
 			cmd->error = CHAR_UNHANDLED;
@@ -57,7 +54,6 @@ void	split_cmd( const char *str, t_commands *cmd)
 		str++;
 	}
 }
-
 
 t_commands	*parse(const char *str)
 {
@@ -73,5 +69,5 @@ t_commands	*parse(const char *str)
 	// parse_op(str, cmd);
 	// expand(str, cmd);
 	// word_splitting(str, cmd);
-	return cmd;
+	return (cmd);
 }
