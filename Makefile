@@ -29,10 +29,11 @@
 
 # Name of a single binary. Add as many variables as required by the project
 NAME1 := minishell
+NAME2 := parse_test
 
 # The names of all the binaries. Add aditional variables created above separated
 # by space.
-NAMES := ${NAME1}
+NAMES := ${NAME1} ${NAME2}
 
 # Readline lib
 LIBS := -lreadline
@@ -143,6 +144,7 @@ DEFAULT_LIB_RULES += debug_tsan debug_tsan_re debug_msan debug_msan_re
 # DIRS := folder1/:folder2/
 # DIRS += folder1/:folder3/:folder4/
 DIRS := ./:commands/:utils/
+DIRS += parser/:tests/parser/
 
 SRC_DIRS_LIST := $(addprefix ${SRC_ROOT},${DIRS})
 SRC_DIRS_LIST := $(foreach dl,${SRC_DIRS_LIST},$(subst :,:${SRC_ROOT},${dl}))
@@ -214,6 +216,12 @@ all: ${BINS}
 
 .SECONDEXPANSION:
 ${BIN_ROOT}${NAME1}: ${LIBFT} $$(call get_files,$${@F},$${OBJS_LIST})
+	${AT}printf "\033[33m[CREATING ${@F}]\033[0m\n" ${BLOCK}
+	${AT}mkdir -p ${@D} ${BLOCK}
+	${AT}${CC} ${CFLAGS} ${INCS} ${ASAN_FILE}\
+		$(call get_files,${@F},${OBJS_LIST}) ${LIBS} -o $@ ${BLOCK}
+
+${BIN_ROOT}${NAME2}: ${LIBFT} $$(call get_files,$${@F},$${OBJS_LIST})
 	${AT}printf "\033[33m[CREATING ${@F}]\033[0m\n" ${BLOCK}
 	${AT}mkdir -p ${@D} ${BLOCK}
 	${AT}${CC} ${CFLAGS} ${INCS} ${ASAN_FILE}\
