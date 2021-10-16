@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 05:13:59 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 10:58:00 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ t_commands	*parse(const char *str)
 	parse_op(str, cmd);
 	if (cmd->error)
 		return (cmd);
+	cmd->line = expand(ft_strdup(str));
+	cmd->output = expand(cmd->output);
+	cmd->input = expand(cmd->input);
+	if (cmd->error)
+		return (cmd);
 	return (cmd);
 }
 // Missing
-// expand(str, cmd);
 // word_splitting(str, cmd);

@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 19:00:13 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/16 05:13:23 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 09:15:49 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct s_commands
 {
 	int					error;
+	char				*line;
 	char				*cmd;
 	char				**args;
 	char				*input;
@@ -38,5 +39,6 @@ typedef struct s_commands
 t_commands	*parse(const char *str);
 void		split_cmd(const char *str, t_commands *cmd);
 void		parse_op(const char *str, t_commands *cmd);
+char		*expand(char *s);
 
 #endif
