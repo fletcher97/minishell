@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 13:45:49 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/07 17:57:20 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/16 08:10:51 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ t_dl_list	*ft_lstlast_dl(t_dl_list *lst);
 void		ft_lstnode_print(t_dl_list *lst, char *name);
 void		ft_lstnode_print_dl(t_dl_list *lst);
 void		ft_lstprint(t_dl_list *lst, char type);
+void		*ft_listget_dl(const char *key, t_dl_list *l);
 
 #endif
