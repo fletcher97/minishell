@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/14 16:22:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/16 02:45:06 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 
 # include "commands.h"
 # include "minishell.h"
+
+// Error codes
+# define CHAR_UNHANDLED 1
+# define QUOTES_OPEN 2
 
 //Error mng functions
 void	error_output(char type, int i);
