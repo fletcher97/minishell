@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 06:20:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 10:49:21 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 18:48:51 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*replace(char *s1, const char *s2, int pos, int len)
 	return (t1);
 }
 
-static int	expand1(char **s, int start)
+static int	expand1(char **s, int start, t_commands *cmd)
 {
 	int		i;
 	char	*str;
@@ -42,6 +42,10 @@ static int	expand1(char **s, int start)
 
 	i = start - 1;
 	str = *s;
+	if (str[i + 1] == '?')
+		cmd->cmd_flags |= 2;
+	if (str[i + 1] == '?')
+		return (0);
 	while (ft_isalnum(str[++i]) || str[i] == '_')
 		;
 	i -= start;
@@ -56,19 +60,22 @@ static int	expand1(char **s, int start)
 	return (i);
 }
 
-char	*expand(char *s)
+char	*expand(char *s, t_commands *cmd)
 {
 	int	i;
 
 	i = -2;
-	printf("--%s--\n", s);
+	if (!s)
+		return (NULL);
 	while (++i && s[(++i) >> 1])
 	{
 		(s[i >> 1] == '\'') && (i ^= 1);
 		if (i & 1)
 			continue ;
 		if (s[i >> 1] == '$')
-			i += (expand1(&s, (i >> 1) + 1) << 1);
+			i += (expand1(&s, (i >> 1) + 1, cmd) << 1);
+		else if (s[i >> 1] == '*')
+			cmd->cmd_flags |= 1;
 	}
 	return (s);
 }

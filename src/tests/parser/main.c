@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 05:11:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 05:13:04 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 11:08:07 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 #include <stdlib.h>
 
 #include "parser.h"
+#include "minishell.h"
+
+t_mini	g_mini;
 
 void	print_cmd(t_commands *cmd)
 {
 	int	i;
 
-	printf("err: %d\n", cmd->error);
+	if (cmd->error)
+		printf("err: %d\n", cmd->error);
 	if (cmd->cmd)
-		printf("cmd: %s\n", cmd->cmd);
+		printf("cmd: ---%s---\n", cmd->cmd);
+	if (cmd->line)
+		printf("line: ---%s---\n", cmd->line);
 	i = -1;
 	if (cmd->args)
 		while (cmd->args[++i])
-			printf("arg %d: %s\n", i, cmd->args[i]);
+			printf("arg %d: ---%s---\n", i, cmd->args[i]);
 	if (cmd->input)
-		printf("in: %s\n", cmd->input);
+		printf("in: ---%s---\n", cmd->input);
 	if (cmd->output)
-		printf("out: %s\n", cmd->output);
+		printf("out: ---%s---\n", cmd->output);
 }
 
 void	clear_cmd(t_commands *cmd)
@@ -39,6 +45,8 @@ void	clear_cmd(t_commands *cmd)
 	if (cmd->cmd)
 		free(cmd->cmd);
 	i = -1;
+	if (cmd->line)
+		free(cmd->line);
 	if (cmd->args)
 		while (cmd->args[++i])
 			free(cmd->args[i]);
