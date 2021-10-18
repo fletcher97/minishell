@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/14 16:20:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/18 17:19:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	struct_init(char **env)
 	g_mini.pid = getpid();
 	g_mini.env = get_env(env);
 	g_mini.exit = 0;
+	g_mini.errno = 0;
 }
 
 //The input loop is used to cut down some lines on the main function body.

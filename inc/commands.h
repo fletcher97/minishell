@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/14 16:20:37 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/14 16:28:54 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <signal.h>
+# include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
 

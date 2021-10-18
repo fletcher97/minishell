@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:27:55 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/18 18:26:14 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ static void	echo_flag(char **argv, int i, int j, int k)
 		j = k;
 		while (i > j)
 		{
+			printf("|%d %d| - ", ft_strcmp(argv[j], "$?"), g_mini.errno);
 			if (env_flag_check(argv, j) != NULL)
 				print_env_content(g_mini.env, env_flag_check(argv, j), 'y');
+			else if (ft_strcmp(argv[j], "$?") == 1)
+				printf("%d", g_mini.errno);
 			else
 				printf("%s", argv[j]);
 			if (i > 1 + j++)
