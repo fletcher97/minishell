@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/14 16:20:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/16 19:59:16 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 t_mini	g_mini;
 
@@ -70,7 +71,11 @@ static void	struct_init(char **env)
 //being used atm.
 static void	input_loop(char *input)
 {
+	t_commands	*cmd;
+
 	add_history(input);
+	cmd = parse(input);
+	free_cmd(cmd);
 	g_mini.argv = ft_split(input, ' ');
 	screening_one(g_mini.argv);
 	free_argv();

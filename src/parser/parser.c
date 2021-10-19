@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 19:58:43 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 20:22:50 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	free_cmd(t_commands *cmd)
 t_commands	*parse(const char *str)
 {
 	t_commands	*cmd;
+	t_commands	*tmp;
 
 	cmd = calloc(1, sizeof(t_commands));
 	proc_q(str, cmd);
@@ -63,14 +64,17 @@ t_commands	*parse(const char *str)
 	split_cmd(str, cmd);
 	if (cmd->error)
 		return (cmd);
-	parse_op(str, cmd);
-	if (cmd->error)
-		return (cmd);
-	cmd->line = expand(ft_strdup(str), cmd);
-	cmd->output = expand(cmd->output, cmd);
-	cmd->input = expand(cmd->input, cmd);
-	if (cmd->error)
-		return (cmd);
+	tmp = cmd;
+	while (tmp)
+	{
+		parse_op(str, cmd);
+		tmp->line = expand(cmd->line, cmd);
+		tmp->output = expand(cmd->output, cmd);
+		tmp->input = expand(cmd->input, cmd);
+		if (cmd->error)
+			return (cmd);
+		tmp = tmp->next;
+	}
 	return (cmd);
 }
 // Missing

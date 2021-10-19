@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 19:00:13 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/16 18:51:34 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/16 20:23:28 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_commands
 	char				input_flags;
 	char				*output;
 	char				output_flags;
+	struct s_commands	*next;
 }				t_commands;
 
 t_commands	*parse(const char *str);
