@@ -6,12 +6,14 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:28:02 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/20 15:07:41 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commands.h"
 
+//The Find Char function returns where is the char that we provided in a string.
+//It will return the full length of the string if no char is found.
 static int	find_char(char *s1, char c)
 {
 	int	x;
@@ -22,28 +24,6 @@ static int	find_char(char *s1, char c)
 	while (s1[x] && s1[x] != c)
 		x++;
 	return (x);
-}
-
-int	check_env_names(char *name, char *content)
-{
-	t_dl_list	*head;
-
-	head = g_mini.env;
-	while (1)
-	{
-		if (ft_strcmp(name, g_mini.env->name))
-		{
-			free(g_mini.env->content);
-			g_mini.env->content = content;
-			g_mini.env = head;
-			return (1);
-		}
-		if (g_mini.env->next == NULL)
-			break ;
-		g_mini.env = g_mini.env->next;
-	}
-	g_mini.env = head;
-	return (0);
 }
 
 //The simple export call will list all our internal environmental variable,

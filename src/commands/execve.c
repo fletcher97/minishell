@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/18 18:27:27 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:50:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ void	ft_execve(char **argv, int i)
 		kill(getpid(), SIGINT);
 	}
 	else
-		wait(NULL);
+		wait(&g_mini.errno);
+	printf("ES = |%d|\n", g_mini.errno);
 }

@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:27:48 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:53:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ static char	*get_path(t_cd *cd)
 static void	change_path(t_cd *cd)
 {
 	char	*str;
+	int		i;
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
 	cd->tmp = g_mini.env;
 	cd->pwd = ft_strdup(str);
 	cd->path1 = get_path(cd);
-	chdir(cd->path1);
+	i = chdir(cd->path1);
+	printf("|%d|\n", i);
 	check_env_names("PWD", cd->path1);
 	check_env_names("OLDPWD", cd->pwd);
 	g_mini.env = g_mini.head;
@@ -66,7 +68,7 @@ static void	ft_cd_back(t_cd *cd)
 	cd->backup = return_env_content(cd->tmp, "OLDPWD");
 	str = getcwd(str, PATH_MAX);
 	old_pwd = str;
-	if (!ft_strncmp(str, cd->backup, ft_strcmp(str, cd->backup)))
+	if (!ft_strcmp(str, cd->backup))
 	{
 		cd->path1 = ft_substr(str, 0, len_char_back(str, '/'));
 		chdir(cd->path1);
@@ -100,9 +102,7 @@ void	ft_cd(char **argv)
 		str = return_env_content(g_mini.env, "HOME");
 		chdir(str);
 		check_env_names("PWD", str);
-		g_mini.env = g_mini.head;
 		check_env_names("OLDPWD", home);
-		g_mini.env = g_mini.head;
 	}
 	else if (ft_strcmp(argv[1], ".."))
 		ft_cd_back(&cd);

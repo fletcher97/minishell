@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/14 16:28:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/20 16:34:13 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,12 @@
 void		ft_cd(char **argv);
 
 //Echo cmd functions
-void		print_env_content(t_dl_list *lst, char *name, char free_name);
-char		*return_env_content(t_dl_list *lst, char *name);
 void		ft_echo(char **argv);
 
 //Env cmd functions
-char		*get_name(char *str, char c);
-t_dl_list	*get_env(char **env);
 void		ft_env(t_dl_list *env);
 
 //Export cmd functions
-int			check_env_names(char *name, char *content);
 int			ft_export(char **argv);
 
 //Execve cmd functions

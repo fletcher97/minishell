@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/14 18:58:26 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/20 16:35:12 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,30 @@
 # include "minishell.h"
 
 //Error mng functions
-void	error_output(char type, int i);
+void		error_output(char type, int i);
 
 //Export utils functions
-int		env_sorted(void);
+int			env_sorted(void);
+
+//Env utils Functions
+int			check_env_names(char *name, char *content);
+void		print_env_content(t_dl_list *lst, char *name, char free_name);
+char		*return_env_content(t_dl_list *lst, char *name);
+char		*get_name(char *str, char c);
+t_dl_list	*get_env(char **env);
 
 //Free utils functions
-void	free_list_nodes(t_dl_list *lst);
-void	free_argv(void);
-void	free_dl_list(t_dl_list *lst);
+void		free_list_nodes(t_dl_list *lst);
+void		free_argv(void);
+void		free_dl_list(t_dl_list *lst);
 
 //Main utils functions
-int		args_counter(void);
+int			args_counter(void);
 
 //Parser functions
-int		find_special(void);
+int			find_special(void);
 
 //Piper functions
-int		piper(int i);
+int			piper(int i);
 
 #endif
