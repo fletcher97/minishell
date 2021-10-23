@@ -13,19 +13,13 @@
 #include "ft_tree.h"
 #include "ft_stdlib.h"
 
-t_tree	*ft_treenew(char *key, void *content)
+t_tree	*ft_treenew(void *content)
 {
 	t_tree	*ret;
 
 	ret = ft_calloc(1, sizeof(t_tree));
 	if (!ret)
 		return (NULL);
-	ret->content = ft_lstnew(content);
-	if (!ret->content)
-	{
-		ft_free(ret);
-		return (NULL);
-	}
-	ret->key = key;
+	ret->content = content;
 	return (ret);
 }

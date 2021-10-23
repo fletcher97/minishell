@@ -13,22 +13,15 @@
 #ifndef FT_TREE_H
 # define FT_TREE_H
 
-# include "ft_list.h"
-
 typedef struct s_tree
 {
-	char			*key;
-	t_list			*content;
-	struct s_tree	*leafs;
-	struct s_tree	*next;
+	void			*content;
+	int				lcount;
+	struct s_tree	**leafs;
 }				t_tree;
 
-t_tree	*ft_treenew(char *key, void *content);
-
-// Add content to current node
+t_tree	*ft_treenew(void *content);
 int		ft_treeadd(t_tree *tree, void *content);
-
-// Insert on same level
-int		ft_treeinsert(t_tree *tree, char *key, void *content);
+int		ft_treeclear(t_tree *t, void (*del)(void *));
 
 #endif

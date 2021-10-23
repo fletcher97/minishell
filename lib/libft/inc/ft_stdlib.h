@@ -23,5 +23,6 @@ void	*ft_malloc(size_t size);
 int		ft_max(int a, int b);
 int		ft_min(int a, int b);
 void	ft_swap(void *e1, void *e2, size_t size);
+void	*ft_realloc(void *ptr, size_t osize, size_t nsize);
 
 #endif
