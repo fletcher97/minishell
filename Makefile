@@ -36,7 +36,7 @@ NAME2 := parse_test
 NAMES := ${NAME1} ${NAME2}
 
 # Readline lib
-LIBS := -lreadline
+LIBS := $(shell pkgconf --libs readline)
 
 ################################################################################
 # Configs
@@ -69,7 +69,7 @@ CREATE_LIB_TARGETS := 1
 CC := clang
 
 # Compiler flags
-CFLAGS := -Wall -Wextra -Werror -Wvla
+CFLAGS := -Wall -Wextra -Werror -Wvla $(shell pkgconf --cflags readline)
 
 # Generic debug flags
 DFLAGS := -g
