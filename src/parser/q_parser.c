@@ -15,7 +15,7 @@
 #include "parser.h"
 #include "utilities.h"
 
-#include <stdlib.h>
+#include "stdlib.h"
 
 static char	*rem_q(char *str, int count)
 {
@@ -23,13 +23,13 @@ static char	*rem_q(char *str, int count)
 	int p1;
 	int p2;
 
-	ret = malloc(ft_strlen(str) - count + 1);
+	ret = ft_calloc(ft_strlen(str) - count + 1, 1);
 	p1 = -1;
 	p2 = -1;
 	while (str[++p1])
 		if (!ft_strchr("\\\"\'", str[p1]))
 			ret[++p2] = str[p1];
-	free(str);
+	ft_free(str);
 	return (ret);
 }
 
@@ -46,10 +46,6 @@ static char	*rem_q(char *str, int count)
  * Escape next char
  * Enter var
  */
-# define S 1
-# define D 2
-# define Q 4
-# define V 8
 char	*proc_q(char *str, t_commands *cmd)
 {
 	(void)cmd;
@@ -68,9 +64,9 @@ char	*proc_q(char *str, t_commands *cmd)
 		(*c == '$') && !(q & S) && (q |= V);
 		(ft_strchr(" \'\"\\;&|", *c)) && (q &= ~V);
 		(*c == '\\') && !(q & S) && (*(c++)) && (count++);
-		(*c) && (q & (S | D)) && !(q &  bQ) && (*c |= 0x80);
+		(*c) && (q & (S | D)) && !(q & Q) && (*c |= 0x80);
 	}
-//	if (q1 || q2)
-//		cmd->error = QUOTES_OPEN;
+	if (q & (S | D))
+		cmd->error = QUOTES_OPEN;
 	return (rem_q(str, count));
 }
