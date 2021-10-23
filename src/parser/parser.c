@@ -13,23 +13,22 @@
 #include "parser.h"
 #include "utilities.h"
 
-static void	proc_q(const char *str, t_commands *cmd)
+static char	*proc_q(char *str, t_commands *cmd)
 {
-	char		q1;
-	char		q2;
+	char		q;
 
-	q1 = 0;
-	q2 = 0;
+	q = 0;
 	while (*str)
 	{
-		if (*str == '\'' && !q2)
-			q1 = !q1;
-		if (*str == '\"' && !q1)
-			q2 = !q2;
+		q |= 4;
+		(*str == '\'') && !(q & 2) && (q ^= 5);
+		(*str == '\"') && !(q & 1) && (q ^= 6);
+		(q & 4) && (str &= )
 		str++;
 	}
 	if (q1 || q2)
 		cmd->error = QUOTES_OPEN;
+	return (str);
 }
 
 void	free_cmd(t_commands *cmd)
@@ -55,10 +54,9 @@ void	free_cmd(t_commands *cmd)
 t_commands	*parse(const char *str)
 {
 	t_commands	*cmd;
-	t_commands	*tmp;
 
 	cmd = calloc(1, sizeof(t_commands));
-	proc_q(str, cmd);
+	cmd->line = proc_q(str, cmd);
 	if (cmd->error)
 		return (cmd);
 	split_cmd(str, cmd);

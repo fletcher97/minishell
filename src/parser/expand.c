@@ -33,7 +33,7 @@ static char	*replace(char *s1, const char *s2, int pos, int len)
 	return (t1);
 }
 
-static int	expand1(char **s, int start, t_commands *cmd)
+static int	expand1(char **s, int start, t_cmd *cmd)
 {
 	int		i;
 	char	*str;
@@ -60,7 +60,7 @@ static int	expand1(char **s, int start, t_commands *cmd)
 	return (i);
 }
 
-char	*expand(char *s, t_commands *cmd)
+char	*expand(char *s, t_cmd *cmd)
 {
 	int	i;
 
