@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_string.h"
+
 #include "parser.h"
 #include "utilities.h"
 
@@ -56,7 +58,7 @@ t_commands	*parse(const char *str)
 	t_commands	*cmd;
 
 	cmd = calloc(1, sizeof(t_commands));
-	cmd->line = proc_q(str, cmd);
+	cmd->line = proc_q(ft_strdup(str), cmd);
 	if (cmd->error)
 		return (cmd);
 	split_cmd(str, cmd);

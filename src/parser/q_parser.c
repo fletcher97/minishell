@@ -48,7 +48,6 @@ static char	*rem_q(char *str, int count)
  */
 char	*proc_q(char *str, t_commands *cmd)
 {
-	(void)cmd;
 	char	q;
 	int		count;
 	char	*c;
@@ -63,7 +62,8 @@ char	*proc_q(char *str, t_commands *cmd)
 		(*c == '\"') && !(q & S) && ((q ^= D | Q) || 1) && (count++);
 		(*c == '$') && !(q & S) && (q |= V);
 		(ft_strchr(" \'\"\\;&|", *c)) && (q &= ~V);
-		(*c == '\\') && !(q & S) && (*(c++)) && (count++);
+		(*c == '\\') && !(q & S) && (ft_strchr("$\\\"", *(c + 1))) &&
+			(*(c++)) && (count++);
 		(*c) && (q & (S | D)) && !(q & Q) && (*c |= 0x80);
 	}
 	if (q & (S | D))

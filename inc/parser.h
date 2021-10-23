@@ -16,6 +16,11 @@
 # include "ft_tree.h"
 # include "ft_list.h"
 
+# define S 1
+# define D 2
+# define Q 4
+# define V 8
+
 /**
  * error: Error code if parser fails
  */
@@ -23,7 +28,7 @@ typedef struct s_commands
 {
 	int		error;
 	char	*line;
-	t_tree	tree;
+	t_tree	*tree;
 }				t_commands;
 
 /**
@@ -65,7 +70,8 @@ typedef struct s_cmd
 }				t_cmd;
 
 t_commands	*parse(const char *str);
-void		split_cmd(const char *str, t_commands *cmd);
+char		*proc_q(char *str, t_commands *cmd);
+t_tree		*split_cmd(char *c);
 void		parse_op(const char *str, t_commands *cmd);
 char		*expand(char *s, t_cmd *cmd);
 void		free_cmd(t_commands *cmd);

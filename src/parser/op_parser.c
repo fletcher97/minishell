@@ -24,8 +24,8 @@ static int	input(char *str, t_commands *cmd, int append)
 	int	i;
 	int	skip;
 
-	if (cmd->input)
-		return (-2);
+//	if (cmd->input)
+//		return (-2);
 	skip = 0;
 	while (ft_isspace((int)*str) && ++skip)
 		str++;
@@ -39,10 +39,10 @@ static int	input(char *str, t_commands *cmd, int append)
 		i += 4;
 	}
 	cmd->input = calloc(1, (i >> 2) + 1);
-	if (!cmd->input)
-		return (-1);
-	cmd->input = ft_strncpy(cmd->input, str, i >> 2);
-	cmd->input_flags = !!append;
+//	if (!cmd->input)
+//		return (-1);
+//	cmd->input = ft_strncpy(cmd->input, str, i >> 2);
+//	cmd->input_flags = !!append;
 	return (skip + (i >> 2) + !!append);
 }
 
@@ -51,8 +51,8 @@ static int	output(char *str, t_commands *cmd, int heredoc)
 	int	i;
 	int	skip;
 
-	if (cmd->output)
-		return (-2);
+//	if (cmd->output)
+//		return (-2);
 	skip = 0;
 	while (*str && ft_isspace((int)*str) && ++skip)
 		str++;
@@ -65,11 +65,11 @@ static int	output(char *str, t_commands *cmd, int heredoc)
 			i ^= 2;
 		i += 4;
 	}
-	cmd->output = calloc(1, (i >> 2) + 1);
-	if (!cmd->output)
-		return (-1);
-	cmd->output = ft_strncpy(cmd->output, str, i >> 2);
-	cmd->output_flags = !!heredoc;
+//	cmd->output = calloc(1, (i >> 2) + 1);
+//	if (!cmd->output)
+//		return (-1);
+//	cmd->output = ft_strncpy(cmd->output, str, i >> 2);
+//	cmd->output_flags = !!heredoc;
 	return (skip + (i >> 2) + !!heredoc);
 }
 
