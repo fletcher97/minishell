@@ -6,12 +6,68 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/16 19:59:16 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 07:00:17 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+
+void print_tree(t_tree *t, int lvl)
+{
+	printf("%*s[%p] \n", lvl, "", t);
+	t_cmd *cmd= (t_cmd*)t->content;
+	if (cmd)
+	{
+		printf("%*s{flags:[", lvl, "");
+		if (cmd->cmd_flags & 1)
+			printf(" WILDE ");
+		if (cmd->cmd_flags & 2)
+			printf(" EXITE ");
+		if (cmd->cmd_flags & 4)
+			printf(" AND ");
+		if (cmd->cmd_flags & 8)
+			printf(" OR ");
+		if (cmd->cmd_flags & 0x10)
+			printf(" END ");
+		if (cmd->cmd_flags & 0x20)
+			printf(" RES ");
+		if (cmd->cmd_flags & 0x40)
+			printf(" PIPE ");
+		if (cmd->line)
+			printf("] cmd: ---%s---", cmd->line);
+		printf("in:{ INPUT:[");
+		for (t_list *l = cmd->in.input; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] HEREDOC:[");
+		for (t_list *l = cmd->in.heredoc; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] OUTPUT:[");
+		for (t_list *l = cmd->in.output; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] APPEND:[");
+		for (t_list *l = cmd->in.append; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] in:");
+		if (cmd->in.in)
+			printf(" %s", (char*)((t_list*)cmd->in.in)->content);
+		printf(" out:");
+		if (cmd->in.out)
+			printf(" %s", (char*)((t_list*)cmd->in.out)->content);
+		printf(" }\n");
+	}
+	else
+		printf("%*s{}\n", lvl, "");
+	for (int i = 0; i < t->lcount; i++)
+		print_tree(t->leafs[i], lvl + 1);
+}
+
+void print_cmd(t_commands *cmd)
+{
+	printf("Error: %d\n", cmd->error);
+	printf("Line: %s\n", cmd->line);
+	print_tree(cmd->tree, 0);
+}
 
 t_mini	g_mini;
 
@@ -75,7 +131,8 @@ static void	input_loop(char *input)
 
 	add_history(input);
 	cmd = parse(input);
-	free_cmd(cmd);
+	print_cmd(cmd);
+	free_command(cmd);
 	g_mini.argv = ft_split(input, ' ');
 	screening_one(g_mini.argv);
 	free_argv();
