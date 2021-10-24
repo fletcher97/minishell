@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 20:22:50 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 07:49:19 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,32 @@
 #include "parser.h"
 #include "utilities.h"
 
-static char	*proc_q(char *str, t_commands *cmd)
+static void	free_cmd(void *v)
 {
-	char		q;
+	t_cmd	*cmd;
 
-	q = 0;
-	while (*str)
-	{
-		q |= 4;
-		(*str == '\'') && !(q & 2) && (q ^= 5);
-		(*str == '\"') && !(q & 1) && (q ^= 6);
-		(q & 4) && (str &= )
-		str++;
-	}
-	if (q1 || q2)
-		cmd->error = QUOTES_OPEN;
-	return (str);
-}
-
-void	free_cmd(t_commands *cmd)
-{
-	int	i;
-
-	if (cmd->cmd)
-		free(cmd->cmd);
-	i = -1;
+	if (!v)
+		return ;
+	cmd = (t_cmd *)v;
 	if (cmd->line)
 		free(cmd->line);
 	if (cmd->args)
-		while (cmd->args[++i])
-			free(cmd->args[i]);
-	if (cmd->args)
-		free(cmd->args);
-	if (cmd->input)
-		free(cmd->input);
-	if (cmd->output)
-		free(cmd->output);
+		ft_lstclear(&cmd->args, free);
+	if (cmd->in.input)
+		ft_lstclear(&cmd->in.input, free);
+	if (cmd->in.heredoc)
+		ft_lstclear(&cmd->in.heredoc, free);
+	if (cmd->in.output)
+		ft_lstclear(&cmd->in.output, free);
+	if (cmd->in.append)
+		ft_lstclear(&cmd->in.append, free);
+	ft_free(v);
+}
+
+void	free_command(t_commands *cmd)
+{
+	free(cmd->line);
+	ft_treeclear(cmd->tree, free_cmd);
 }
 
 t_commands	*parse(const char *str)
@@ -58,23 +48,21 @@ t_commands	*parse(const char *str)
 	t_commands	*cmd;
 
 	cmd = calloc(1, sizeof(t_commands));
+	cmd->tree = ft_treenew(NULL);
 	cmd->line = proc_q(ft_strdup(str), cmd);
+	if ((split_cmd(cmd->tree, cmd->line, 0) - 1) == (int)ft_strlen(cmd->line))
+		if (!cmd->error)
+			cmd->error = 10;
 	if (cmd->error)
 		return (cmd);
-	split_cmd(str, cmd);
+	if (!parse_op(cmd->tree))
+		cmd->error = 100;
 	if (cmd->error)
 		return (cmd);
-	tmp = cmd;
-	while (tmp)
-	{
-		parse_op(str, cmd);
-		tmp->line = expand(cmd->line, cmd);
-		tmp->output = expand(cmd->output, cmd);
-		tmp->input = expand(cmd->input, cmd);
-		if (cmd->error)
-			return (cmd);
-		tmp = tmp->next;
-	}
+	if (!expand(cmd->tree))
+		cmd->error = 1000;
+	if (cmd->error)
+		return (cmd);
 	return (cmd);
 }
 // Missing

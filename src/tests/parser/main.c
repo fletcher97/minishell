@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 05:11:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 11:08:07 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 06:57:51 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,64 @@
 
 t_mini	g_mini;
 
-void	print_cmd(t_commands *cmd)
-{
-	int	i;
+#define TRUE(x) x?'1':'0'
+#define BYTES(x) TRUE(x&0x80),TRUE(x&0x40),TRUE(x&0x20),TRUE(x&0x10),\
+TRUE(x&0x8),TRUE(x&0x4),TRUE(x&0x2),TRUE(x&0x1)
 
-	if (cmd->error)
-		printf("err: %d\n", cmd->error);
-	if (cmd->cmd)
-		printf("cmd: ---%s---\n", cmd->cmd);
-	if (cmd->line)
-		printf("line: ---%s---\n", cmd->line);
-	i = -1;
-	if (cmd->args)
-		while (cmd->args[++i])
-			printf("arg %d: ---%s---\n", i, cmd->args[i]);
-	if (cmd->input)
-		printf("in: ---%s---\n", cmd->input);
-	if (cmd->output)
-		printf("out: ---%s---\n", cmd->output);
+void print_tree(t_tree *t, int lvl)
+{
+	printf("%*s[%p] \n", lvl, "", t);
+	t_cmd *cmd= (t_cmd*)t->content;
+	if (cmd)
+	{
+		printf("%*s{flags:[", lvl, "");
+		if (cmd->cmd_flags & 1)
+			printf(" WILDE ");
+		if (cmd->cmd_flags & 2)
+			printf(" EXITE ");
+		if (cmd->cmd_flags & 4)
+			printf(" AND ");
+		if (cmd->cmd_flags & 8)
+			printf(" OR ");
+		if (cmd->cmd_flags & 0x10)
+			printf(" END ");
+		if (cmd->cmd_flags & 0x20)
+			printf(" RES ");
+		if (cmd->cmd_flags & 0x40)
+			printf(" PIPE ");
+		if (cmd->line)
+			printf("] cmd: ---%s---", cmd->line);
+		printf("in:{ INPUT:[");
+		for (t_list *l = cmd->in.input; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] HEREDOC:[");
+		for (t_list *l = cmd->in.heredoc; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] OUTPUT:[");
+		for (t_list *l = cmd->in.output; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] APPEND:[");
+		for (t_list *l = cmd->in.append; l; l = l->next)
+			printf(" %s ", (char*)l->content);
+		printf("] in:");
+		if (cmd->in.in)
+			printf(" %s", (char*)((t_list*)cmd->in.in)->content);
+		printf(" out:");
+		if (cmd->in.out)
+			printf(" %s", (char*)((t_list*)cmd->in.out)->content);
+		printf(" }\n");
+	}
+	else
+		printf("%*s{}\n", lvl, "");
+	for (int i = 0; i < t->lcount; i++)
+		print_tree(t->leafs[i], lvl + 1);
 }
 
-void	clear_cmd(t_commands *cmd)
+void print_cmd(t_commands *cmd)
 {
-	int	i;
-
-	if (cmd->cmd)
-		free(cmd->cmd);
-	i = -1;
-	if (cmd->line)
-		free(cmd->line);
-	if (cmd->args)
-		while (cmd->args[++i])
-			free(cmd->args[i]);
-	if (cmd->args)
-		free(cmd->args);
-	if (cmd->input)
-		free(cmd->input);
-	if (cmd->output)
-		free(cmd->output);
+	printf("Error: %d\n", cmd->error);
+	printf("Line: %s\n", cmd->line);
+	print_tree(cmd->tree, 0);
 }
 
 int	main(int argc, char const *argv[])
@@ -67,7 +87,7 @@ int	main(int argc, char const *argv[])
 	printf("parsing: ---%s---\n", argv[1]);
 	cmd = parse(argv[1]);
 	print_cmd(cmd);
-	clear_cmd(cmd);
+	free_command(cmd);
 	free(cmd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 06:20:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 18:48:51 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 07:49:42 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	expand1(char **s, int start, t_cmd *cmd)
 	return (i);
 }
 
-char	*expand(char *s, t_cmd *cmd)
+char	*expand_cmd(char *s, t_cmd *cmd)
 {
 	int	i;
 
@@ -78,4 +78,23 @@ char	*expand(char *s, t_cmd *cmd)
 			cmd->cmd_flags |= 1;
 	}
 	return (s);
+}
+
+int	expand(t_tree *t)
+{
+	t_cmd	*cmd;
+	int		i;
+
+	cmd = (t_cmd *)t->content;
+	if (cmd)
+	{
+		cmd->line = expand_cmd(cmd->line, cmd);
+		if (!cmd->line)
+			return (0);
+	}
+	i = 0;
+	while (i < t->lcount)
+		if (!expand(t->leafs[i++]))
+			return (0);
+	return (1);
 }

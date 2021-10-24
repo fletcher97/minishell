@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 20:22:50 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 08:04:04 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 
 static char	*rem_q(char *str, int count)
 {
-	char *ret;
-	int p1;
-	int p2;
+	char	*ret;
+	int		p1;
+	int		p2;
 
 	ret = ft_calloc(ft_strlen(str) - count + 1, 1);
 	p1 = -1;
@@ -32,7 +32,6 @@ static char	*rem_q(char *str, int count)
 	ft_free(str);
 	return (ret);
 }
-
 
 /**
  * q:

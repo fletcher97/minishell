@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 19:00:13 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/16 20:23:28 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 08:04:40 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,20 @@ typedef struct s_input
 	t_list	*heredoc;
 	t_list	*out;
 	t_list	*output;
+	t_list	*append;
 }				t_input;
 
 /**
  * cmd: Command to be executed
  * cmd_flags: flags about the command.
- *   If (cmd_flags & 1) at least one argument/cmd has a possible wildcard.
- *   If (cmd_flags & 2) at least one argument/cmd needs to expand exit code.
+ *   If (cmd_flags & 0x01) at least one argument/cmd has a possible wildcard.
+ *   If (cmd_flags & 0x02) at least one argument/cmd needs to expand exit code.
+ *   If (cmd_flags & 0x04) cmd is to be executed before a &&
+ *   If (cmd_flags & 0x08) cmd is to be executed before a ||
+ *   If (cmd_flags & 0x10) cmd is at the end of a list
+ *   If (cmd_flags & 0x20) cmd is to be executed before a ; therefore reseting
+ *     logic.
+ *   If (cmd_flags & 0x40) input piped to next command
  * args: Arguments to be passed to the command
  * in: input
  */
@@ -66,14 +73,14 @@ typedef struct s_cmd
 	char	*cmd;
 	char	cmd_flags;
 	t_list	*args;
-	t_input in;
+	t_input	in;
 }				t_cmd;
 
 t_commands	*parse(const char *str);
 char		*proc_q(char *str, t_commands *cmd);
-t_tree		*split_cmd(char *c);
-void		parse_op(const char *str, t_commands *cmd);
-char		*expand(char *s, t_cmd *cmd);
-void		free_cmd(t_commands *cmd);
+int			split_cmd(t_tree *t, char *c, int i);
+int			parse_op(t_tree *t);
+int			expand(t_tree *t);
+void		free_command(t_commands *cmd);
 
 #endif

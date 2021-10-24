@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 03:47:09 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/16 10:42:17 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/24 08:03:32 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,70 +17,77 @@
 #include "ft_string.h"
 #include "ft_ctype.h"
 
-//TODO: replace return with define of error
-
-static int	input(char *str, t_commands *cmd, int append)
+static int	spec(char s)
 {
-	int	i;
-	int	skip;
-
-//	if (cmd->input)
-//		return (-2);
-	skip = 0;
-	while (ft_isspace((int)*str) && ++skip)
-		str++;
-	i = 0;
-	while (str[i >> 2] && ((i & 3) || !ft_isspace(str[i >> 2])))
-	{
-		if (str[i >> 2] == '\'' && !(i & 2))
-			i ^= 1;
-		if (str[i >> 2] == '\"' && !(i & 1))
-			i ^= 2;
-		i += 4;
-	}
-	cmd->input = calloc(1, (i >> 2) + 1);
-//	if (!cmd->input)
-//		return (-1);
-//	cmd->input = ft_strncpy(cmd->input, str, i >> 2);
-//	cmd->input_flags = !!append;
-	return (skip + (i >> 2) + !!append);
+	return (!!ft_strchr(" \t\n\v\f\r<>$\"\'&|()", s));
 }
 
-static int	output(char *str, t_commands *cmd, int heredoc)
+static int	input(char *str, t_cmd *cmd, int heredoc)
 {
-	int	i;
-	int	skip;
+	int		i;
+	int		skip;
+	t_list	*l;
+	char	*in;
 
-//	if (cmd->output)
-//		return (-2);
 	skip = 0;
-	while (*str && ft_isspace((int)*str) && ++skip)
-		str++;
 	i = 0;
-	while (str[i >> 2] && ((i & 3) || !ft_isspace(str[i >> 2])))
-	{
-		if (str[i >> 2] == '\'' && !(i & 2))
-			i ^= 1;
-		if (str[i >> 2] == '\"' && !(i & 1))
-			i ^= 2;
-		i += 4;
-	}
-//	cmd->output = calloc(1, (i >> 2) + 1);
-//	if (!cmd->output)
-//		return (-1);
-//	cmd->output = ft_strncpy(cmd->output, str, i >> 2);
-//	cmd->output_flags = !!heredoc;
-	return (skip + (i >> 2) + !!heredoc);
+	l = NULL;
+	while (str[skip] && ft_isspace(str[skip + i]))
+		skip++;
+	while (str[skip + i] && !ft_isspace(str[skip + i]) && !spec(str[skip + i]))
+		i++;
+	in = ft_substr(str, skip, i);
+	((!heredoc) && (l = ft_lstnew(ft_strjoin("<", in))))
+		|| (l = ft_lstnew(ft_strjoin("<<", in)));
+	free(in);
+	if (!l)
+		return (-1);
+	if (heredoc)
+		ft_lstadd_back(&cmd->in.heredoc, l);
+	else
+		ft_lstadd_back(&cmd->in.input, l);
+	cmd->in.in = l;
+	ft_memset(str - (1 + !!heredoc), ' ', skip + i + 1 + !!heredoc);
+	return (skip + i + !!heredoc);
 }
 
-void	parse_op(const char *str, t_commands *cmd)
+static int	output(char *str, t_cmd *cmd, int append)
+{
+	int		i;
+	int		skip;
+	t_list	*l;
+	char	*out;
+
+	skip = 0;
+	i = 0;
+	l = NULL;
+	while (str[skip] && ft_isspace((int)str[skip]))
+		skip++;
+	while (str[skip + i] && !ft_isspace(str[skip + i]))
+		i++;
+	out = ft_substr(str, skip, i);
+	((!append) && (l = ft_lstnew(ft_strjoin(">", out))))
+		|| (l = ft_lstnew(ft_strjoin(">>", out)));
+	free(out);
+	if (!l)
+		return (-1);
+	if (append)
+		ft_lstadd_back(&cmd->in.append, l);
+	else
+		ft_lstadd_back(&cmd->in.output, l);
+	cmd->in.out = l;
+	ft_memset(str - (1 + !!append), ' ', skip + i + 1 + !!append);
+	return (skip + i + !!append);
+}
+
+static int	parse_op_cmd(t_cmd *cmd)
 {
 	char	q;
 	char	*cur;
 	int		i;
 
 	q = 0;
-	cur = (char *) str;
+	cur = (char *) cmd->line;
 	while (*cur)
 	{
 		(*cur == '\'') && !(q & 2) && (q ^= 1);
@@ -94,9 +101,24 @@ void	parse_op(const char *str, t_commands *cmd)
 		|| ((*cur == '>') && ((i = output(cur + 1, cmd, 0)) || 1))
 		|| (i = 0);
 		if (i < 0)
-			cmd->error = i;
-		if (i < 0)
-			return ;
+			return (0);
 		cur += i + 1;
 	}
+	return (1);
+}
+
+int	parse_op(t_tree *t)
+{
+	t_cmd	*cmd;
+	int		i;
+
+	cmd = (t_cmd *)t->content;
+	if (cmd)
+		if (!parse_op_cmd(cmd))
+			return (0);
+	i = 0;
+	while (i < t->lcount)
+		if (!parse_op(t->leafs[i++]))
+			return (0);
+	return (1);
 }
