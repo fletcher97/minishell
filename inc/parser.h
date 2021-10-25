@@ -70,9 +70,8 @@ typedef struct s_input
 typedef struct s_cmd
 {
 	char	*line;
-	char	*cmd;
+	char	**cmd;
 	char	cmd_flags;
-	t_list	*args;
 	t_input	in;
 }				t_cmd;
 
@@ -81,6 +80,8 @@ char		*proc_q(char *str, t_commands *cmd);
 int			split_cmd(t_tree *t, char *c, int i);
 int			parse_op(t_tree *t);
 int			expand(t_tree *t);
+int			word_split(t_tree *t);
+int			unmask(t_tree *t);
 void		free_command(t_commands *cmd);
 
 #endif

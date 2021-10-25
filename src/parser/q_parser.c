@@ -17,6 +17,38 @@
 
 #include "stdlib.h"
 
+static int	unmask_str(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = -1;
+	while (str[++i])
+		str[i] &= ~0x80;
+	return (1);
+}
+
+int	unmask(t_tree *t)
+{
+	t_cmd	*cmd;
+	int		i;
+
+	cmd = (t_cmd *)t->content;
+	i = -1;
+	if (cmd && cmd->line)
+		unmask_str(cmd->line);
+	if (cmd && cmd->cmd)
+		while (cmd->cmd[++i])
+			if (!unmask_str(cmd->cmd[i]))
+				return (0);
+	i = 0;
+	while (i < t->lcount)
+		if (!unmask(t->leafs[i++]))
+			return (0);
+	return (1);
+}
+
 static char	*rem_q(char *str, int count)
 {
 	char	*ret;

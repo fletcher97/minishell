@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <ft_stdlib.h>
+
 #include "ft_string.h"
 
 #include "parser.h"
@@ -18,14 +20,20 @@
 static void	free_cmd(void *v)
 {
 	t_cmd	*cmd;
+	int		i;
 
 	if (!v)
 		return ;
 	cmd = (t_cmd *)v;
 	if (cmd->line)
 		free(cmd->line);
-	if (cmd->args)
-		ft_lstclear(&cmd->args, free);
+	i = -1;
+	if (cmd->cmd)
+	{
+		while (cmd->cmd[++i])
+			free(cmd->cmd[i]);
+		free(cmd->cmd);
+	}
 	if (cmd->in.input)
 		ft_lstclear(&cmd->in.input, free);
 	if (cmd->in.heredoc)
@@ -63,7 +71,10 @@ t_commands	*parse(const char *str)
 		cmd->error = 1000;
 	if (cmd->error)
 		return (cmd);
+	if (!word_split(cmd->tree))
+		cmd->error = 10000;
+	if (cmd->error)
+		return (cmd);
+	unmask(cmd->tree);
 	return (cmd);
 }
-// Missing
-// word_splitting(str, cmd);

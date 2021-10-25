@@ -34,9 +34,11 @@ void print_tree(t_tree *t, int lvl)
 			printf(" RES ");
 		if (cmd->cmd_flags & 0x40)
 			printf(" PIPE ");
-		if (cmd->line)
-			printf("] cmd: ---%s---", cmd->line);
-		printf("in:{ INPUT:[");
+		printf("] line: ---%s--- cmd: [", cmd->line);
+		if (cmd->cmd)
+			for (int i = 0; cmd->cmd[i]; i++)
+				printf(" ---%s--- ", cmd->cmd[i]);
+		printf("] in:{ INPUT:[");
 		for (t_list *l = cmd->in.input; l; l = l->next)
 			printf(" %s ", (char*)l->content);
 		printf("] HEREDOC:[");
