@@ -80,7 +80,7 @@ ASAN += -fsanitize=pointer-subtract -fsanitize=pointer-compare
 # Technicaly UBSan but works with ASan
 ASAN += -fsanitize=undefined
 # Technicaly LSan but works with ASan
-ASAN += -fsanitize=leak
+# ASAN += -fsanitize=leak
 # Thread sanitizing flags
 TSAN := -fsanitize=thread
 # Memory sanitizing flags
