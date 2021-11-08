@@ -14,6 +14,7 @@
 # define COMMANDS_H
 
 # include <limits.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
