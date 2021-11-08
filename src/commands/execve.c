@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/20 18:50:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:18:54 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 //calls such as ls, wc, etc, and executable programs calls with "./" or "a.out")
 static char	*path_creation(char *path, char *cmd)
 {
-	char	*temp;
-	char	*new_path;
+	char		*temp;
+	char		*new_path;
+	t_dl_list	*head;
 
+	head = g_mini.env;
 	if (!ft_strncmp(cmd, "./", 2) || ft_strcmp(cmd, "a.out"))
 		new_path = ft_strjoin(return_env_content(g_mini.env, "PWD"), ++cmd);
 	else
@@ -28,6 +30,7 @@ static char	*path_creation(char *path, char *cmd)
 		free(temp);
 		temp = NULL;
 	}
+	g_mini.env = head;
 	return (new_path);
 }
 
@@ -59,6 +62,8 @@ static int	path_creation_loop(char **cmds, char **path, char *cmd)
 //The execve function is used to execute various commands such as ls, wc, grep
 //etc. This commands are not mandatory but will improve the user experience and
 //they will help during the program evaluation.
+// if (ft_strcmp(cmd[0], "ls"))
+// 	cmd[1] = getcwd(g_mini.str, PATH_MAX);
 void	ft_execve(char **argv, int i)
 {
 	char	*path;
@@ -72,8 +77,6 @@ void	ft_execve(char **argv, int i)
 	if (!argv[i])
 		return ;
 	cmd = (char *[]){argv[i], argv[i + 1], NULL};
-	if (ft_strcmp(cmd[0], "ls"))
-		cmd[1] = getcwd(g_mini.str, PATH_MAX);
 	if (fork() == 0)
 	{
 		j = path_creation_loop(cmd, paths, cmd[i]);
@@ -83,5 +86,4 @@ void	ft_execve(char **argv, int i)
 	}
 	else
 		wait(&g_mini.errno);
-	printf("ES = |%d|\n", g_mini.errno);
 }

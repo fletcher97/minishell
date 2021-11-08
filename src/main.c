@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/18 17:19:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 14:25:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_mini	g_mini;
 static void	screening_two(int i)
 {
 	if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
-		ft_pwd(g_mini.env);
+		ft_pwd();
 	else if (ft_strcmp(g_mini.argv[i], "export"))
 		ft_export(g_mini.argv);
 	else if (ft_strcmp(g_mini.argv[i], "node"))

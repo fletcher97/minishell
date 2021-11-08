@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:29 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:28:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:10:51 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 //Print the content of the environmental variable "PWD" from the internal
 //env list (dual linked list).
 
-void	ft_pwd(t_dl_list *env)
+int	ft_pwd(void)
 {
-	print_env_content(env, "PWD", 'n');
-	printf("\n");
+	char	pwd[PATH_MAX];
+
+	if (!getcwd(pwd, PATH_MAX))
+		return (-1);
+	printf("%s\n", pwd);
+	return (1);
 }
 
 //Exit function is used to flag the exit call to make sure that the main func

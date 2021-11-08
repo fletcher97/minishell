@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/20 16:34:13 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 14:24:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			ft_export(char **argv);
 void		ft_execve(char **argv, int i);
 
 //PWD and Exit cmd functions
-void		ft_pwd(t_dl_list *env);
+int			ft_pwd(void);
 void		ft_exit(void);
 
 //Signal functions

@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:59:39 by fferreir          #+#    #+#             */
-/*   Updated: 2021/10/20 17:04:06 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:19:24 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_dl_list	*get_env(char **env)
 //The Check Env names will replace the content of the provided env variable
 //'name; if found on the internal environmental list with the provided
 //string 'content'.
+//free(g_mini.env->content);
 int	check_env_names(char *name, char *content)
 {
 	t_dl_list	*head;
@@ -94,7 +95,6 @@ int	check_env_names(char *name, char *content)
 	{
 		if (ft_strcmp(name, g_mini.env->name))
 		{
-			free(g_mini.env->content);
 			g_mini.env->content = content;
 			g_mini.env = head;
 			return (1);

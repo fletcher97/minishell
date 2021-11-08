@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:44 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 16:19:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 14:25:30 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	screening_pipe(int i)
 	if (g_mini.argv)
 	{
 		if (ft_strcmp(g_mini.argv[i], "pwd"))
-			ft_pwd(g_mini.env);
+			ft_pwd();
 		else if (ft_strcmp(g_mini.argv[i], "echo"))
 			ft_echo(g_mini.argv);
 		else if (ft_strcmp(g_mini.argv[i], "cd"))
