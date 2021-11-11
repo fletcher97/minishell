@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asan.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42lisboa.c      +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/05 22:29:10 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/10/26 18:24:10 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,5 @@ const char	*__asan_default_options(void)
 		strict_init_order=1:\
 		detect_invalid_pointer_pairs=9:\
 		halt_on_error=0\
-		detect_leaks=1\
 		use_unaligned=1");
 }

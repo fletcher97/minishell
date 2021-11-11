@@ -6,42 +6,14 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:27:55 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/20 16:52:49 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commands.h"
 
-void	print_env_content(t_dl_list *lst, char *name, char free_name)
-{
-	char	*content;
-
-	content = NULL;
-	if (return_env_content(lst, name))
-	{
-		content = return_env_content(lst, name);
-		if (content == NULL)
-			printf("\n");
-		else
-			printf("%s", content);
-	}
-	if (free_name == 'y')
-		free(name);
-}
-
-char	*return_env_content(t_dl_list *lst, char *name)
-{
-	while (lst)
-	{
-		if (ft_strcmp(lst->name, name))
-			break ;
-		if (lst->next == NULL)
-			return (NULL);
-		lst = lst->next;
-	}
-	return (lst->content);
-}
-
+//The Env Flag Check function will check for the requested env on out internal
+//and it will return its name.
 static char	*env_flag_check(char **argv, int i)
 {
 	char	*env_name;
@@ -59,6 +31,8 @@ static char	*env_flag_check(char **argv, int i)
 	return (NULL);
 }
 
+//The Echo Flag function checks for the env varible flag ($) and the exit status
+//($?). It will return its content if it finds it on the program internal list.
 static void	echo_flag(char **argv, int i, int j, int k)
 {
 	if (i > k)
@@ -66,7 +40,9 @@ static void	echo_flag(char **argv, int i, int j, int k)
 		j = k;
 		while (i > j)
 		{
-			if (env_flag_check(argv, j) != NULL)
+			if (ft_strcmp(argv[j], "$?"))
+				printf("%d", g_mini.errno);
+			else if (env_flag_check(argv, j) != NULL)
 				print_env_content(g_mini.env, env_flag_check(argv, j), 'y');
 			else
 				printf("%s", argv[j]);
@@ -78,6 +54,9 @@ static void	echo_flag(char **argv, int i, int j, int k)
 	}
 }
 
+//The Echo command function is used to print the inputed arguments provided.
+//It will check for the '-n' flag which removes the new line.
+//It will also print environmental varible if they are called.
 void	ft_echo(char **argv)
 {
 	int	i;

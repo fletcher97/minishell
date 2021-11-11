@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:29:25 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/10/18 17:25:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_mini
 	int			pid;
 	int			exit;
 	int			nbr_arg;
+	int			errno;
 	t_cd		*cd;
 	t_dl_list	*env;
 	t_dl_list	*head;

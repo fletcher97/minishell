@@ -6,77 +6,19 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/10/24 07:00:17 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/11/11 22:45:28 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-void print_tree(t_tree *t, int lvl)
-{
-	printf("%*s[%p] \n", lvl, "", t);
-	t_cmd *cmd= (t_cmd*)t->content;
-	if (cmd)
-	{
-		printf("%*s{flags:[", lvl, "");
-		if (cmd->cmd_flags & 1)
-			printf(" WILDE ");
-		if (cmd->cmd_flags & 2)
-			printf(" EXITE ");
-		if (cmd->cmd_flags & 4)
-			printf(" AND ");
-		if (cmd->cmd_flags & 8)
-			printf(" OR ");
-		if (cmd->cmd_flags & 0x10)
-			printf(" END ");
-		if (cmd->cmd_flags & 0x20)
-			printf(" RES ");
-		if (cmd->cmd_flags & 0x40)
-			printf(" PIPE ");
-		printf("] line: ---%s--- cmd: [", cmd->line);
-		if (cmd->cmd)
-			for (int i = 0; cmd->cmd[i]; i++)
-				printf(" ---%s--- ", cmd->cmd[i]);
-		printf("] in:{ INPUT:[");
-		for (t_list *l = cmd->in.input; l; l = l->next)
-			printf(" %s ", (char*)l->content);
-		printf("] HEREDOC:[");
-		for (t_list *l = cmd->in.heredoc; l; l = l->next)
-			printf(" %s ", (char*)l->content);
-		printf("] OUTPUT:[");
-		for (t_list *l = cmd->in.output; l; l = l->next)
-			printf(" %s ", (char*)l->content);
-		printf("] APPEND:[");
-		for (t_list *l = cmd->in.append; l; l = l->next)
-			printf(" %s ", (char*)l->content);
-		printf("] in:");
-		if (cmd->in.in)
-			printf(" %s", (char*)((t_list*)cmd->in.in)->content);
-		printf(" out:");
-		if (cmd->in.out)
-			printf(" %s", (char*)((t_list*)cmd->in.out)->content);
-		printf(" }\n");
-	}
-	else
-		printf("%*s{}\n", lvl, "");
-	for (int i = 0; i < t->lcount; i++)
-		print_tree(t->leafs[i], lvl + 1);
-}
-
-void print_cmd(t_commands *cmd)
-{
-	printf("Error: %d\n", cmd->error);
-	printf("Line: %s\n", cmd->line);
-	print_tree(cmd->tree, 0);
-}
-
 t_mini	g_mini;
 
 static void	screening_two(int i)
 {
 	if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
-		ft_pwd(g_mini.env);
+		ft_pwd();
 	else if (ft_strcmp(g_mini.argv[i], "export"))
 		ft_export(g_mini.argv);
 	else if (ft_strcmp(g_mini.argv[i], "node"))
@@ -122,6 +64,7 @@ static void	struct_init(char **env)
 	g_mini.pid = getpid();
 	g_mini.env = get_env(env);
 	g_mini.exit = 0;
+	g_mini.errno = 0;
 }
 
 //The input loop is used to cut down some lines on the main function body.

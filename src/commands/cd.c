@@ -6,106 +6,47 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:27:48 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:14:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commands.h"
 
-static char	*get_path(t_cd *cd)
+//The Change Directory fucntion is responsible to change the directory accordin-
+//gly to the path provided by the used input and passed by the ft_cd functon.
+//It will return "-1" if system function chdir does not resolve successfully.
+static int	change_directory(t_dl_list *head, char *path)
 {
-	char	*path;
-	int		i;
+	char	old_pwd[PATH_MAX];
+	int		ret;
 
-	i = 1;
-	path = ft_strjoin("/", g_mini.argv[i]);
-	while (g_mini.argv[i + 1] != NULL)
+	if (!getcwd(old_pwd, PATH_MAX))
+		return (-1);
+	if (ft_strcmp(path, "~") || path == NULL || !ft_strlen(path))
+		path = ft_strdup(return_env_content(g_mini.env, "HOME"));
+	else if (!ft_strncmp(path, "~", 1))
+		path = ft_strjoin(return_env_content(g_mini.env, "HOME"), ++path);
+	else if (ft_strcmp(path, "-"))
+		path = ft_strdup(return_env_content(g_mini.env, "OLDPWD"));
+	ret = chdir(path);
+	g_mini.env = head;
+	if (ret > -1)
 	{
-		path = ft_strjoin(path, " ");
-		path = ft_strjoin(path, g_mini.argv[i + 1]);
-		i++;
-	}
-	path = ft_strjoin(cd->pwd, path);
-	return (path);
-}
-
-static void	change_path(t_cd *cd)
-{
-	char	*str;
-
-	str = NULL;
-	str = getcwd(str, PATH_MAX);
-	cd->tmp = g_mini.env;
-	cd->pwd = ft_strdup(str);
-	cd->path1 = get_path(cd);
-	chdir(cd->path1);
-	check_env_names("PWD", cd->path1);
-	check_env_names("OLDPWD", cd->pwd);
-	g_mini.env = g_mini.head;
-}
-
-static int	len_char_back(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	while ((str[i] != c))
-		i--;
-	return (i);
-}
-
-static void	ft_cd_back(t_cd *cd)
-{
-	char	*str;
-	char	*old_pwd;
-
-	str = NULL;
-	g_mini.head = g_mini.env;
-	cd->backup = return_env_content(cd->tmp, "OLDPWD");
-	str = getcwd(str, PATH_MAX);
-	old_pwd = str;
-	if (!ft_strncmp(str, cd->backup, ft_strcmp(str, cd->backup)))
-	{
-		cd->path1 = ft_substr(str, 0, len_char_back(str, '/'));
-		chdir(cd->path1);
-		check_env_names("PWD", cd->path1);
+		check_env_names("PWD", path);
 		check_env_names("OLDPWD", old_pwd);
 	}
-	else
-	{
-		if (!(chdir(cd->tmp->content)))
-			printf("cd: no such file or directory: %s\n", \
-				(char *)cd->tmp->content);
-	}
-	g_mini.env = g_mini.head;
+	return (ret);
 }
 
+//The cd function is reponsible to forward the path and/or arguments list
+//to the change_directory function. It will be used to receive the return
+//value so it can be fowarded to the internal exit status variable.
 void	ft_cd(char **argv)
 {
-	t_cd	cd;
-	char	*str;
-	char	*home;
-	int		i;
+	t_dl_list	*head;
+	int			ret;
 
-	home = NULL;
-	str = NULL;
-	g_mini.head = g_mini.env;
-	cd.tmp = g_mini.env;
-	home = getcwd(home, PATH_MAX);
-	i = 0;
-	if (!argv[1])
-	{
-		str = return_env_content(g_mini.env, "HOME");
-		chdir(str);
-		check_env_names("PWD", str);
-		g_mini.env = g_mini.head;
-		check_env_names("OLDPWD", home);
-		g_mini.env = g_mini.head;
-	}
-	else if (ft_strcmp(argv[1], ".."))
-		ft_cd_back(&cd);
-	else
-		change_path(&cd);
+	head = g_mini.env;
+	ret = change_directory(head, argv[1]);
+	g_mini.errno = ret;
 }
