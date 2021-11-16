@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 06:20:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/24 07:49:42 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/11/16 02:45:36 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,53 @@ static char	*replace(char *s1, const char *s2, int pos, int len)
 {
 	char	*t1;
 	char	*t2;
+	char	*mask;
+	int		i;
 
 	t1 = ft_substr(s1, 0, pos);
-	t2 = ft_strjoin(t1, s2);
+	mask = ft_strdup(s2);
+	i = -1;
+	if (len & INT_MIN)
+		while (mask[++i])
+			mask[i] |= 0x80;
+	t2 = ft_strjoin(t1, mask);
+	free(mask);
 	free(t1);
-	t1 = ft_strjoin(t2, s1 + pos + len);
+	t1 = ft_strjoin(t2, s1 + pos + (len & INT_MAX));
 	free(t2);
 	return (t1);
 }
 
-static int	expand1(char **s, int start, t_cmd *cmd)
+static int	expand1(char **str, int start, t_cmd *cmd, int i)
 {
-	int		i;
-	char	*str;
+	char	*s;
 	char	*big;
 	char	*var;
 
 	i = start - 1;
-	str = *s;
-	if (str[i + 1] == '?')
+	s = *str;
+	if ((s[i + 1] & 0x7F) == '?')
 		cmd->cmd_flags |= 2;
-	if (str[i + 1] == '?')
+	if ((s[i + 1] & 0x7F) == '?')
 		return (0);
-	while (ft_isalnum(str[++i]) || str[i] == '_')
+	while (ft_isalnum((s[++i] & 0x7F)) || (s[i] & 0x7F) == '_')
 		;
 	i -= start;
-	var = ft_substr(str, start, i);
+	if (!i)
+		return (0);
+	var = ft_substr(s, start, i);
+	unmask_str(var);
 	big = ft_listget_dl(var, g_mini.env);
 	free(var);
 	if (!big)
 		return (0);
-	*s = replace(str, big, start - 1, i + 1);
+	*str = replace(s, big, start - 1, (i + 1) + ((s[start] & 0x80) * 16777216));
 	i = ft_abs(i - ft_strlen(big));
-	free(str);
+	free(s);
 	return (i);
 }
 
-char	*expand_cmd(char *s, t_cmd *cmd)
+static char	*expand_cmd(char *s, t_cmd *cmd)
 {
 	int	i;
 
@@ -72,8 +82,8 @@ char	*expand_cmd(char *s, t_cmd *cmd)
 		(s[i >> 1] == '\'') && (i ^= 1);
 		if (i & 1)
 			continue ;
-		if (s[i >> 1] == '$')
-			i += (expand1(&s, (i >> 1) + 1, cmd) << 1);
+		if ((s[i >> 1] & 0x7F) == '$')
+			i += (expand1(&s, (i >> 1) + 1, cmd, 0) << 1);
 		else if (s[i >> 1] == '*')
 			cmd->cmd_flags |= 1;
 	}
