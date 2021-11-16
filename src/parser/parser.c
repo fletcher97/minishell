@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/24 07:49:19 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/11/16 02:49:27 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	free_command(t_commands *cmd)
 {
 	free(cmd->line);
 	ft_treeclear(cmd->tree, free_cmd);
+	free(cmd);
 }
 
 t_commands	*parse(const char *str)
