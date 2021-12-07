@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/20 14:02:23 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/07 03:37:18 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_commands	*parse(const char *str)
 	t_commands	*cmd;
 
 	cmd = validate(str);
-	if (cmd->error)
+	if (!cmd || cmd->error)
 		return (cmd);
 	cmd->tree = ft_treenew(NULL);
 	cmd->line = proc_q(ft_strdup(str), cmd);
