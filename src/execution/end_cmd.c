@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:50:12 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 17:28:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:15:14 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	close(fd[0]);
 	if (cmd->in.in)
 	{
-		input = file_input(cmd->in.input);
+		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 		if (input > 0)
 			dup2(input, 0);
 		else
 			return (-1);
 	}
-	else
+	else if (g_mini.saved_fd > 0)
 	{
 		if (dup2(g_mini.saved_fd, 0) == -1)
 			printf("Error: Bad dup2 on saved_fd to 0 end multi cmd function");
@@ -46,15 +46,14 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	close(fd[0]);
 	if (cmd->in.in)
 	{
-		input = file_input(cmd->in.input);
+		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 		if (input > 0)
 			dup2(input, 0);
 		else
 			return (-1);
 	}
-	else
+	else if (g_mini.saved_fd > 0)
 	{
-		printf("saved fd = %d\n", g_mini.saved_fd);
 		if (dup2(g_mini.saved_fd, 0) == -1)
 			printf("Error: Bad dup2 on s_fd to 0 end multi cmd child func\n");
 	}
@@ -91,6 +90,7 @@ int	end_multi_cmd(t_cmd *cmd, int fd[2])
 		close(fd[0]);
 		exit_status = wait(0);
 		close(g_mini.saved_fd);
+		printf("EXIT END = %d\n", exit_status);
 	}
 	return (exit_status);
 }

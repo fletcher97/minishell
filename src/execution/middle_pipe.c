@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 17:38:17 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 18:43:51 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:37:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	file_input_instruction(t_cmd *cmd, int input)
 {
-	input = file_input(cmd->in.input);
+	input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 	if (input > 0)
 	{
 		dup2(input, 0);

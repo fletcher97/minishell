@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:23:59 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 18:51:55 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:13:22 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,12 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	close(fd[0]);
 	if (cmd->in.in)
 	{
-		input = file_input(cmd->in.input);
-		printf("INPUT = %d\n", input);
-		if (input == -1)
+		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
+		if (input < 0)
 			return (-1);
 	}
 	if (cmd->in.out)
-	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		printf("OUTPUT = %d\n", output);
-	}
 	else
 	{
 		if (dup2(fd[1], 1) == -1)
@@ -42,7 +38,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	close(fd[0]);
 	if (cmd->in.in)
 	{
-		input = file_input(cmd->in.input);
+		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 		if (input > 0)
 			dup2(input, 0);
 		else
@@ -51,7 +47,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output)
+		if (output > 0)
 			dup2(output, 1);
 	}
 	else

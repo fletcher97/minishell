@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:48:05 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 17:34:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:55:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int	fd_mng_builtins(t_cmd *cmd, int input, int output)
 {
 	if (cmd->in.in)
 	{
-		input = file_input(cmd->in.input);
-		if (input == -1)
+		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
+		if (input < 0)
 			return (-1);
 	}
 	if (cmd->in.out)
@@ -30,15 +30,19 @@ static int	fd_mng_child_process(t_cmd *cmd, int input, int output)
 {
 	if (cmd->in.in)
 	{
-		input = file_input(cmd->in.input);
-		if (input)
+		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
+		if (input > 0)
 			dup2(input, 0);
+		else
+			return (-1);
 	}
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output)
+		if (output > 0)
 			dup2(output, 1);
+		else
+			return (-1);
 	}
 	cmd_selector(cmd->cmd);
 	exit_fork();

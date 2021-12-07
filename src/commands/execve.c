@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/08 15:18:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/25 17:03:24 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static char	*path_creation(char *path, char *cmd)
 //The path creation loop function is mainly used to cut down lines on the execve
 //function body. It will loop through all the possible path's found in the env
 //"PATH" ($PATH) and try to run each of them with the inputed command.
+//NOTA IMPORTANTE-> Criar copia do env interno em forma de table e null
+//terminated e pasar para execve!
 static int	path_creation_loop(char **cmds, char **path, char *cmd)
 {
 	char	*total;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/11 21:36:40 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/02 19:17:23 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 # include "ft_list.h"
 # include "ft_stdlib.h"
 # include "ft_string.h"
 
 # include "commands.h"
+# include "execution.h"
 # include "minishell.h"
+# include "parser.h"
 
 // Error codes
 # define CHAR_UNHANDLED 1
@@ -44,14 +47,25 @@ t_dl_list	*get_env(char **env);
 void		free_list_nodes(t_dl_list *lst);
 void		free_argv(void);
 void		free_dl_list(t_dl_list *lst);
+void		delete_temp(char *path);
 
 //Main utils functions
 int			args_counter(void);
 
-//Parser functions
-int			find_special(void);
+//Fork Functions
+void		exit_fork(void);
 
-//Piper functions
-int			piper(int i);
+//cmd exec
+int			file_input(t_list *input, t_list *heredoc, t_list *in);
+int			file_output(t_list *output, t_list *append, t_list *final_output);
+
+//Selector functions
+int			screening_one(char **argv);
+void		cmd_selector(char **argv);
+int			cmd_identifier(char **argv);
+
+//Heredoc creation functions
+char		*temp_path(char *filename, char *home);
+void		check_heredoc(t_tree *t);
 
 #endif

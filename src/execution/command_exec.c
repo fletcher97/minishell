@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:51:31 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 18:20:25 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:11:11 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	command_exec(t_cmd *cmd)
 	}
 	else
 		command_exec2(cmd);
-	g_mini.first_cmd = 0;
+	if (cmd->cmd_flags & 0x20)
+		g_mini.first_cmd = 1;
+	else
+		g_mini.first_cmd = 0;
 }
-	// if (cmd->cmd_flags & 0x40)
-	// 	g_mini.exit_status = pipe_command(cmd, fd);

@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:28:26 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 19:30:06 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/11/26 15:07:39 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	screening_two(int i)
 {
-	if (ft_strcmp(g_mini.argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
+	if (ft_strcmp(g_mini.argv[i], "pwd"	))
 		ft_pwd();
 	else if (ft_strcmp(g_mini.argv[i], "export"))
 		ft_export(g_mini.argv);
