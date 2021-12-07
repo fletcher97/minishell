@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 17:38:17 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 16:37:52 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:37:29 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output)
-			dup2(output, 1);
+		if (output > 0 && dup2(output, 1) < 0)
+			printf("Error : bad dup2 on output to 1 on pipe cmd function\n");
 	}
 	else
 	{

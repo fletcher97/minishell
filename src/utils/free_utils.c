@@ -6,11 +6,33 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:28:46 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:27:57 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utilities.h"
+
+void	delete_temp(char *path)
+{
+	char	*file_path;
+	int		i;
+
+	if (!path)
+		return ;
+	i = -1;
+	while (++i < (g_mini.file_counter))
+	{
+		if (g_mini.hdoc_files[i] != ft_itoa(i))
+		{
+			file_path = ft_strjoin(path, g_mini.hdoc_files[i]);
+			printf("FILE DELETED = %s ;; PATH = %s\n", g_mini.hdoc_files[i], file_path);
+			unlink(file_path);
+			free(file_path);
+			free(g_mini.hdoc_files[i]);
+			g_mini.hdoc_files[i] = ft_itoa(i);
+		}
+	}
+}
 
 //The free list node will receive a dual linked list and it will free up all its
 //nodes. No malloc used on the nodes content will be freed.
@@ -58,16 +80,18 @@ void	free_dl_list(t_dl_list *lst)
 	if (lst == NULL)
 	{
 		free(lst);
-		lst = NULL;
 		return ;
 	}
 	while (1)
 	{
 		temp = lst->next;
-		free(lst->content);
-		lst->content = NULL;
-		free(lst->name);
-		lst->name = NULL;
+		if (lst)
+		{
+			free(lst->content);
+			lst->content = NULL;
+			free(lst->name);
+			lst->name = NULL;
+		}
 		if (lst->next == NULL)
 		{
 			free(lst);

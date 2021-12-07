@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:50:12 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 15:15:14 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:31:33 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,19 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	if (cmd->in.in)
 	{
 		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
-		if (input > 0)
-			dup2(input, 0);
-		else
+		if (input > 0 && dup2(input, 0) < 0)
+		{
+			printf("Error: Bad dup2 on input to 0 end multi cmd function");
 			return (-1);
+		}
 	}
-	else if (g_mini.saved_fd > 0)
-	{
-		if (dup2(g_mini.saved_fd, 0) == -1)
-			printf("Error: Bad dup2 on saved_fd to 0 end multi cmd function");
-	}
+	else if (g_mini.saved_fd > 0 && dup2(g_mini.saved_fd, 0) < 0)
+		printf("Error: Bad dup2 on saved_fd to 0 end multi cmd function");
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output > 0)
-			dup2(output, 1);
+		if (output > 0 && dup2(output, 1) < 0)
+			printf("Error: Bad dup2 on output to 0 end multi cmd function");
 	}
 	screening_one(cmd->cmd);
 	close(g_mini.saved_fd);
@@ -47,21 +45,19 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	if (cmd->in.in)
 	{
 		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
-		if (input > 0)
-			dup2(input, 0);
-		else
+		if (input > 0 && dup2(input, 0) < 0)
+		{
+			printf("Error: Bad dup2 on inpt to 0 end multi cmd child func");
 			return (-1);
+		}
 	}
-	else if (g_mini.saved_fd > 0)
-	{
-		if (dup2(g_mini.saved_fd, 0) == -1)
-			printf("Error: Bad dup2 on s_fd to 0 end multi cmd child func\n");
-	}
+	else if (g_mini.saved_fd > 0 && dup2(g_mini.saved_fd, 0) < 0)
+		printf("Error: Bad dup2 on s_fd to 0 end multi cmd child func\n");
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output > 0)
-			dup2(output, 1);
+		if (output > 0 && dup2(output, 1) < 0)
+			printf("Error: Bad dup2 on outp to 0 end multi cmd child func");
 	}
 	cmd_selector(cmd->cmd);
 	exit_fork();
@@ -90,7 +86,6 @@ int	end_multi_cmd(t_cmd *cmd, int fd[2])
 		close(fd[0]);
 		exit_status = wait(0);
 		close(g_mini.saved_fd);
-		printf("EXIT END = %d\n", exit_status);
 	}
 	return (exit_status);
 }
