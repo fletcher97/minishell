@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/07 17:20:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:54:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	struct_init(char **env)
 		g_mini.hdoc_files[i] = ft_itoa(i);
 	g_mini.hdoc_files[i] = NULL;
 	g_mini.file_counter = 0;
+	g_mini.and_or_flag = 0;
+	g_mini.stop = 0;
 }
 
 void	printing(t_tree *t)
@@ -55,15 +57,8 @@ void	printing(t_tree *t)
 		command_exec(cmd);
 	}
 	else
-		for (int i = 0; i < t->lcount; i++)
-		{
-			if (g_mini.exit_status == -1)
-			{
-				printf("EXIT = %d\n", g_mini.exit_status);
-				return ;
-			}
+		while (++i < t->lcount)
 			printing(t->leafs[i]);
-		}
 }
 
 //The input loop is used to cut down some lines on the main function body.
@@ -87,6 +82,8 @@ static void	input_loop(char *input)
 	delete_temp(g_mini.temp_path);
 	g_mini.hdoc_counter = 0;
 	g_mini.file_counter = 0;
+	g_mini.and_or_flag = 0;
+	g_mini.stop = 0;
 	input = NULL;
 }
 
