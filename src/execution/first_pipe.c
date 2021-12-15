@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:23:59 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/06 17:13:22 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:11:30 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	first_cmd_pipe(t_cmd *cmd, int fd[2])
 	exit_status = 0;
 	input = 0;
 	output = 0;
+	printf("CMD LINE = %s\n", cmd->line);
 	pipe(fd);
 	if (!cmd_identifier(cmd->cmd))
 		return (fd_mng_builtins(cmd, fd, input, output));
@@ -81,6 +82,7 @@ int	first_cmd_pipe(t_cmd *cmd, int fd[2])
 	{
 		close(fd[1]);
 		exit_status = wait(0);
+		printf("ES = %d for %s\n", exit_status, cmd->line);
 		g_mini.saved_fd = fd[0];
 	}
 	return (exit_status);
