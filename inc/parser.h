@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 19:00:13 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/11 22:43:59 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/11/20 14:39:04 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ int			word_split(t_tree *t);
 int			unmask(t_tree *t);
 void		free_command(t_commands *cmd);
 void		print_cmd(t_commands *cmd);
+int			unmask_str(char *str);
+t_commands	*validate(const char *str);
 
 #endif

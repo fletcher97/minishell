@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/24 08:04:04 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/11/16 02:16:23 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "stdlib.h"
 
-static int	unmask_str(char *str)
+int	unmask_str(char *str)
 {
 	int	i;
 
@@ -25,7 +25,10 @@ static int	unmask_str(char *str)
 		return (0);
 	i = -1;
 	while (str[++i])
-		str[i] &= ~0x80;
+	{
+		(str[i] &= 0x7F);
+		!str[i] && (str[i] = '$');
+	}
 	return (1);
 }
 
@@ -93,9 +96,11 @@ char	*proc_q(char *str, t_commands *cmd)
 		(*c == '\"') && !(q & S) && ((q ^= D | Q) || 1) && (count++);
 		(*c == '$') && !(q & S) && (q |= V);
 		(ft_strchr(" \'\"\\;&|", *c)) && (q &= ~V);
-		(*c == '\\') && !(q & S) && (ft_strchr("$\\\"", *(c + 1))) &&
+		(*c == '\\') && !(q & S) && (ft_strchr("\\\"", *(c + 1))) &&
 			(*(c++)) && (count++);
-		(*c) && (q & (S | D)) && !(q & Q) && (*c |= 0x80);
+		(*c == '\\') && !(q & S) && ('$' == *(c + 1)) && (c++) && (*c = 0x80);
+		(*c == '$') && (q & S) && (*c = 0x80);
+		(*c & 0x7F) && (q & (S | D)) && !(q & Q) && (*c |= 0x80);
 	}
 	if (q & (S | D))
 		cmd->error = QUOTES_OPEN;
