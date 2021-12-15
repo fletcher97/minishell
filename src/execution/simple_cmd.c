@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:48:05 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 16:55:21 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:40:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,12 @@ int	simple_command(t_cmd *cmd)
 	int	input;
 	int	output;
 
+	if (g_mini.stop)
+		return (g_mini.exit_status);
 	exit_status = 0;
 	input = 0;
 	output = 0;
+	printf("CMD LINE S = %s\n", cmd->line);
 	if (!cmd_identifier(cmd->cmd))
 		return (fd_mng_builtins(cmd, input, output));
 	pid = fork();
@@ -66,5 +69,8 @@ int	simple_command(t_cmd *cmd)
 		return (fd_mng_child_process(cmd, input, output));
 	else
 		exit_status = wait(0);
+	if (exit_status < 0)
+		g_mini.stop = 1;
+	printf("ES = %d for %s\n", exit_status, cmd->line);
 	return (exit_status);
 }

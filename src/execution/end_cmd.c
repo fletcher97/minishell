@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:50:12 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 17:31:33 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:57:54 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,12 @@ int	end_multi_cmd(t_cmd *cmd, int fd[2])
 	int	output;
 	int	input;
 
+	if (g_mini.stop)
+		return (g_mini.exit_status);
 	exit_status = 0;
 	input = 0;
 	output = 0;
+	printf("CMD LINE E = %s\n", cmd->line);
 	pipe(fd);
 	pid = fork();
 	if (!cmd_identifier(cmd->cmd))
@@ -85,7 +88,10 @@ int	end_multi_cmd(t_cmd *cmd, int fd[2])
 		close(fd[1]);
 		close(fd[0]);
 		exit_status = wait(0);
+		printf("ES = %d for %s\n", exit_status, cmd->line);
 		close(g_mini.saved_fd);
 	}
+	if (exit_status < 0)
+		g_mini.stop = 1;
 	return (exit_status);
 }
