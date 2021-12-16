@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/16 02:49:27 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/07 03:37:18 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ t_commands	*parse(const char *str)
 {
 	t_commands	*cmd;
 
-	cmd = calloc(1, sizeof(t_commands));
+	cmd = validate(str);
+	if (!cmd || cmd->error)
+		return (cmd);
 	cmd->tree = ft_treenew(NULL);
 	cmd->line = proc_q(ft_strdup(str), cmd);
 	if ((split_cmd(cmd->tree, cmd->line, 0) - 1) == (int)ft_strlen(cmd->line))
@@ -74,8 +76,7 @@ t_commands	*parse(const char *str)
 		return (cmd);
 	if (!word_split(cmd->tree))
 		cmd->error = 10000;
-	if (cmd->error)
-		return (cmd);
-	unmask(cmd->tree);
+	if (!cmd->error)
+		unmask(cmd->tree);
 	return (cmd);
 }
