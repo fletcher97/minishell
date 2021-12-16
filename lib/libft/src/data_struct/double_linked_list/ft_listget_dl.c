@@ -15,7 +15,7 @@
 
 void	*ft_listget_dl(const char *key, t_dl_list *l)
 {
-	while (l && ft_memcmp(key, l->name, ft_strlen(key)))
+	while (l && !ft_strcmp(key, l->name))
 		l = l->next;
 	if (l)
 		return (l->content);
