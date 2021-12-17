@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/08 15:14:04 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:34:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ static int	change_directory(t_dl_list *head, char *path)
 //The cd function is reponsible to forward the path and/or arguments list
 //to the change_directory function. It will be used to receive the return
 //value so it can be fowarded to the internal exit status variable.
-void	ft_cd(char **argv)
+int	ft_cd(char **argv)
 {
 	t_dl_list	*head;
-	int			ret;
 
 	head = g_mini.env;
-	ret = change_directory(head, argv[1]);
-	g_mini.errno = ret;
+	return(change_directory(head, argv[1]));
 }
