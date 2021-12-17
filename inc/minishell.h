@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/15 15:33:20 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:53:18 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_mini
 	char		**hdoc_files;
 	int			hdoc_counter;
 	int			file_counter;
-	int			and_or_flag;
+	int			and_flag;
 	int			stop;
 	t_cd		*cd;
 	t_commands	*cmd;
