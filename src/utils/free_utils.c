@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/06 17:27:57 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:10:19 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	delete_temp(char *path)
 		if (g_mini.hdoc_files[i] != ft_itoa(i))
 		{
 			file_path = ft_strjoin(path, g_mini.hdoc_files[i]);
-			printf("FILE DELETED = %s ;; PATH = %s\n", g_mini.hdoc_files[i], file_path);
 			unlink(file_path);
 			free(file_path);
 			free(g_mini.hdoc_files[i]);
@@ -77,12 +76,7 @@ void	free_dl_list(t_dl_list *lst)
 {
 	t_dl_list	*temp;
 
-	if (lst == NULL)
-	{
-		free(lst);
-		return ;
-	}
-	while (1)
+	while (lst)
 	{
 		temp = lst->next;
 		if (lst)
