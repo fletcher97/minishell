@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:28:26 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/26 15:07:39 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:37:39 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	screening_one(char **argv)
 		else if (ft_strcmp(argv[i], "echo"))
 			ft_echo(argv);
 		else if (ft_strcmp(argv[i], "cd"))
-			ft_cd(argv);
+			i = ft_cd(argv);
 		else if (ft_strcmp(argv[i], " "))
 			printf("\n");
 		else if (ft_strcmp(argv[i], "env"))
