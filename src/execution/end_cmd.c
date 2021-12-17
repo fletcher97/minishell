@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:50:12 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/15 15:57:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 16:07:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 		if (input > 0 && dup2(input, 0) < 0)
 		{
 			printf("Error: Bad dup2 on input to 0 end multi cmd function");
-			return (-1);
+			return (EXIT_FAILURE);
 		}
 	}
 	else if (g_mini.saved_fd > 0 && dup2(g_mini.saved_fd, 0) < 0)
@@ -35,7 +35,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	}
 	screening_one(cmd->cmd);
 	close(g_mini.saved_fd);
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
@@ -48,7 +48,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 		if (input > 0 && dup2(input, 0) < 0)
 		{
 			printf("Error: Bad dup2 on inpt to 0 end multi cmd child func");
-			return (-1);
+			return (EXIT_FAILURE);
 		}
 	}
 	else if (g_mini.saved_fd > 0 && dup2(g_mini.saved_fd, 0) < 0)
@@ -61,37 +61,52 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	}
 	cmd_selector(cmd->cmd);
 	exit_fork();
-	return (1);
+	return (EXIT_FAILURE);
 }
 
+static int	fd_mng_parent_process(int fd[2], int pid)
+{
+	int	status;
+
+	close(fd[1]);
+	close(fd[0]);
+	if (waitpid(pid, &status, 0) == -1)
+	{
+		printf("waitpid failed");
+		return (EXIT_FAILURE);
+	}
+	if (WIFEXITED(status))
+		g_mini.exit_status = WEXITSTATUS(status);
+	close(g_mini.saved_fd);
+	return (EXIT_SUCCESS);
+}
+
+//The End Multi Cmd function manage the 'END' flag from a multi command call
+//with, at least, one pipe on the command line.
+//Also, it manages the input and output file descriptors (FD's).
 int	end_multi_cmd(t_cmd *cmd, int fd[2])
 {
-	int	exit_status;
 	int	pid;
 	int	output;
 	int	input;
 
 	if (g_mini.stop)
-		return (g_mini.exit_status);
-	exit_status = 0;
+		return (--g_mini.stop);
 	input = 0;
 	output = 0;
-	printf("CMD LINE E = %s\n", cmd->line);
 	pipe(fd);
 	pid = fork();
 	if (!cmd_identifier(cmd->cmd))
 		return (fd_mng_builtins(cmd, fd, input, output));
 	if (pid == 0)
-		exit_status = fd_mng_child_process(cmd, fd, input, output);
+	{
+		fd_mng_child_process(cmd, fd, input, output);
+		return (EXIT_FAILURE);
+	}
 	else
 	{
-		close(fd[1]);
-		close(fd[0]);
-		exit_status = wait(0);
-		printf("ES = %d for %s\n", exit_status, cmd->line);
-		close(g_mini.saved_fd);
+		if (fd_mng_parent_process(fd, pid) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
-	if (exit_status < 0)
-		g_mini.stop = 1;
-	return (exit_status);
+	return (EXIT_SUCCESS);
 }
