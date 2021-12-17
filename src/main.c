@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/17 16:59:29 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:54:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	struct_init(char **env)
 		g_mini.hdoc_files[i] = ft_itoa(i);
 	g_mini.hdoc_files[i] = NULL;
 	g_mini.file_counter = 0;
-	g_mini.and_or_flag = 0;
+	g_mini.and_flag = 0;
 	g_mini.stop = 0;
 }
 
@@ -87,7 +87,7 @@ static void	input_loop(char *input)
 	free(input);
 	g_mini.hdoc_counter = 0;
 	g_mini.file_counter = 0;
-	g_mini.and_or_flag = 0;
+	g_mini.and_flag = 0;
 	g_mini.stop = 0;
 	input = NULL;
 }
