@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/25 17:03:24 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:24:55 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,8 @@ void	ft_execve(char **argv, int i)
 	if (!argv[i])
 		return ;
 	cmd = (char *[]){argv[i], argv[i + 1], NULL};
-	if (fork() == 0)
-	{
-		j = path_creation_loop(cmd, paths, cmd[i]);
-		if (j == 0)
-			error_output('c', 0);
-		kill(getpid(), SIGINT);
-	}
-	else
-		wait(&g_mini.errno);
+	j = path_creation_loop(cmd, paths, cmd[i]);
+	if (j == 0)
+		error_output('c', 0);
+	kill(getpid(), SIGINT);
 }
