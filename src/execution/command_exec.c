@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:51:31 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 15:38:37 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:03:29 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static void	command_call2(t_cmd *cmd, int *fd)
 		else
 			end_multi_cmd(cmd, fd);
 		if (g_mini.exit_status != 0)
+		{
 			g_mini.stop++;
+			g_mini.and_flag++;
+		}
 	}
 	else if (cmd->cmd_flags & 8)
 	{
@@ -73,5 +76,10 @@ void	command_exec(t_cmd *cmd)
 	else
 		g_mini.first_cmd = 0;
 	if ((cmd->cmd_flags & 8) && !cmd->cmd[0])
-		g_mini.stop = 0;
+	{
+		if (g_mini.and_flag > 0 && g_mini.stop)
+			g_mini.stop = 0;
+		else
+			g_mini.and_flag--;
+	}
 }
