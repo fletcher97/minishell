@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 17:38:17 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/09 16:11:43 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 16:23:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ static int	file_input_instruction(t_cmd *cmd, int input)
 	input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 	if (input > 0)
 	{
-		dup2(input, 0);
-		return (1);
+		if (dup2(input, 0))
+			return (EXIT_SUCCESS);
 	}
-	else
-		return (-1);
+	return (EXIT_FAILURE);
 }
 
 static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
@@ -29,7 +28,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	if (cmd->in.in)
 	{
 		if (file_input_instruction(cmd, input) < 0)
-			return (-1);
+			return (EXIT_FAILURE);
 	}
 	else
 	{
@@ -49,15 +48,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 			printf("Error : bad dup2 on fd[1] to 1 on pipe cmd function\n");
 	}
 	screening_one(cmd->cmd);
-	return (1);
-}
-
-static void	child_last_instructions(t_cmd *cmd, int fd[2])
-{
-	cmd_selector(cmd->cmd);
-	close(fd[1]);
-	close(fd[0]);
-	exit_fork();
+	return (EXIT_SUCCESS);
 }
 
 static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
@@ -65,7 +56,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	if (cmd->in.in)
 	{
 		if (file_input_instruction(cmd, input) < 0)
-			return (-1);
+			return (EXIT_FAILURE);
 	}
 	else
 	{
@@ -84,33 +75,53 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 		if (dup2(fd[1], 1) == -1)
 			printf("Error : bad dup2 on fd[1] to 1 on pipe cmd function\n");
 	}
-	child_last_instructions(cmd, fd);
-	return (1);
+	cmd_selector(cmd->cmd);
+	return (EXIT_FAILURE);
 }
 
+static int	fd_mng_parent_process(int fd[2], int pid)
+{
+	int	status;
+
+	close(fd[1]);
+	if (waitpid(pid, &status, 0) == -1)
+	{
+		printf("waitpid failed");
+		return (EXIT_FAILURE);
+	}
+	if (WIFEXITED(status))
+		g_mini.exit_status = WEXITSTATUS(status);
+	g_mini.saved_fd = fd[0];
+	return (EXIT_SUCCESS);
+}
+
+//The Pipe command function manages the pipe flag (indicates there are more pipe
+//call after this).
+//Also, it manages the input and output file descriptors (FD's).
 int	pipe_command(t_cmd *cmd, int fd[2])
 {
-	int	exit_status;
 	int	pid;
 	int	input;
 	int	output;
 
-	exit_status = 0;
 	input = 0;
 	output = 0;
-	printf("CMD LINE = %s\n", cmd->line);
 	pipe(fd);
 	pid = fork();
 	if (!cmd_identifier(cmd->cmd))
 		return (fd_mng_builtins(cmd, fd, input, output));
 	if (pid == 0)
-		return (fd_mng_child_process(cmd, fd, input, output));
+	{
+		fd_mng_child_process(cmd, fd, input, output);
+		close(fd[1]);
+		close(fd[0]);
+		exit_fork();
+		return (EXIT_FAILURE);
+	}
 	else
 	{
-		close(fd[1]);
-		exit_status = wait(0);
-		printf("ES = %d for %s\n", exit_status, cmd->line);
-		g_mini.saved_fd = fd[0];
+		if (fd_mng_parent_process(fd, pid) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
-	return (exit_status);
+	return (EXIT_SUCCESS);
 }
