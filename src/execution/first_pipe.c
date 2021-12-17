@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:23:59 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/09 16:11:30 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 16:07:31 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	{
 		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 		if (input < 0)
-			return (-1);
+			return (EXIT_FAILURE);
 	}
 	if (cmd->in.out)
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
@@ -30,7 +30,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 	}
 	screening_one(cmd->cmd);
 	g_mini.saved_fd = fd[1];
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
@@ -42,7 +42,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 		if (input > 0)
 			dup2(input, 0);
 		else
-			return (-1);
+			return (EXIT_FAILURE);
 	}
 	if (cmd->in.out)
 	{
@@ -58,32 +58,49 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	cmd_selector(cmd->cmd);
 	close(fd[1]);
 	exit_fork();
-	return (1);
+	return (EXIT_FAILURE);
 }
 
+static int	fd_mng_parent_process(int fd[2], int pid)
+{
+	int	status;
+
+	close(fd[1]);
+	if (waitpid(pid, &status, 0) == -1)
+	{
+		printf("waitpid failed");
+		return (EXIT_FAILURE);
+	}
+	if (WIFEXITED(status))
+		g_mini.exit_status = WEXITSTATUS(status);
+	g_mini.saved_fd = fd[0];
+	return (EXIT_SUCCESS);
+}
+
+//The First Cmd Pipe function will check for the pipe flag for the first cmd on
+//at least a pipe. It will also manage the 'first_cmd' flag. Also, it manages
+//the input and output file descriptors (FD's).
 int	first_cmd_pipe(t_cmd *cmd, int fd[2])
 {
 	int	pid;
-	int	exit_status;
 	int	output;
 	int	input;
 
-	exit_status = 0;
 	input = 0;
 	output = 0;
-	printf("CMD LINE = %s\n", cmd->line);
 	pipe(fd);
 	if (!cmd_identifier(cmd->cmd))
 		return (fd_mng_builtins(cmd, fd, input, output));
 	pid = fork();
 	if (pid == 0)
-		return (fd_mng_child_process(cmd, fd, input, output));
+	{
+		fd_mng_child_process(cmd, fd, input, output);
+		return (EXIT_FAILURE);
+	}
 	else
 	{
-		close(fd[1]);
-		exit_status = wait(0);
-		printf("ES = %d for %s\n", exit_status, cmd->line);
-		g_mini.saved_fd = fd[0];
+		if (fd_mng_parent_process(fd, pid) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
-	return (exit_status);
+	return (EXIT_SUCCESS);
 }
