@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/16 16:34:38 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 16:44:48 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ int	ft_cd(char **argv)
 	t_dl_list	*head;
 
 	head = g_mini.env;
-	return(change_directory(head, argv[1]));
+	return (change_directory(head, argv[1]));
 }
