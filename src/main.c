@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/15 15:54:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 16:59:29 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	struct_init(char **env)
 	g_mini.stop = 0;
 }
 
-void	printing(t_tree *t)
+static void	check_cmd_calls(t_commands *command, t_tree *t)
 {
 	t_cmd		*cmd;
 	int			i;
@@ -58,7 +58,7 @@ void	printing(t_tree *t)
 	}
 	else
 		while (++i < t->lcount)
-			printing(t->leafs[i]);
+			check_cmd_calls(command, t->leafs[i]);
 }
 
 //The input loop is used to cut down some lines on the main function body.
@@ -72,14 +72,19 @@ static void	input_loop(char *input)
 	g_mini.first_cmd = 1;
 	add_history(input);
 	cmd = parse(input);
-	g_mini.cmd = cmd;
-	print_cmd(cmd);
-	check_heredoc(cmd->tree);
-	g_mini.hdoc_counter = 0;
-	printing(cmd->tree);
+	if (!cmd->error)
+	{
+		g_mini.cmd = cmd;
+		print_cmd(cmd);
+		check_heredoc(cmd->tree);
+		g_mini.hdoc_counter = 0;
+		check_cmd_calls(cmd, cmd->tree);
+		delete_temp(g_mini.temp_path);
+	}
+	else
+		printf("Syntax error code: %d\n", cmd->error);
 	free_command(cmd);
 	free(input);
-	delete_temp(g_mini.temp_path);
 	g_mini.hdoc_counter = 0;
 	g_mini.file_counter = 0;
 	g_mini.and_or_flag = 0;
