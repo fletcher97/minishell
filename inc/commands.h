@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/08 14:24:04 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:03:16 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "utilities.h"
 
 //CD cmd functions
-void		ft_cd(char **argv);
+int		ft_cd(char **argv);
 
 //Echo cmd functions
 void		ft_echo(char **argv);
