@@ -34,9 +34,6 @@ NAME1 := minishell
 # by space.
 NAMES := ${NAME1}
 
-# Readline lib
-LIBS := $(shell pkgconf --libs readline)
-
 ################################################################################
 # Configs
 ################################################################################
@@ -68,7 +65,7 @@ CREATE_LIB_TARGETS := 1
 CC := clang
 
 # Compiler flags
-CFLAGS := -Wall -Wextra -Werror -Wvla $(shell pkgconf --cflags readline)
+CFLAGS := -Wall -Wextra -Werror -Wvla
 
 # Generic debug flags
 DFLAGS := -g
@@ -108,6 +105,13 @@ LIBFT := ${LIBFT_ROOT}bin/libft.a
 
 INC_DIRS += ${LIBFT_INC}
 LIBS += -L${LIBFT_ROOT}bin -lft
+
+# Libreadline
+READLINE_ROOT := ${LIB_ROOT}readline/
+READLINE := ${READLINE_ROOT}libreadline.a ${READLINE_ROOT}libhistory.a
+
+INC_DIRS += ${READLINE_ROOT}
+LIBS += -L${READLINE_ROOT} -lreadline -lhistory -ltinfo
 
 # Libraries for which to create default targets. All libraries in this list will
 # have targets created automatically. The targets that are created are set in
@@ -213,13 +217,18 @@ vpath %.d $(DEP_DIRS)
 all: ${BINS}
 
 .SECONDEXPANSION:
-${BIN_ROOT}${NAME1}: ${LIBFT} $$(call get_files,$${@F},$${OBJS_LIST})
+${BIN_ROOT}${NAME1}: ${LIBFT} ${READLINE} $$(call get_files,$${@F},$${OBJS_LIST})
 	${AT}printf "\033[33m[CREATING ${@F}]\033[0m\n" ${BLOCK}
 	${AT}mkdir -p ${@D} ${BLOCK}
 	${AT}${CC} ${CFLAGS} ${INCS} ${ASAN_FILE}\
 		$(call get_files,${@F},${OBJS_LIST}) ${LIBS} -o $@ ${BLOCK}
 
 ${LIBFT}: $$(call get_lib_target,$${DEFAULT_LIBS},all) ;
+
+${READLINE}:
+	${AT}pwd ${BLOCK}
+	${AT}cd ./${READLINE_ROOT} ${BLOCK} && ./configure${BLOCK}
+	${AT}make --no-silent -C ${READLINE_ROOT} ${BLOCK}
 
 ################################################################################
 # Clean Targets
@@ -239,12 +248,16 @@ fclean: $$(call get_lib_target,$${DEFAULT_LIBS},$$@)
 	${AT}find ${BIN_ROOT} -type f\
 		$(addprefix -name ,${NAMES}) -delete ${BLOCK}
 
+clean_lib:
+	${AT}printf "\033[38;5;1m[REMOVING READLINE]\033[0m\n" ${BLOCK}
+	${AT}if [[ -e ${READLINE_ROOT}Makefile ]]; then make -i -C ${READLINE_ROOT} distclean; fi ${BLOCK}
+
 clean_dep: $$(call get_lib_target,$${DEFAULT_LIBS},$$@)
 	${AT}printf "\033[38;5;1m[REMOVING DEPENDENCIES]\033[0m\n" ${BLOCK}
 	${AT}mkdir -p ${DEP_ROOT} ${BLOCK}
 	${AT}find ${DEP_ROOT} -type f -name "*.d" -delete ${BLOCK}
 
-clean_all: fclean clean_dep
+clean_all: fclean clean_dep clean_lib
 
 re: fclean all
 
@@ -319,7 +332,7 @@ compile-test: ${addprefix compile-test/,${NAMES}}
 ################################################################################
 
 # Phony clean targets
-.PHONY: clean fclean clean_dep clean_all
+.PHONY: clean fclean clean_dep clean_all clean_lib
 
 # Phony debug targets
 .PHONY: debug debug_re debug_asan debug_asan_re debug_tsan debug_tsan_re
