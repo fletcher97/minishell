@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 19:00:13 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/20 14:39:04 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:48:46 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ void		free_command(t_commands *cmd);
 void		print_cmd(t_commands *cmd);
 int			unmask_str(char *str);
 t_commands	*validate(const char *str);
+int			wild(int i, char *s, t_cmd *cmd);
+void print_cmd(t_commands *cmd);
 
 #endif

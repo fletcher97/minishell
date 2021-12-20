@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 06:20:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/16 02:45:36 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:49:13 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ static char	*expand_cmd(char *s, t_cmd *cmd)
 		if ((s[i >> 1] & 0x7F) == '$')
 			i += (expand1(&s, (i >> 1) + 1, cmd, 0) << 1);
 		else if (s[i >> 1] == '*')
-			cmd->cmd_flags |= 1;
+			i = wild(i, s, cmd);
+			// cmd->cmd_flags |= 1;
 	}
 	return (s);
 }
