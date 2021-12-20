@@ -111,7 +111,7 @@ READLINE_ROOT := ${LIB_ROOT}readline/
 READLINE := ${READLINE_ROOT}libreadline.a ${READLINE_ROOT}libhistory.a
 
 INC_DIRS += ${READLINE_ROOT}
-LIBS += -L${READLINE_ROOT} -lreadline -lhistory -ltinfo
+LIBS += -L${READLINE_ROOT} -lreadline -lhistory -ltermcap
 
 # Libraries for which to create default targets. All libraries in this list will
 # have targets created automatically. The targets that are created are set in
@@ -228,7 +228,7 @@ ${LIBFT}: $$(call get_lib_target,$${DEFAULT_LIBS},all) ;
 ${READLINE}:
 	${AT}pwd ${BLOCK}
 	${AT}cd ./${READLINE_ROOT} ${BLOCK} && ./configure${BLOCK}
-	${AT}make --no-silent -C ${READLINE_ROOT} ${BLOCK}
+	${AT}make -C ${READLINE_ROOT} ${BLOCK}
 
 ################################################################################
 # Clean Targets
