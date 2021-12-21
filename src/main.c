@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/17 17:54:04 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:47:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	struct_init(char **env)
 	g_mini.env = get_env(env);
 	g_mini.exit = 0;
 	g_mini.exit_status = 0;
-	g_mini.errno = 0;
 	g_mini.saved_fd = -1;
 	g_mini.hdoc_counter = 0;
 	g_mini.temp_path = ft_strdup("/tmp/	");
@@ -48,7 +47,6 @@ static void	check_cmd_calls(t_commands *command, t_tree *t)
 
 	cmd = (t_cmd *)t->content;
 	i = -1;
-	g_mini.exit_status = 0;
 	step += 10;
 	if (cmd)
 	{
