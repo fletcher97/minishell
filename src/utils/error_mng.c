@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/18 17:58:07 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:48:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	error_output(char type, int i)
 	if (type == 'c')
 	{
 		printf("minishell: command not found: %s\n", g_mini.argv[i]);
-		g_mini.errno = 127;
+		g_mini.exit_status = 127;
 	}
 	if (type == 's')
 	{
 		printf("minishell: special character not defined: %s\n", g_mini.argv[i]);
-		g_mini.errno = 33;
+		g_mini.exit_status = 33;
 	}
 }
