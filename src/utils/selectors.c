@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:28:26 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 17:23:45 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:13:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	cmd_selector(char **argv)
 			ft_echo(argv);
 		else if (ft_strcmp(argv[0], "env"))
 			ft_env(g_mini.env);
+		else if (ft_strcmp(argv[0], "export"))
+			ft_export(argv);
 		else
 			ft_execve(argv, 0);
 	}
@@ -71,7 +73,7 @@ int	cmd_identifier(char **argv)
 	int	i;
 
 	i = 0;
-	if (g_mini.argv)
+	if (argv)
 	{
 		if (ft_strcmp(argv[i], "exit"))
 			i = 0;
@@ -79,9 +81,9 @@ int	cmd_identifier(char **argv)
 			i = 0;
 		else if (ft_strcmp(argv[i], " "))
 			i = 0;
-		else if (ft_strcmp(argv[i], "pwd") || ft_strcmp(g_mini.argv[i], "PWD"))
+		else if (ft_strcmp(argv[i], "pwd") || ft_strcmp(argv[i], "PWD"))
 			i = 0;
-		else if (ft_strcmp(argv[i], "export"))
+		else if (ft_strcmp(argv[i], "export") && argv[i + 1] != NULL)
 			i = 0;
 		else if (ft_strcmp(argv[i], "node"))
 			i = 0;
