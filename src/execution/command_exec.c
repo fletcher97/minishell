@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:51:31 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 18:03:29 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:10:00 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,21 @@ static void	command_call(t_cmd *cmd)
 //well as managing the stop flag for 'OR' commands.
 void	command_exec(t_cmd *cmd)
 {
+	if (!cmd->cmd[0])
+	{
+		if ((cmd->cmd_flags & 8) && g_mini.exit_status == 0)
+		{
+			g_mini.stop = 1;
+			g_mini.and_flag--;
+		}
+		if ((cmd->cmd_flags & 0x04) && g_mini.exit_status != 0)
+			g_mini.stop = 1;
+		g_mini.first_cmd = 1;
+		return ;
+	}
 	command_call(cmd);
 	if (cmd->cmd_flags & 0x04)
 		g_mini.first_cmd = 1;
 	else
 		g_mini.first_cmd = 0;
-	if ((cmd->cmd_flags & 8) && !cmd->cmd[0])
-	{
-		if (g_mini.and_flag > 0 && g_mini.stop)
-			g_mini.stop = 0;
-		else
-			g_mini.and_flag--;
-	}
 }
