@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:48:05 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 16:20:43 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:11:51 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ static int	fd_mng_builtins(t_cmd *cmd, int input, int output)
 			return (EXIT_FAILURE);
 	}
 	if (cmd->in.out)
+	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
+		if (output > 0)
+			dup2(output, 1);
+	}
 	screening_one(cmd->cmd);
+	if (output > 0)
+		close(output);
 	return (EXIT_SUCCESS);
 }
 
@@ -58,7 +64,7 @@ int	simple_command(t_cmd *cmd)
 	int	output;
 	int	status;
 
-	if (g_mini.stop)
+	if (g_mini.stop > 0)
 		return (--g_mini.stop);
 	input = 0;
 	output = 0;
