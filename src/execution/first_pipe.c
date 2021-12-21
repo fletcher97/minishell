@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:23:59 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 16:07:31 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:18:00 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,21 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
 			return (EXIT_FAILURE);
 	}
 	if (cmd->in.out)
+	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
+		if (output > 0)
+			dup2(output, 1);
+	}
 	else
 	{
 		if (dup2(fd[1], 1) == -1)
 			printf("Error: Bad dup2 on first cmd pipe function");
 	}
 	screening_one(cmd->cmd);
-	g_mini.saved_fd = fd[1];
+	if (output > 0)
+		g_mini.saved_fd = output;
+	else
+		g_mini.saved_fd = fd[1];
 	return (EXIT_SUCCESS);
 }
 
