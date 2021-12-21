@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/16 16:24:55 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:59:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,12 @@ static int	path_creation_loop(char **cmds, char **path, char *cmd)
 	}
 	if (j == i)
 		return (1);
-	return (0);
+	return (127);
 }
 
 //The execve function is used to execute various commands such as ls, wc, grep
 //etc. This commands are not mandatory but will improve the user experience and
 //they will help during the program evaluation.
-// if (ft_strcmp(cmd[0], "ls"))
-// 	cmd[1] = getcwd(g_mini.str, PATH_MAX);
 void	ft_execve(char **argv, int i)
 {
 	char	*path;
@@ -80,7 +78,7 @@ void	ft_execve(char **argv, int i)
 		return ;
 	cmd = (char *[]){argv[i], argv[i + 1], NULL};
 	j = path_creation_loop(cmd, paths, cmd[i]);
-	if (j == 0)
+	if (j == 127)
 		error_output('c', 0);
 	kill(getpid(), SIGINT);
 }
