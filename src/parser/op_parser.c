@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 03:47:09 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/24 08:03:32 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/23 15:47:49 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include "ft_string.h"
 #include "ft_ctype.h"
 
-static int	spec(char s)
+int	isspecial(char s)
 {
 	return (!!ft_strchr(" \t\n\v\f\r<>$\"\'&|()", s));
 }
 
-static int	input(char *str, t_cmd *cmd, int heredoc)
+static int	input(char *s, t_cmd *cmd, int heredoc)
 {
 	int		i;
 	int		skip;
@@ -32,11 +32,11 @@ static int	input(char *str, t_cmd *cmd, int heredoc)
 	skip = 0;
 	i = 0;
 	l = NULL;
-	while (str[skip] && ft_isspace(str[skip + i]))
+	while (s[skip] && ft_isspace(s[skip + i]))
 		skip++;
-	while (str[skip + i] && !ft_isspace(str[skip + i]) && !spec(str[skip + i]))
+	while (s[skip + i] && !ft_isspace(s[skip + i]) && !isspecial(s[skip + i]))
 		i++;
-	in = ft_substr(str, skip, i);
+	in = ft_substr(s, skip, i);
 	((!heredoc) && (l = ft_lstnew(ft_strjoin("<", in))))
 		|| (l = ft_lstnew(ft_strjoin("<<", in)));
 	free(in);
@@ -47,7 +47,7 @@ static int	input(char *str, t_cmd *cmd, int heredoc)
 	else
 		ft_lstadd_back(&cmd->in.input, l);
 	cmd->in.in = l;
-	ft_memset(str - (1 + !!heredoc), ' ', skip + i + 1 + !!heredoc);
+	ft_memset(s - (1 + !!heredoc), ' ', skip + i + 1 + !!heredoc);
 	return (skip + i + !!heredoc);
 }
 
