@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/20 16:52:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:48:23 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 //The Env Flag Check function will check for the requested env on out internal
 //and it will return its name.
-static char	*env_flag_check(char **argv, int i)
-{
-	char	*env_name;
-	int		j;
+// static char	*env_flag_check(char **argv, int i)
+// {
+// 	char	*env_name;
+// 	int		j;
 
-	j = 0;
-	env_name = NULL;
-	while (argv[i][j])
-		j++;
-	if (j > 0 && argv[i][0] == '$')
-	{
-		env_name = ft_substr(argv[i], 1, j);
-		return (env_name);
-	}
-	return (NULL);
-}
+// 	j = 0;
+// 	env_name = NULL;
+// 	while (argv[i][j])
+// 		j++;
+// 	if (j > 0 && argv[i][0] == '$')
+// 	{
+// 		env_name = ft_substr(argv[i], 1, j);
+// 		return (env_name);
+// 	}
+// 	return (NULL);
+// }
 
 //The Echo Flag function checks for the env varible flag ($) and the exit status
 //($?). It will return its content if it finds it on the program internal list.
@@ -41,9 +41,7 @@ static void	echo_flag(char **argv, int i, int j, int k)
 		while (i > j)
 		{
 			if (ft_strcmp(argv[j], "$?"))
-				printf("%d", g_mini.errno);
-			else if (env_flag_check(argv, j) != NULL)
-				print_env_content(g_mini.env, env_flag_check(argv, j), 'y');
+				printf("%d", g_mini.exit_status);
 			else
 				printf("%s", argv[j]);
 			if (i > 1 + j++)

@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/08 15:18:54 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:59:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static char	*path_creation(char *path, char *cmd)
 //The path creation loop function is mainly used to cut down lines on the execve
 //function body. It will loop through all the possible path's found in the env
 //"PATH" ($PATH) and try to run each of them with the inputed command.
+//NOTA IMPORTANTE-> Criar copia do env interno em forma de table e null
+//terminated e pasar para execve!
 static int	path_creation_loop(char **cmds, char **path, char *cmd)
 {
 	char	*total;
@@ -56,14 +58,12 @@ static int	path_creation_loop(char **cmds, char **path, char *cmd)
 	}
 	if (j == i)
 		return (1);
-	return (0);
+	return (127);
 }
 
 //The execve function is used to execute various commands such as ls, wc, grep
 //etc. This commands are not mandatory but will improve the user experience and
 //they will help during the program evaluation.
-// if (ft_strcmp(cmd[0], "ls"))
-// 	cmd[1] = getcwd(g_mini.str, PATH_MAX);
 void	ft_execve(char **argv, int i)
 {
 	char	*path;
@@ -77,13 +77,8 @@ void	ft_execve(char **argv, int i)
 	if (!argv[i])
 		return ;
 	cmd = (char *[]){argv[i], argv[i + 1], NULL};
-	if (fork() == 0)
-	{
-		j = path_creation_loop(cmd, paths, cmd[i]);
-		if (j == 0)
-			error_output('c', 0);
-		kill(getpid(), SIGINT);
-	}
-	else
-		wait(&g_mini.errno);
+	j = path_creation_loop(cmd, paths, cmd[i]);
+	if (j == 127)
+		error_output('c', 0);
+	kill(getpid(), SIGINT);
 }

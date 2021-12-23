@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/08 14:24:04 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:22:58 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,28 @@
 # include "utilities.h"
 
 //CD cmd functions
-void		ft_cd(char **argv);
+int		ft_cd(char **argv);
 
 //Echo cmd functions
-void		ft_echo(char **argv);
+void	ft_echo(char **argv);
 
 //Env cmd functions
-void		ft_env(t_dl_list *env);
+void	ft_env(t_dl_list *env);
 
 //Export cmd functions
-int			ft_export(char **argv);
+int		ft_export(char **argv);
 
 //Execve cmd functions
-void		ft_execve(char **argv, int i);
+void	ft_execve(char **argv, int i);
 
 //PWD and Exit cmd functions
-int			ft_pwd(void);
-void		ft_exit(void);
+int		ft_pwd(void);
+void	ft_exit(void);
 
 //Signal functions
-void		get_signal(int signal);
+void	get_signal(int signal);
 
 //Unset cmd functions
-void		ft_unset(t_dl_list *env, char **argv, int i);
+void	ft_unset(t_dl_list *env, char **argv, int i);
 
 #endif
