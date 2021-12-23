@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 20:22:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/04/24 21:55:05 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:49:20 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_strpbrk(const char *s1, const char *s2);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strrev(char *str);
 char	*ft_strsjoin(int size, char **strs, char *sep);
-int		ft_strendw(const char *str, const char *start);
+int		ft_strstartw(const char *str, const char *start);
 char	*ft_strtok(char *str, const char *delim);
 char	*ft_strtrim(char const *s1, char const *set);
 int		ft_strwcnt(const char *str, const char *delim);
