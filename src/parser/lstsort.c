@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:40:23 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/24 18:57:32 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/25 03:18:33 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	lstsort(t_list **l)
 	while (aux->next)
 	{
 		if (ft_strncmp(aux->content, aux->next->content,
-				ft_strlen(aux->content)) < 0)
+				ft_strlen(aux->content)) <= 0)
 		{
 			aux = aux->next;
 			continue ;
