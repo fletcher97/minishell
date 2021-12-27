@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:00:03 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 17:10:59 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:59:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	heredoc_loop(t_list *heredoc, int input_hdoc)
 				ft_itoa(++g_mini.hdoc_counter));
 		pth = temp_path(pth, g_mini.temp_path);
 		input_hdoc = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		printf("PATH << = %s ;; input = %d\n", pth, input_hdoc);
 		heredoc = heredoc->next;
 		free(pth);
 	}
@@ -42,7 +41,6 @@ static int	input_loop(t_list *input, int input_file)
 		pth = ft_substr((char *)input->content, 1,
 				ft_strlen((char *)input->content));
 		input_file = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		printf("PATH < = %s , input = %d\n", pth, input_file);
 		input = input->next;
 		free(pth);
 	}
@@ -62,11 +60,9 @@ int	file_input(t_list *input, t_list *heredoc, t_list *in)
 	{
 		if (input_file)
 			close(input_file);
-		printf("input heredoc = %d ;; file = %s\n", input_hdoc, in->content);
 		return (input_hdoc);
 	}
 	if (input_hdoc)
 		close(input_hdoc);
-	printf("input file = %d\n", input_file);
 	return (input_file);
 }
