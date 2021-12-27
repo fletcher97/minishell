@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/02 19:17:23 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:25:24 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define QUOTES_OPEN 2
 
 //Error mng functions
-void		error_output(char type, int i);
+int		error_output(char type, int i, char *str);
 
 //Export utils functions
 int			env_sorted(void);
