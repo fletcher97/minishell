@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:43:44 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 17:00:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:59:31 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,5 @@ int	file_output(t_list *output, t_list *append, t_list *final_output)
 	output_file = output_loop(output, output_file);
 	output_file = append_loop(append, output_file);
 	output_file = final_output_loop(final_output, output_file);
-	printf("OUTPUT FILE = %d\n", output_file);
 	return (output_file);
 }
