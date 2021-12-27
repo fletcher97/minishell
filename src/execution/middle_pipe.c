@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 17:38:17 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 16:23:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:24:15 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,25 @@ static int	file_input_instruction(t_cmd *cmd, int input)
 		if (dup2(input, 0))
 			return (EXIT_SUCCESS);
 	}
-	return (EXIT_FAILURE);
+	return (error_output('i', 0, ++cmd->in.input->content));
 }
 
-static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
+static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input)
 {
 	if (cmd->in.in)
 	{
 		if (file_input_instruction(cmd, input) < 0)
-			return (EXIT_FAILURE);
+			return (error_output('i', 0, ++cmd->in.input->content));
 	}
 	else
 	{
-		if (dup2(g_mini.saved_fd, 0) == -1)
-			printf("Error: Bad dup2 on saved_fd to 0 pipe cmd function");
+		dup2(g_mini.saved_fd, 0);
 		close(g_mini.saved_fd);
 	}
 	if (cmd->in.out)
-	{
-		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output > 0)
-			dup2(output, 1);
-	}
+		file_output(cmd->in.output, cmd->in.append, cmd->in.out);
 	else
-	{
-		if (dup2(fd[1], 1) == -1)
-			printf("Error : bad dup2 on fd[1] to 1 on pipe cmd function\n");
-	}
+		dup2(fd[1], 1);
 	screening_one(cmd->cmd);
 	return (EXIT_SUCCESS);
 }
@@ -60,21 +52,17 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 	}
 	else
 	{
-		if (dup2(g_mini.saved_fd, 0) == -1)
-			printf("Error: Bad dup2 on saved_fd to 0 pipe cmd child function");
+		dup2(g_mini.saved_fd, 0);
 		close(g_mini.saved_fd);
 	}
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output > 0 && dup2(output, 1) < 0)
-			printf("Error : bad dup2 on output to 1 on pipe cmd function\n");
+		if (output > 0)
+			dup2(output, 1);
 	}
 	else
-	{
-		if (dup2(fd[1], 1) == -1)
-			printf("Error : bad dup2 on fd[1] to 1 on pipe cmd function\n");
-	}
+		dup2(fd[1], 1);
 	cmd_selector(cmd->cmd);
 	return (EXIT_FAILURE);
 }
@@ -109,7 +97,7 @@ int	pipe_command(t_cmd *cmd, int fd[2])
 	pipe(fd);
 	pid = fork();
 	if (!cmd_identifier(cmd->cmd))
-		return (fd_mng_builtins(cmd, fd, input, output));
+		return (fd_mng_builtins(cmd, fd, input));
 	if (pid == 0)
 	{
 		fd_mng_child_process(cmd, fd, input, output);
