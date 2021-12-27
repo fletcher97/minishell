@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/17 17:22:58 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:49:39 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_env(t_dl_list *env);
 int		ft_export(char **argv);
 
 //Execve cmd functions
-void	ft_execve(char **argv, int i);
+int		ft_execve(char **argv, int i);
 
 //PWD and Exit cmd functions
 int		ft_pwd(void);
