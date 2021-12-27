@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/17 16:44:48 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:05:45 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	change_directory(t_dl_list *head, char *path)
 		path = ft_strjoin(return_env_content(g_mini.env, "HOME"), ++path);
 	else if (ft_strcmp(path, "-"))
 		path = ft_strdup(return_env_content(g_mini.env, "OLDPWD"));
+	else
+		path = ft_strdup(g_mini.argv[1]);
 	ret = chdir(path);
 	g_mini.env = head;
 	if (ret > -1)
@@ -35,6 +37,7 @@ static int	change_directory(t_dl_list *head, char *path)
 		check_env_names("PWD", path);
 		check_env_names("OLDPWD", old_pwd);
 	}
+	free(path);
 	return (ret);
 }
 
@@ -44,7 +47,11 @@ static int	change_directory(t_dl_list *head, char *path)
 int	ft_cd(char **argv)
 {
 	t_dl_list	*head;
+	int			ret;
 
 	head = g_mini.env;
-	return (change_directory(head, argv[1]));
+	ret = change_directory(head, argv[1]);
+	if (ret < 0)
+		error_output('d', 1, NULL);
+	return (ret);
 }
