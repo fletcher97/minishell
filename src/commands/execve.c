@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/21 14:59:34 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:37:02 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static char	*path_creation(char *path, char *cmd)
 	head = g_mini.env;
 	if (!ft_strncmp(cmd, "./", 2) || ft_strcmp(cmd, "a.out"))
 		new_path = ft_strjoin(return_env_content(g_mini.env, "PWD"), ++cmd);
+	else if (!ft_strncmp(cmd, "/", 1))
+		new_path = ft_strdup(cmd);
 	else
 	{
 		temp = ft_strjoin(path, "/");
@@ -64,10 +66,9 @@ static int	path_creation_loop(char **cmds, char **path, char *cmd)
 //The execve function is used to execute various commands such as ls, wc, grep
 //etc. This commands are not mandatory but will improve the user experience and
 //they will help during the program evaluation.
-void	ft_execve(char **argv, int i)
+int	ft_execve(char **argv, int i)
 {
 	char	*path;
-	char	**cmd;
 	char	**paths;
 	int		j;
 
@@ -75,10 +76,9 @@ void	ft_execve(char **argv, int i)
 	paths = ft_split((const char *)path, ':');
 	g_mini.str = NULL;
 	if (!argv[i])
-		return ;
-	cmd = (char *[]){argv[i], argv[i + 1], NULL};
-	j = path_creation_loop(cmd, paths, cmd[i]);
+		return (0);
+	j = path_creation_loop(argv, paths, argv[i]);
 	if (j == 127)
-		error_output('c', 0);
-	kill(getpid(), SIGINT);
+		error_output('c', 0, NULL);
+	return (j);
 }
