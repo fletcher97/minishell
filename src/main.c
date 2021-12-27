@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/27 17:23:03 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:52:02 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <signal.h>
 
 #include "minishell.h"
 #include "parser.h"
@@ -89,6 +91,12 @@ static void	input_loop(char *input)
 	input = NULL;
 }
 
+static void	hsi(int signal)
+{
+	rl_replace_line("", signal);
+	printf("\nminishell: ");
+}
+
 // before while
 //	signal(SIGINT , get_signal);
 //	signal(SIGQUIT , get_signal);
@@ -104,12 +112,14 @@ int	main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	struct_init(env);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, hsi);
 	while (42)
 	{
 		input = readline("minishell: ");
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
-		if (g_mini.exit)
+		if (g_mini.exit || !input)
 		{
 			free_dl_list(g_mini.env);
 			free(g_mini.hdoc_files);
