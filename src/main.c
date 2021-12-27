@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/27 21:52:02 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/27 22:03:35 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ static void	hsi(int signal)
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
+	int		i;
 
 	(void) argc;
 	(void) argv;
@@ -122,6 +123,9 @@ int	main(int argc, char **argv, char **env)
 		if (g_mini.exit || !input)
 		{
 			free_dl_list(g_mini.env);
+			i = -1;
+			while (++i < 101)
+				ft_free(g_mini.hdoc_files[i]);
 			free(g_mini.hdoc_files);
 			exit(0);
 		}

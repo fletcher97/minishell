@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:59:39 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 17:08:38 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 22:18:11 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,21 @@ t_dl_list	*get_env(char **env)
 {
 	t_dl_list	*temp;
 	int			x;
+	char		**splited;
+	int			aux;
 
 	x = -1;
 	g_mini.env = NULL;
+	splited = malloc(sizeof(char *) * 2);
 	while (env[++x] != NULL)
 	{
-		temp = ft_lstnew_dl(ft_split(env[x], '='));
+		aux = ft_strichr(env[x], '=');
+		splited[0] = ft_substr(env[x], 0, aux);
+		splited[1] = ft_substr(env[x], aux + 1, ft_strlen(env[x]) - aux);
+		temp = ft_lstnew_dl(splited);
 		ft_lstadd_back_dl(&g_mini.env, temp);
 	}
+	ft_free(splited);
 	return (g_mini.env);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/17 17:10:19 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 22:08:53 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,8 @@ void	free_dl_list(t_dl_list *lst)
 	while (lst)
 	{
 		temp = lst->next;
-		if (lst)
-		{
-			free(lst->content);
-			lst->content = NULL;
-			free(lst->name);
-			lst->name = NULL;
-		}
-		if (lst->next == NULL)
-		{
-			free(lst);
-			lst = NULL;
-			break ;
-		}
+		free(lst->content);
+		free(lst->name);
 		free(lst);
 		lst = temp;
 	}
