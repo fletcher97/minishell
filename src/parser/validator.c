@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 16:22:56 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/07 03:29:49 by mgueifao         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:02:17 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,31 @@ static int	check_ops(const char *str, char q, char text, int i)
 	return ((text && q != 8) || (!text && q == 8));
 }
 
-static int	check_lvls(const char *str, int i)
-{
-	char	q;
-	char	ao;
+// static int	check_lvls(const char *str, int i)
+// {
+// 	char	q;
+// 	char	ao;
 
-	q = 0;
-	ao = 0;
-	while (i != -2 && str[++i])
-	{
-		(str[i] == '\'') && !(q & 2) && (q ^= 1);
-		(str[i] == '\"') && !(q & 1) && (q ^= 2);
-		if ((q || ft_isspace(str[i])))
-			continue ;
-		if (str[i] == '(')
-			i = check_qparen(str, i);
-		else if (str[i] == ')')
-			return (i);
-		else
-			((str[i] == '&') && (str[i + 1] == '&') && !ao && (ao = 1))
-			|| ((str[i] == '|') && (str[i + 1] == '|') && !ao && (ao = 2))
-			|| ((str[i] == '&') && (str[i + 1] == '&') && ao == 2 && (i = -2))
-			|| ((str[i] == '|') && (str[i + 1] == '|') && ao == 1 && (i = -2));
-	}
-	return (i);
-}
+// 	q = 0;
+// 	ao = 0;
+// 	while (i != -2 && str[++i])
+// 	{
+// 		(str[i] == '\'') && !(q & 2) && (q ^= 1);
+// 		(str[i] == '\"') && !(q & 1) && (q ^= 2);
+// 		if ((q || ft_isspace(str[i])))
+// 			continue ;
+// 		if (str[i] == '(')
+// 			i = check_qparen(str, i);
+// 		else if (str[i] == ')')
+// 			return (i);
+// 		else
+// 			((str[i] == '&') && (str[i + 1] == '&') && !ao && (ao = 1))
+// 			|| ((str[i] == '|') && (str[i + 1] == '|') && !ao && (ao = 2))
+// 			|| ((str[i] == '&') && (str[i + 1] == '&') && ao == 2 && (i = -2))
+// 			|| ((str[i] == '|') && (str[i + 1] == '|') && ao == 1 && (i = -2));
+// 	}
+// 	return (i);
+// }
 
 //	String is wrong if:
 //		- opening parenthesys has no closing one
@@ -133,9 +133,7 @@ t_commands	*validate(const char *str)
 		cmd->error = 500;
 	else if (!check_ops(str, 0, 0, -1))
 		cmd->error = 501;
-	else if (check_lvls(str, -1) != (int)ft_strlen(str))
-		cmd->error = 502;
 	return (cmd);
 }
-// else if(!check_comp(str))
-// 	cmd->error = 503;
+// else if (check_lvls(str, -1) != (int)ft_strlen(str))
+// 	cmd->error = 502;
