@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:59:39 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/08 15:19:24 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:08:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	check_env_names(char *name, char *content)
 	{
 		if (ft_strcmp(name, g_mini.env->name))
 		{
-			g_mini.env->content = content;
+			g_mini.env->content = ft_strdup(content);
 			g_mini.env = head;
 			return (1);
 		}
