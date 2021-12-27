@@ -6,36 +6,26 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:23:59 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/21 19:45:51 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:17:51 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input, int output)
+static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input)
 {
 	close(fd[0]);
 	if (cmd->in.in)
 	{
 		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 		if (input < 0)
-			return (EXIT_FAILURE);
+			return (error_output('i', 0, ++cmd->in.input->content));
 	}
 	if (cmd->in.out)
-	{
-		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output > 0)
-			dup2(output, 1);
-	}
+		file_output(cmd->in.output, cmd->in.append, cmd->in.out);
 	else
-	{
-		if (dup2(fd[1], 1) == -1)
-			printf("Error: Bad dup2 on first cmd pipe function");
-	}
+		dup2(fd[1], 1);
 	screening_one(cmd->cmd);
-	if (output > 0)
-		g_mini.saved_fd = output;
-	else
 		g_mini.saved_fd = fd[1];
 	return (EXIT_SUCCESS);
 }
@@ -49,7 +39,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 		if (input > 0)
 			dup2(input, 0);
 		else
-			return (EXIT_FAILURE);
+			return (error_output('i', 0, ++cmd->in.input->content));
 	}
 	if (cmd->in.out)
 	{
@@ -58,10 +48,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 			dup2(output, 1);
 	}
 	else
-	{
-		if (dup2(fd[1], 1) == -1)
-			printf("Error: Bad dup2 on first cmd pipe function");
-	}
+		dup2(fd[1], 1);
 	cmd_selector(cmd->cmd);
 	close(fd[1]);
 	exit_fork();
@@ -97,7 +84,7 @@ int	first_cmd_pipe(t_cmd *cmd, int fd[2])
 	output = 0;
 	pipe(fd);
 	if (!cmd_identifier(cmd->cmd))
-		return (fd_mng_builtins(cmd, fd, input, output));
+		return (fd_mng_builtins(cmd, fd, input));
 	pid = fork();
 	if (pid == 0)
 	{
