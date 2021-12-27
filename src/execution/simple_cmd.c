@@ -6,29 +6,23 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:48:05 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/21 19:46:03 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:11:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static int	fd_mng_builtins(t_cmd *cmd, int input, int output)
+static int	fd_mng_builtins(t_cmd *cmd, int input)
 {
 	if (cmd->in.in)
 	{
 		input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 		if (input < 0)
-			return (EXIT_FAILURE);
+			return (error_output('i', 0, ++cmd->in.input->content));
 	}
 	if (cmd->in.out)
-	{
-		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output > 0)
-			dup2(output, 1);
-	}
+		file_output(cmd->in.output, cmd->in.append, cmd->in.out);
 	screening_one(cmd->cmd);
-	if (output > 0)
-		close(output);
 	return (EXIT_SUCCESS);
 }
 
@@ -40,7 +34,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int input, int output)
 		if (input > 0)
 			dup2(input, 0);
 		else
-			return (EXIT_FAILURE);
+			return (error_output('i', 0, ++cmd->in.input->content));
 	}
 	if (cmd->in.out)
 	{
@@ -69,13 +63,10 @@ int	simple_command(t_cmd *cmd)
 	input = 0;
 	output = 0;
 	if (!cmd_identifier(cmd->cmd))
-		return (fd_mng_builtins(cmd, input, output));
+		return (fd_mng_builtins(cmd, input));
 	pid = fork();
 	if (pid == 0)
-	{
-		fd_mng_child_process(cmd, input, output);
-		return (EXIT_FAILURE);
-	}
+		return (fd_mng_child_process(cmd, input, output));
 	if (waitpid(pid, &status, 0) == -1)
 	{
 		printf("waitpid failed");
