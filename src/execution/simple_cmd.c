@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:48:05 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 17:11:34 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:41:33 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static int	fd_mng_child_process(t_cmd *cmd, int input, int output)
 		if (input > 0)
 			dup2(input, 0);
 		else
-			return (error_output('i', 0, ++cmd->in.input->content));
+		{
+			error_output('i', 0, ++cmd->in.input->content);
+			exit_fork();
+			return (EXIT_FAILURE);
+		}
 	}
 	if (cmd->in.out)
 	{
