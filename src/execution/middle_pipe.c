@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 17:38:17 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 17:24:15 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/01 06:35:25 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	file_input_instruction(t_cmd *cmd, int input)
 	input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 	if (input > 0)
 	{
-		if (dup2(input, 0))
+		if (dup2(input, 0) != -1)
 			return (EXIT_SUCCESS);
 	}
 	return (error_output('i', 0, ++cmd->in.input->content));
@@ -28,7 +28,7 @@ static int	fd_mng_builtins(t_cmd *cmd, int fd[2], int input)
 	if (cmd->in.in)
 	{
 		if (file_input_instruction(cmd, input) < 0)
-			return (error_output('i', 0, ++cmd->in.input->content));
+			return (EXIT_FAILURE);
 	}
 	else
 	{
@@ -47,7 +47,7 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 {
 	if (cmd->in.in)
 	{
-		if (file_input_instruction(cmd, input) < 0)
+		if (file_input_instruction(cmd, input) > 0)
 			return (EXIT_FAILURE);
 	}
 	else
@@ -61,13 +61,15 @@ static int	fd_mng_child_process(t_cmd *cmd, int fd[2], int input, int output)
 		if (output > 0)
 			dup2(output, 1);
 	}
-	else
+	else if (cmd->cmd_flags & 0x40)
 		dup2(fd[1], 1);
+	else
+		close(fd[1]);
 	cmd_selector(cmd->cmd);
 	return (EXIT_FAILURE);
 }
 
-static int	fd_mng_parent_process(int fd[2], int pid)
+static int	fd_mng_parent_process(t_cmd *cmd, int fd[2], int pid)
 {
 	int	status;
 
@@ -79,7 +81,13 @@ static int	fd_mng_parent_process(int fd[2], int pid)
 	}
 	if (WIFEXITED(status))
 		g_mini.exit_status = WEXITSTATUS(status);
-	g_mini.saved_fd = fd[0];
+	if (cmd->cmd_flags & 0x10)
+	{
+		close(g_mini.saved_fd);
+		close(fd[0]);
+	}
+	else
+		g_mini.saved_fd = fd[0];
 	return (EXIT_SUCCESS);
 }
 
@@ -108,7 +116,7 @@ int	pipe_command(t_cmd *cmd, int fd[2])
 	}
 	else
 	{
-		if (fd_mng_parent_process(fd, pid) == EXIT_FAILURE)
+		if (fd_mng_parent_process(cmd, fd, pid) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
