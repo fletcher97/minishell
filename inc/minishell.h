@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/21 14:47:44 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/06 01:34:29 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,26 @@ typedef struct s_mini
 	char		**argv;
 	char		*str;
 	char		*temp_path;
-	int			pid;
 	int			exit;
 	int			nbr_arg;
 	int			exit_status;
 	int			first_cmd;
 	int			fd[2];
-	int			saved_fd;
+	int			tmp_in;
+	int			tmp_out;
+	int			fd_in;
+	int			fd_out;
 	char		*input;
 	char		*heredoc;
 	char		**hdoc_files;
-	int			hdoc_counter;
+	int			cmd_counter;
 	int			file_counter;
+	int			hdoc_counter;
+	int			pid_counter;
 	int			and_flag;
+	int			pid[INT_MAX];
 	int			stop;
+	int			saved_fd;
 	t_cd		*cd;
 	t_commands	*cmd;
 	t_dl_list	*env;

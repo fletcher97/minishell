@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 15:02:19 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/06 01:48:07 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,24 @@ static void	check_heredoc_call(t_cmd *cmd)
 //The Check heredoc function is to run through the command list. If cmd does not
 //point to NULL, it will send it to another function to check for an eventual
 //heredoc call in the cmd line.
-void	check_heredoc(t_tree *t)
+static void	check_loop(t_tree *t)
 {
 	t_cmd		*cmd;
-	static int	step;
-	int			i;
+	//static int	step;
 
 	cmd = (t_cmd *)t->content;
-	step += 10;
+	//step += 10;
+	if (!cmd)
+		return ;
+	//g_mini.hdoc_counter = step;
+	check_heredoc_call(cmd);
+}
+
+void	check_heredoc(t_tree *t)
+{
+	int	i;
+
 	i = -1;
-	if (cmd)
-	{
-		g_mini.hdoc_counter = step;
-		check_heredoc_call(cmd);
-	}
-	else
-		while (++i < t->lcount)
-			check_heredoc(t->leafs[i]);
+	while (++i < t->lcount)
+		check_loop(t->leafs[i]);
 }

@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:24:36 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/25 18:59:01 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/06 01:26:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,6 @@ int		simple_command(t_cmd *cmd);
 //End cmd call function
 int		end_multi_cmd(t_cmd *cmd, int fd[2]);
 
+//execute cmd function
+int		execute_cmd(t_cmd *cmd);
 #endif

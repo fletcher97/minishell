@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2021/12/27 22:03:35 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/01/06 01:48:28 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static void	struct_init(char **env)
 	int	i;
 
 	g_mini.head = malloc(sizeof(t_dl_list));
-	g_mini.pid = getpid();
 	g_mini.env = get_env(env);
 	g_mini.exit = 0;
 	g_mini.exit_status = 0;
-	g_mini.saved_fd = -1;
+	g_mini.fd_in = 0;
+	g_mini.fd_out = 1;
 	g_mini.hdoc_counter = 0;
 	g_mini.temp_path = ft_strdup("/tmp/	");
 	i = -1;
@@ -37,29 +37,53 @@ static void	struct_init(char **env)
 		g_mini.hdoc_files[i] = ft_itoa(i);
 	g_mini.hdoc_files[i] = NULL;
 	g_mini.file_counter = 0;
+	g_mini.cmd_counter = 0;
 	g_mini.and_flag = 0;
 	g_mini.stop = 0;
+	g_mini.pid_counter = -1;
 }
 
-static void	check_cmd_calls(t_commands *command, t_tree *t)
+static int	check_cmd_calls(t_tree *t)
 {
 	t_cmd		*cmd;
-	int			i;
-	static int	step;
+	//static int	step;
 
 	cmd = (t_cmd *)t->content;
-	i = -1;
-	step += 10;
-	if (cmd)
-	{
-		g_mini.argv = cmd->cmd;
-		g_mini.hdoc_counter = step;
-		command_exec(cmd);
-	}
-	else
-		while (++i < t->lcount)
-			check_cmd_calls(command, t->leafs[i]);
+	//step += 10;
+	if (!cmd)
+		return (0);
+	g_mini.argv = cmd->cmd;
+	//g_mini.hdoc_counter = step;
+	if (execute_cmd(cmd) == -1)
+		return (-1);
+	return (1);
 }
+
+static void tree_loop(t_tree *t)
+{
+	int	status;
+	int	i;
+
+	g_mini.tmp_in = dup(0);
+	g_mini.tmp_out = dup(1);
+	g_mini.fd_in = dup(g_mini.tmp_in);
+	i = -1;
+	status = 0;
+	while (++i < t->lcount)
+	{
+		if (check_cmd_calls(t->leafs[i]) == -1)
+			break ;
+	}
+	dup2(g_mini.tmp_in, 0);
+	dup2(g_mini.tmp_out, 1);
+	close(g_mini.tmp_in);
+	close(g_mini.tmp_out);
+	if (g_mini.pid[g_mini.pid_counter] > 0)
+		waitpid(g_mini.pid[g_mini.pid_counter], &status, 0);
+	if (WIFEXITED(status))
+		g_mini.exit = WEXITSTATUS(status);
+}
+
 
 //The input loop is used to cut down some lines on the main function body.
 //PS: Removed "g_mini.nbr_arg = args_counter();" because the variable is not
@@ -77,15 +101,16 @@ static void	input_loop(char *input)
 		g_mini.cmd = cmd;
 		check_heredoc(cmd->tree);
 		g_mini.hdoc_counter = 0;
-		check_cmd_calls(cmd, cmd->tree);
+		tree_loop(cmd->tree);
 		delete_temp(g_mini.temp_path);
 	}
 	else
 		printf("Syntax error code: %d\n", cmd->error);
 	free_command(cmd);
 	free(input);
-	g_mini.hdoc_counter = 0;
+	g_mini.cmd_counter = 0;
 	g_mini.file_counter = 0;
+	g_mini.hdoc_counter = 0;
 	g_mini.and_flag = 0;
 	g_mini.stop = 0;
 	input = NULL;
