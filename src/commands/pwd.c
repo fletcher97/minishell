@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:29 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/11/08 15:10:51 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:56:33 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_pwd(void)
 	if (!getcwd(pwd, PATH_MAX))
 		return (-1);
 	printf("%s\n", pwd);
+	exit(0);
 	return (1);
 }
 
