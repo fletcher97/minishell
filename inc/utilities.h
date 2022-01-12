@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/29 02:49:30 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:43:41 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 // Error codes
 # define CHAR_UNHANDLED 1
 # define QUOTES_OPEN 2
+# define MAX_FD 256
 
 //Error mng functions
 int			error_output(char type, int i, char *str);
@@ -50,7 +51,9 @@ void		free_dl_list(t_dl_list *lst);
 void		delete_temp(char *path);
 
 //Main utils functions
-int			args_counter(void);
+void		hsi(int signal);
+void		clean_processes(void);
+void		re_init(void);
 
 //Fork Functions
 void		exit_fork(void);

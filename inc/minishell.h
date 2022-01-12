@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/01/06 01:34:29 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:33:01 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include "parser.h"
 # include "execution.h"
 
+# define FD_MAX 256
+# define CHILD_MAX 512
 typedef struct s_cd
 {
 	t_dl_list	*tmp;
@@ -59,7 +61,8 @@ typedef struct s_mini
 	int			hdoc_counter;
 	int			pid_counter;
 	int			and_flag;
-	int			pid[INT_MAX];
+	int			pid;
+	int			*pid_lst;
 	int			stop;
 	int			saved_fd;
 	t_cd		*cd;

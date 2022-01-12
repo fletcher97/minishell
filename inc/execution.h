@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:24:36 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/06 01:26:03 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:23:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,10 @@
 # include "parser.h"
 
 //Command Execution functions
-void	command_exec(t_cmd *cmd);
+int	command_exec(t_cmd *cmd);
 
 //Pipe functions
-int		first_cmd_pipe(t_cmd *cmd, int fd[2]);
 int		pipe_command(t_cmd *cmd, int fd[2]);
-
-//Simple cmd call function
-int		simple_command(t_cmd *cmd);
-
-//End cmd call function
-int		end_multi_cmd(t_cmd *cmd, int fd[2]);
 
 //execute cmd function
 int		execute_cmd(t_cmd *cmd);
