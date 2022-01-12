@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/01/06 01:48:28 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:08:18 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,15 @@ static void	struct_init(char **env)
 	g_mini.hdoc_counter = 0;
 	g_mini.temp_path = ft_strdup("/tmp/	");
 	i = -1;
-	g_mini.hdoc_files = malloc(sizeof(char **) * (100 + 1));
-	while (++i < 100)
+	g_mini.hdoc_files = malloc(sizeof(char **) * (FD_MAX + 1));
+	while (++i < FD_MAX)
 		g_mini.hdoc_files[i] = ft_itoa(i);
 	g_mini.hdoc_files[i] = NULL;
+	g_mini.pid_lst = malloc(sizeof(int*) * (CHILD_MAX + 1));
+	i = -1;
+	while (++i < CHILD_MAX)
+		g_mini.pid_lst[i] = -1;
+	g_mini.pid_lst[i] = 0;
 	g_mini.file_counter = 0;
 	g_mini.cmd_counter = 0;
 	g_mini.and_flag = 0;
@@ -46,15 +51,15 @@ static void	struct_init(char **env)
 static int	check_cmd_calls(t_tree *t)
 {
 	t_cmd		*cmd;
-	//static int	step;
+	static int	step;
 
 	cmd = (t_cmd *)t->content;
-	//step += 10;
+	step += 10;
 	if (!cmd)
 		return (0);
 	g_mini.argv = cmd->cmd;
-	//g_mini.hdoc_counter = step;
-	if (execute_cmd(cmd) == -1)
+	g_mini.hdoc_counter = step;
+	if (command_exec(cmd) == -1)
 		return (-1);
 	return (1);
 }
@@ -68,7 +73,6 @@ static void tree_loop(t_tree *t)
 	g_mini.tmp_out = dup(1);
 	g_mini.fd_in = dup(g_mini.tmp_in);
 	i = -1;
-	status = 0;
 	while (++i < t->lcount)
 	{
 		if (check_cmd_calls(t->leafs[i]) == -1)
@@ -78,16 +82,15 @@ static void tree_loop(t_tree *t)
 	dup2(g_mini.tmp_out, 1);
 	close(g_mini.tmp_in);
 	close(g_mini.tmp_out);
-	if (g_mini.pid[g_mini.pid_counter] > 0)
-		waitpid(g_mini.pid[g_mini.pid_counter], &status, 0);
+	status = 0;
+	if (g_mini.pid > 0)
+		waitpid(g_mini.pid, &status, 0);
 	if (WIFEXITED(status))
-		g_mini.exit = WEXITSTATUS(status);
+		g_mini.exit_status = WEXITSTATUS(status);
 }
 
 
 //The input loop is used to cut down some lines on the main function body.
-//PS: Removed "g_mini.nbr_arg = args_counter();" because the variable is not
-//being used atm.
 static void	input_loop(char *input)
 {
 	t_commands	*cmd;
@@ -108,25 +111,10 @@ static void	input_loop(char *input)
 		printf("Syntax error code: %d\n", cmd->error);
 	free_command(cmd);
 	free(input);
-	g_mini.cmd_counter = 0;
-	g_mini.file_counter = 0;
-	g_mini.hdoc_counter = 0;
-	g_mini.and_flag = 0;
-	g_mini.stop = 0;
+	re_init();
 	input = NULL;
 }
 
-static void	hsi(int signal)
-{
-	rl_replace_line("", signal);
-	printf("\nminishell: ");
-}
-
-// before while
-//	signal(SIGINT , get_signal);
-//	signal(SIGQUIT , get_signal);
-// while start
-//	input = readline("minishell: ");
 //The main function is 	responsible for receiving the input from the user and
 //manage it. It will make sure the program has a promp until the used call for
 //exit or sends the signal do quit.
@@ -145,13 +133,14 @@ int	main(int argc, char **argv, char **env)
 		input = readline("minishell: ");
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
-		if (g_mini.exit || !input)
+		if (g_mini.exit)
 		{
 			free_dl_list(g_mini.env);
 			i = -1;
-			while (++i < 101)
+			while (++i < FD_MAX)
 				ft_free(g_mini.hdoc_files[i]);
 			free(g_mini.hdoc_files);
+			free(g_mini.pid_lst);
 			exit(0);
 		}
 	}
