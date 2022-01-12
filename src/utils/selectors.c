@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:28:26 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 17:11:03 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:30:16 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	cmd_identifier(char **argv)
 			i = 0;
 		else if (ft_strcmp(argv[i], "node"))
 			i = 0;
-		else if (ft_strcmp(argv[i], "unset"))
+		else if (ft_strcmp(argv[i], "unset ") && argv[i + 1] != NULL)
 			i = 0;
 		else
 			i = 1;
