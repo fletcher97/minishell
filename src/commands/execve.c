@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/27 16:37:02 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/12 19:20:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ int	ft_execve(char **argv, int i)
 	char	**paths;
 	int		j;
 
+	if (!argv[i])
+		return (0);
 	path = return_env_content(g_mini.env, "PATH");
 	paths = ft_split((const char *)path, ':');
 	g_mini.str = NULL;
-	if (!argv[i])
-		return (0);
 	j = path_creation_loop(argv, paths, argv[i]);
 	if (j == 127)
 		error_output('c', 0, NULL);
+	exit(127);
 	return (j);
 }
