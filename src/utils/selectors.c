@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:28:26 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/12 16:30:16 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/31 22:20:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ void	cmd_selector(char **argv)
 			ft_export(argv);
 		else if (ft_strcmp(argv[0], "pwd") || ft_strcmp(argv[0], "PWD"))
 			ft_pwd();
+		else if (ft_strcmp(argv[0], "unset"))
+			ft_unset(g_mini.env, argv, 0);
+		else if (ft_strcmp(argv[0], "cd"))
+			ft_cd(argv);
 		else
 			ft_execve(argv, 0);
 	}
@@ -87,7 +91,7 @@ int	cmd_identifier(char **argv)
 			i = 0;
 		else if (ft_strcmp(argv[i], "node"))
 			i = 0;
-		else if (ft_strcmp(argv[i], "unset ") && argv[i + 1] != NULL)
+		else if (ft_strcmp(argv[i], "unset") && argv[i + 1] != NULL)
 			i = 0;
 		else
 			i = 1;
