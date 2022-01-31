@@ -35,9 +35,10 @@ void	check_pipe(t_cmd *cmd)
 		g_mini.fd_in = g_mini.fd[0];
 		g_mini.fd_out = g_mini.fd[1];
 	}
+	if ((cmd->cmd_flags & 0x10) && !cmd->in.out)
+		g_mini.fd_out = dup(g_mini.tmp_out);
 	dup2(g_mini.fd_out, 1);
 	close(g_mini.fd_out);
-	printf("FD OUT = %d ;; TEMP FD = %d ;; CMD = %d\n", g_mini.fd_out, g_mini.tmp_out, cmd->cmd_flags & 0x40);
 }
 
 int	execute_cmd(t_cmd *cmd)
@@ -45,12 +46,9 @@ int	execute_cmd(t_cmd *cmd)
 	file_output_instruction(cmd);
 	if (!file_input_instruction(cmd))
 		return (-1);
-	if (!cmd_identifier(cmd->cmd))
-		return (screening_one(cmd->cmd));
 	check_pipe(cmd);
 	g_mini.pid = fork();
 	g_mini.pid_lst[++g_mini.pid_counter] = g_mini.pid;
-	//printf("PID = %d ;; COUNTER = %d\n", g_mini.pid_lst[g_mini.pid_counter], g_mini.pid_counter);
 	if (g_mini.pid == 0)
 		cmd_selector(cmd->cmd);
 	return (1);
