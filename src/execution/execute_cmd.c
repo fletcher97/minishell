@@ -50,6 +50,9 @@ int	execute_cmd(t_cmd *cmd)
 	g_mini.pid = fork();
 	g_mini.pid_lst[++g_mini.pid_counter] = g_mini.pid;
 	if (g_mini.pid == 0)
+	{
 		cmd_selector(cmd->cmd);
+		exit(0);
+	}
 	return (1);
 }
