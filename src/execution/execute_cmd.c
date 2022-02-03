@@ -35,7 +35,7 @@ void	check_pipe(t_cmd *cmd)
 		g_mini.fd_in = g_mini.fd[0];
 		g_mini.fd_out = g_mini.fd[1];
 	}
-	if ((cmd->cmd_flags & 0x10) && !cmd->in.out)
+	if (!(cmd->cmd_flags & 0x40) && !cmd->in.out)
 		g_mini.fd_out = dup(g_mini.tmp_out);
 	dup2(g_mini.fd_out, 1);
 	close(g_mini.fd_out);
@@ -54,5 +54,5 @@ int	execute_cmd(t_cmd *cmd)
 		cmd_selector(cmd->cmd);
 		exit(0);
 	}
-	return (1);
+	return (g_mini.exit_status);
 }
