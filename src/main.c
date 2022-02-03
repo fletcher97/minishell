@@ -6,19 +6,19 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/01/12 21:30:31 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/03 00:49:50 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
-
 #include "minishell.h"
 #include "parser.h"
 
 t_mini	g_mini;
-
-//Struct init function is used to initiate the stuct variable and cut down some
-//lines in the main function body.
+/*
+*   Struct init function is used to initiate the stuct variable and cut down
+*    some lines in the main function body.
+*/
 static void	struct_init(char **env)
 {
 	int	i;
@@ -30,7 +30,7 @@ static void	struct_init(char **env)
 	g_mini.fd_in = 0;
 	g_mini.fd_out = 1;
 	g_mini.hdoc_counter = 0;
-	g_mini.temp_path = ft_strdup("/tmp/	");
+	g_mini.temp_path = ft_strdup("/tmp/");
 	i = -1;
 	g_mini.hdoc_files = malloc(sizeof(char **) * (FD_MAX + 1));
 	while (++i < FD_MAX)
@@ -48,6 +48,10 @@ static void	struct_init(char **env)
 	g_mini.pid_counter = -1;
 }
 
+/*
+*   Check cmd calls function will run the command in case it exists on the tree
+*    struct sent by the tree loop function.
+*/
 static int	check_cmd_calls(t_tree *t)
 {
 	t_cmd		*cmd;
@@ -63,7 +67,11 @@ static int	check_cmd_calls(t_tree *t)
 		return (-1);
 	return (1);
 }
-
+/*
+*   Tree loop function will check the tree leafs for commands. Also, it is
+*    responsible for setting up the FD initial logic and retrieving exit
+*    status variable from child process's.
+*/
 static void tree_loop(t_tree *t)
 {
 	int	status;
@@ -88,9 +96,9 @@ static void tree_loop(t_tree *t)
 	if (WIFEXITED(status))
 		g_mini.exit_status = WEXITSTATUS(status);
 }
-
-
-//The input loop is used to cut down some lines on the main function body.
+/*
+*   The input loop is used to cut down some lines on the main function body.
+*/
 static void	input_loop(char *input)
 {
 	t_commands	*cmd;
@@ -115,9 +123,11 @@ static void	input_loop(char *input)
 	input = NULL;
 }
 
-//The main function is 	responsible for receiving the input from the user and
-//manage it. It will make sure the program has a promp until the used call for
-//exit or sends the signal do quit.
+/*
+*   The main function is responsible for receiving the input from the user and
+*   manage it. It will make sure the program has a promp until the used call for
+*   exit or sends the signal do quit.
+*/
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -133,7 +143,7 @@ int	main(int argc, char **argv, char **env)
 		input = readline("minishell: ");
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
-		if (g_mini.exit)
+		if (g_mini.exit || !input)
 		{
 			free_dl_list(g_mini.env);
 			i = -1;
