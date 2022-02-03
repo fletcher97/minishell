@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:59:39 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 22:18:11 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:01:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	check_env_names(char *name, char *content)
 	{
 		if (ft_strcmp(name, g_mini.env->name))
 		{
+			free(g_mini.env->content);
 			g_mini.env->content = ft_strdup(content);
 			g_mini.env = head;
 			return (1);
