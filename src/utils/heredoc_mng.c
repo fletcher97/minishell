@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/06 01:48:07 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:34:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ static void	check_heredoc_call(t_cmd *cmd)
 static void	check_loop(t_tree *t)
 {
 	t_cmd		*cmd;
-	//static int	step;
+	static int	step;
 
 	cmd = (t_cmd *)t->content;
-	//step += 10;
+	step += 10;
 	if (!cmd)
 		return ;
-	//g_mini.hdoc_counter = step;
+	g_mini.hdoc_counter = step;
 	check_heredoc_call(cmd);
 }
 
