@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/27 22:08:53 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:44:37 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,21 @@ void	free_dl_list(t_dl_list *lst)
 		free(lst);
 		lst = temp;
 	}
+}
+
+/*
+*   Frees up an array of strings that was malloced.
+*/
+void	free_table(char **array)
+{
+	int	i;
+
+	i = -1;
+	while(array[++i])
+	{
+		free(array[i]);
+		array[i] = NULL;
+	}
+	free(array);
+	array = NULL;
 }
