@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/03 00:49:50 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:59:20 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parser.h"
 
 t_mini	g_mini;
+
 /*
 *   Struct init function is used to initiate the stuct variable and cut down
 *    some lines in the main function body.
@@ -43,7 +44,6 @@ static void	struct_init(char **env)
 	g_mini.pid_lst[i] = 0;
 	g_mini.file_counter = 0;
 	g_mini.cmd_counter = 0;
-	g_mini.and_flag = 0;
 	g_mini.stop = 0;
 	g_mini.pid_counter = -1;
 }
@@ -67,23 +67,28 @@ static int	check_cmd_calls(t_tree *t)
 		return (-1);
 	return (1);
 }
+
 /*
 *   Tree loop function will check the tree leafs for commands. Also, it is
 *    responsible for setting up the FD initial logic and retrieving exit
 *    status variable from child process's.
 */
-static void tree_loop(t_tree *t)
+void tree_loop(t_tree *t, int i)
 {
-	int	status;
-	int	i;
+	int		status;
+	t_cmd	*cmd;
+	t_tree	*t_temp;
 
 	g_mini.tmp_in = dup(0);
 	g_mini.tmp_out = dup(1);
 	g_mini.fd_in = dup(g_mini.tmp_in);
-	i = -1;
 	while (++i < t->lcount)
 	{
 		if (check_cmd_calls(t->leafs[i]) == -1)
+			break ;
+		t_temp = t->leafs[i];
+		cmd = (t_cmd *)t_temp->content;
+		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08)))
 			break ;
 	}
 	dup2(g_mini.tmp_in, 0);
@@ -95,7 +100,9 @@ static void tree_loop(t_tree *t)
 		waitpid(g_mini.pid, &status, 0);
 	if (WIFEXITED(status))
 		g_mini.exit_status = WEXITSTATUS(status);
+	check_and_or_flag(cmd, t , i);
 }
+
 /*
 *   The input loop is used to cut down some lines on the main function body.
 */
@@ -112,7 +119,7 @@ static void	input_loop(char *input)
 		g_mini.cmd = cmd;
 		check_heredoc(cmd->tree);
 		g_mini.hdoc_counter = 0;
-		tree_loop(cmd->tree);
+		tree_loop(cmd->tree, -1);
 		delete_temp(g_mini.temp_path);
 	}
 	else
