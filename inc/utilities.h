@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/12 18:43:41 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:43:22 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ void		free_list_nodes(t_dl_list *lst);
 void		free_argv(void);
 void		free_dl_list(t_dl_list *lst);
 void		delete_temp(char *path);
+void		free_table(char **table);
 
 //Main utils functions
 void		hsi(int signal);
 void		clean_processes(void);
 void		re_init(void);
+void		check_and_or_flag(t_cmd *cmd, t_tree *t, int i);
+void		tree_loop(t_tree *t, int i);
 
 //Fork Functions
 void		exit_fork(void);
