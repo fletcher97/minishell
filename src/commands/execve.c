@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/03 23:48:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/06 23:43:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static char	*path_creation(char *path, char *cmd)
 static char**	temp_env(char **env)
 {
 	t_dl_list	*head;
+	char		*temp;
 	int			size;
 	int			i;
 
@@ -63,7 +64,9 @@ static char**	temp_env(char **env)
 	i = -1;
 	while (g_mini.env)
 	{
-		env[++i] = ft_strjoin(g_mini.env->name, g_mini.env->content);
+		temp = ft_strjoin(g_mini.env->name, "=");
+		env[++i] = ft_strjoin(temp, g_mini.env->content);
+		free(temp);
 		g_mini.env = g_mini.env->next;
 		if (!g_mini.env)
 			break ;
@@ -87,11 +90,11 @@ static int	path_creation_loop(char **cmds, char **path, char *cmd)
 
 	i = -1;
 	j = -1;
-	env = NULL;
+	env = temp_env(NULL);
 	while (path[++i])
 	{
 		total = path_creation(path[i], cmd);
-		if ((execve(total, cmds, temp_env(env)) != -1))
+		if ((execve(total, cmds, env) != -1))
 			--j;
 		free(total);
 		total = NULL;
