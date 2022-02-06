@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/03 22:54:17 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/06 23:45:49 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
 			g_mini.stop++;
 		if ((cmd->cmd_flags & 0x04) && g_mini.exit_status != 0)
 			g_mini.stop++;
+		if ((cmd->cmd_flags & 0x20))
+			g_mini.stop = 0;
 		tree_loop(t, i);
 	}
 }
