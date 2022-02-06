@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/03 23:44:37 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/06 23:42:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ void	free_table(char **array)
 	int	i;
 
 	i = -1;
-	while(array[++i])
+	if (!array)
+		return ;
+	while (array[++i])
 	{
 		free(array[i]);
 		array[i] = NULL;
