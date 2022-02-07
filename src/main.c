@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/03 23:59:20 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:05:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ void tree_loop(t_tree *t, int i)
 	g_mini.tmp_in = dup(0);
 	g_mini.tmp_out = dup(1);
 	g_mini.fd_in = dup(g_mini.tmp_in);
+	cmd = NULL;
 	while (++i < t->lcount)
 	{
 		if (check_cmd_calls(t->leafs[i]) == -1)
-			break ;
+			g_mini.stop++;
 		t_temp = t->leafs[i];
 		cmd = (t_cmd *)t_temp->content;
-		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08)))
+		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08) ||
+				cmd->cmd_flags & 0x20))
 			break ;
 	}
 	dup2(g_mini.tmp_in, 0);
