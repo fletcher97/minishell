@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/06 23:45:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 00:53:55 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void	re_init(void)
 */
 void check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
 {
-	if (cmd && (cmd->cmd_flags & 0x04 || cmd->cmd_flags & 0x08))
+	if (cmd && (cmd->cmd_flags & 0x04 || cmd->cmd_flags & 0x08 ||
+			cmd->cmd_flags & 0x20))
 	{
 		if ((cmd->cmd_flags & 0x08) && g_mini.exit_status == 0)
 			g_mini.stop++;
