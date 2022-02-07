@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/07 00:53:55 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:50:11 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	hsi(int signal)
 {
 	rl_replace_line("", signal);
+	g_mini.cancel = 1;
 	printf("\nminishell: ");
 }
 
@@ -52,6 +53,7 @@ void	re_init(void)
 	g_mini.pid_counter = -1;
 	g_mini.stop = 0;
 	g_mini.first_cmd = 1;
+	g_mini.cancel = 0;
 }
 
 /*
