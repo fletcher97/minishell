@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/07 01:49:36 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 02:17:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static int	check_cmd_calls(t_tree *t)
 void tree_loop(t_tree *t, int i)
 {
 	int		status;
+	int		ret;
 	t_cmd	*cmd;
 	t_tree	*t_temp;
 
@@ -88,8 +89,11 @@ void tree_loop(t_tree *t, int i)
 	{
 		t_temp = t->leafs[i];
 		cmd = (t_cmd *)t_temp->content;
-		if (check_cmd_calls(t->leafs[i]) == -1)
+		ret = check_cmd_calls(t->leafs[i]);
+		if (ret == -1)
 			break ;
+		if (ret == 0 && t->leafs[i])
+			tree_loop(t->leafs[i], -1);
 		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08) ||
 				cmd->cmd_flags & 0x20))
 			break ;
