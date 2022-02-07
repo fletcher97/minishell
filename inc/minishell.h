@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/01/12 18:33:01 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:47:06 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_mini
 	int			*pid_lst;
 	int			stop;
 	int			saved_fd;
+	int			cancel;
 	t_cd		*cd;
 	t_commands	*cmd;
 	t_dl_list	*env;
