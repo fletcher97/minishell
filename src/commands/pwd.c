@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:29 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/01/12 20:56:33 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:27:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ int	ft_pwd(void)
 void	ft_exit(void)
 {
 	g_mini.exit = 1;
-	write(1, "exit\n", 4);
+	write(1, "exit\n", 5);
 }
