@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/07 01:05:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 01:25:21 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void tree_loop(t_tree *t, int i)
 	cmd = NULL;
 	while (++i < t->lcount)
 	{
-		if (check_cmd_calls(t->leafs[i]) == -1)
-			g_mini.stop++;
 		t_temp = t->leafs[i];
 		cmd = (t_cmd *)t_temp->content;
+		if (check_cmd_calls(t->leafs[i]) == -1)
+			break ;
 		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08) ||
 				cmd->cmd_flags & 0x20))
 			break ;
@@ -152,6 +152,8 @@ int	main(int argc, char **argv, char **env)
 		input = readline("minishell: ");
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
+		else if (input)
+			free(input);
 		if (g_mini.exit || !input)
 		{
 			free_dl_list(g_mini.env);
