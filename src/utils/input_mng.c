@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:00:03 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/12 19:12:02 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/07 00:23:01 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	input_loop(t_list *input, int input_file)
 		input_file = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if (input_file == -1)
 		{
-			error_output('i', 0, ++input->content);
+			error_output('i', 0, input->content + 1);
 			free(pth);
 			break ;
 		}
