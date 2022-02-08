@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/08 00:28:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:56:04 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ static void	input_loop(char *input)
 		g_mini.cmd = cmd;
 		check_heredoc(cmd->tree);
 		g_mini.hdoc_counter = 0;
-		//print_cmd(cmd);
 		tree_loop(cmd->tree, -1);
 		delete_temp(g_mini.temp_path);
 	}
