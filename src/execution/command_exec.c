@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:51:31 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/03 22:35:24 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:46:50 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,41 @@
 */
 static int	stop_check(t_cmd *cmd)
 {
+	//printf("CMD  = %s ;; STOP CHECK = %d\n", cmd->cmd[0], g_mini.stop);
 	if (g_mini.stop > 0)
 		return (g_mini.exit_status);
 	return (execute_cmd(cmd));
+}
+
+/*
+*   Modifies STOP variable when there is a &&/|| flag with no command which
+*    means we are in between a parentesis and a command.
+*/
+static void	no_cmd_flagged(t_cmd *cmd)
+{
+	if (cmd->cmd_flags & 0x04)
+		{
+			if (g_mini.stop > 0)
+				g_mini.stop = 5;
+			else
+				g_mini.stop = -3;
+			g_mini.and_flag--;
+		}
+		if (cmd->cmd_flags & 0x08)
+		{
+			if (g_mini.and_flag > 0)
+			{
+				if (g_mini.stop > 0)
+					g_mini.stop = -4;
+				else
+					g_mini.stop = 6;
+				g_mini.and_flag--;
+			}
+			if (g_mini.stop > 0 && g_mini.or_flag > 0)
+				g_mini.stop = 6;
+			g_mini.or_flag--;
+		}
+		g_mini.first_cmd = 1;
 }
 
 /*
@@ -45,11 +77,7 @@ int	command_exec(t_cmd *cmd)
 	ret = 0;
 	if (!cmd->cmd[0])
 	{
-		if ((cmd->cmd_flags & 0x08) && g_mini.exit_status == 0)
-			g_mini.stop--;
-		if ((cmd->cmd_flags & 0x04) && g_mini.exit_status != 0)
-			g_mini.stop++;
-		g_mini.first_cmd = 1;
+		no_cmd_flagged(cmd);
 		return (-2);
 	}
 	if (!cmd_identifier(cmd->cmd) && g_mini.first_cmd &&
