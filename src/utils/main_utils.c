@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/07 01:50:11 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:53:53 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,43 @@ void	re_init(void)
 	g_mini.file_counter = 0;
 	g_mini.hdoc_counter = 0;
 	g_mini.pid_counter = -1;
-	g_mini.stop = 0;
 	g_mini.first_cmd = 1;
-	g_mini.cancel = 0;
+	g_mini.stop = 0;
+	g_mini.and_flag = 0;
+	g_mini.or_flag = 0;
+	g_mini.es_flag = 0;
+}
+
+/*
+*   Modifies the STOP, AND, OR and ES flags if the command flag && or || was
+*    flagged.
+*/
+static void	and_or_flag(t_cmd *cmd)
+{
+	if ((cmd->cmd_flags & 0x04))
+	{
+		if (g_mini.exit_status != 0)
+		{
+			g_mini.es_flag = g_mini.exit_status;
+			g_mini.and_flag++;
+			g_mini.stop = 1;
+		}
+		else
+			g_mini.and_flag++;
+	}
+	else
+		g_mini.and_flag = 1;
+	if (cmd->cmd_flags & 0x08)
+	{
+		if (!g_mini.exit_status)
+		{
+			g_mini.es_flag = g_mini.exit_status;
+			g_mini.or_flag++;
+			g_mini.stop = 2;
+		}
+		else
+			g_mini.or_flag++;
+	}
 }
 
 /*
@@ -66,15 +100,29 @@ void	re_init(void)
 */
 void check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
 {
-	if (cmd && (cmd->cmd_flags & 0x04 || cmd->cmd_flags & 0x08 ||
-			cmd->cmd_flags & 0x20))
+	if (cmd && !(cmd->cmd_flags & 0x40))
 	{
-		if ((cmd->cmd_flags & 0x08) && g_mini.exit_status == 0)
-			g_mini.stop++;
-		if ((cmd->cmd_flags & 0x04) && g_mini.exit_status != 0)
-			g_mini.stop++;
-		if ((cmd->cmd_flags & 0x20))
-			g_mini.stop = 0;
+		if (cmd->cmd[0])
+		{
+			and_or_flag(cmd);
+			if (cmd->cmd_flags & 0x10)
+			{
+				if (g_mini.and_flag > 0 && (g_mini.es_flag || g_mini.exit_status))
+				{
+					if (g_mini.exit_status)
+						g_mini.stop = 3;
+				}
+				else if (g_mini.or_flag > 0 && (!g_mini.es_flag || !g_mini.exit_status))
+				{
+					if (g_mini.exit_status)
+						g_mini.stop = 4;
+					else
+						g_mini.stop = -2;
+				}
+			}
+			else if ((cmd->cmd_flags & 0x20))
+				g_mini.stop = -10;
+		}
 		tree_loop(t, i);
 	}
 }
