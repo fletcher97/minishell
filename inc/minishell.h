@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/09 00:10:33 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:29:43 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define FD_MAX 256
 # define CHILD_MAX 512
+
 typedef struct s_cd
 {
 	t_dl_list	*tmp;
