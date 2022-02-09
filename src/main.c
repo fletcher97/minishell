@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/09 00:11:28 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:19:49 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_mini	g_mini;
 */
 static void	struct_init(char **env)
 {
-	int	i;
-
 	g_mini.head = malloc(sizeof(t_dl_list));
 	g_mini.env = get_env(env);
 	g_mini.exit = 0;
@@ -36,16 +34,7 @@ static void	struct_init(char **env)
 	g_mini.fd_out = 1;
 	g_mini.hdoc_counter = 0;
 	g_mini.temp_path = ft_strdup("/tmp/");
-	i = -1;
-	g_mini.hdoc_files = malloc(sizeof(char **) * (FD_MAX + 1));
-	while (++i < FD_MAX)
-		g_mini.hdoc_files[i] = ft_itoa(i);
-	g_mini.hdoc_files[i] = NULL;
-	g_mini.pid_lst = malloc(sizeof(int*) * (CHILD_MAX + 1));
-	i = -1;
-	while (++i < CHILD_MAX)
-		g_mini.pid_lst[i] = -1;
-	g_mini.pid_lst[i] = 0;
+	create_hdoc_and_pid_arrays();
 	g_mini.file_counter = 0;
 	g_mini.cmd_counter = 0;
 	g_mini.pid_counter = -1;
@@ -76,7 +65,7 @@ static int	check_cmd_calls(t_tree *t)
 *    responsible for setting up the FD initial logic and retrieving exit
 *    status variable from child process's.
 */
-void tree_loop(t_tree *t, int i)
+void	tree_loop(t_tree *t, int i)
 {
 	int		status;
 	int		ret;
@@ -96,8 +85,8 @@ void tree_loop(t_tree *t, int i)
 			break ;
 		if (ret == 0 && t->leafs[i])
 			tree_loop(t->leafs[i], -1);
-		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08) ||
-				cmd->cmd_flags & 0x20))
+		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08)
+				|| cmd->cmd_flags & 0x20))
 			break ;
 	}
 	dup2(g_mini.tmp_in, 0);
@@ -109,7 +98,7 @@ void tree_loop(t_tree *t, int i)
 		waitpid(g_mini.pid, &status, 0);
 	if (WIFEXITED(status))
 		g_mini.exit_status = WEXITSTATUS(status);
-	check_and_or_flag(cmd, t , i);
+	check_and_or_flag(cmd, t, i);
 }
 
 /*
@@ -147,7 +136,6 @@ static void	input_loop(char *input)
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
-	int		i;
 
 	(void) argc;
 	(void) argv;
@@ -162,15 +150,7 @@ int	main(int argc, char **argv, char **env)
 		else if (input)
 			free(input);
 		if (g_mini.exit || !input)
-		{
-			free_dl_list(g_mini.env);
-			i = -1;
-			while (++i < FD_MAX)
-				ft_free(g_mini.hdoc_files[i]);
-			free(g_mini.hdoc_files);
-			free(g_mini.pid_lst);
-			exit(0);
-		}
+			exit_loop();
 	}
 	return (0);
 }
