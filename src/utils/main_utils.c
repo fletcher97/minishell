@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/08 00:53:53 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:12:07 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	hsi(int signal)
 {
 	rl_replace_line("", signal);
-	g_mini.cancel = 1;
-	printf("\nminishell: ");
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 /*
