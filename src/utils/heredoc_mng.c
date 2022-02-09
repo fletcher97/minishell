@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/07 02:40:57 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:32:33 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ static int	create_hrdoc_file(char *eof_str, char *filename)
 //would the heredoc data.
 static void	check_heredoc_call(t_cmd *cmd)
 {
+	t_list	*head;
 	char	*filename;
 	char	*eof;
-	t_list	*head;
+	char	*i;
 
 	eof = NULL;
 	if (cmd->in.heredoc)
@@ -72,7 +73,9 @@ static void	check_heredoc_call(t_cmd *cmd)
 	while (cmd->in.heredoc)
 	{
 		eof = (char *)cmd->in.heredoc->content;
-		filename = ft_strjoin(eof, ft_itoa(++g_mini.hdoc_counter));
+		i = ft_itoa(++g_mini.hdoc_counter);
+		filename = ft_strjoin(eof, i);
+		free(i);
 		if (create_hrdoc_file(ft_substr(eof, 2, ft_strlen(eof)), filename) < 0)
 			printf("Error: unable to create heredoc file\n");
 		cmd->in.heredoc = cmd->in.heredoc->next;
