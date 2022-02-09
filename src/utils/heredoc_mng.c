@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 00:32:33 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:57:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*temp_path(char *filename, char *path)
 	if (!filename || !path)
 		return (NULL);
 	pth = ft_strjoin(path, filename);
+	free(g_mini.hdoc_files[g_mini.file_counter]);
 	g_mini.hdoc_files[g_mini.file_counter++] = filename;
 	return (pth);
 }
@@ -44,13 +45,15 @@ static int	create_hrdoc_file(char *eof_str, char *filename)
 	if (output < 0)
 		return (-1);
 	input = readline("> ");
-	while (ft_strcmp(input, eof_str) != 1)
+	while (input && ft_strcmp(input, eof_str) != 1)
 	{
 		if (ft_strlen(input) > 0)
 			write(output, input, ft_strlen(input));
-		write(output, "\n", 2);
+		write(output, "\n", 1);
+		free(input);
 		input = readline("> ");
 	}
+	free(input);
 	free(eof_str);
 	free(filename);
 	close(output);
