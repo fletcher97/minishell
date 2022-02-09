@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:51:31 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/08 00:46:50 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/08 23:37:52 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 *   Checks for the END (;) flag so it can reset the First_cmd variable;
-*   Also, it modifies the STOP variable in case it detects the OR flag;
-*   Also, stops the cmd to be executed in case STOP variable is > 0.
+*    Also, it modifies the STOP variable in case it detects the OR flag;
+*    Also, stops the cmd to be executed in case STOP variable is > 0.
 */
 static int	stop_check(t_cmd *cmd)
 {
