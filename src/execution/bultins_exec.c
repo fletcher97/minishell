@@ -1,5 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bultins_exec.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/09 01:27:26 by fferreir          #+#    #+#             */
+/*   Updated: 2022/02/09 01:43:08 by fferreir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "execution.h"
 
+/*
+*   It will check for the input files flags. If the file does not exist, it will
+*    return 0, which will make the execute to stop and exit the command loop.
+*/
 static int	file_input_instruction(t_cmd *cmd, int input)
 {
 	input = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
@@ -11,6 +27,10 @@ static int	file_input_instruction(t_cmd *cmd, int input)
 	return (-1);
 }
 
+/*
+*   All built in function that are single commands will execute using this
+*    function. It manages all the inputs/outputs.
+*/
 int	bultin_exec(t_cmd *cmd)
 {
 	int	output;
