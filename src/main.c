@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/08 00:56:04 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:11:28 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	struct_init(char **env)
 	g_mini.file_counter = 0;
 	g_mini.cmd_counter = 0;
 	g_mini.pid_counter = -1;
-	g_mini.cancel = 0;
 }
 
 /*
@@ -157,13 +156,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, hsi);
 	while (42)
 	{
-		if (!g_mini.cancel)
-			input = readline("minishell: ");
-		else
-		{
-			input = readline("");
-			g_mini.cancel = 0;
-		}
+		input = readline("minishell: ");
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
 		else if (input)
