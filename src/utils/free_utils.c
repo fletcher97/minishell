@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/06 23:42:56 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:18:31 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,25 @@
 void	delete_temp(char *path)
 {
 	char	*file_path;
+	char	*nbr;
 	int		i;
 
 	if (!path)
 		return ;
 	i = -1;
-	while (++i < (g_mini.file_counter))
+	while (++i < (g_mini.file_counter + 1))
 	{
-		if (g_mini.hdoc_files[i] != ft_itoa(i))
+		nbr = ft_itoa(i);
+		if (ft_strcmp(g_mini.hdoc_files[i], nbr) != 1)
 		{
 			file_path = ft_strjoin(path, g_mini.hdoc_files[i]);
+			printf("%s\n ;;; counter = %d\n", file_path, g_mini.file_counter);
 			unlink(file_path);
 			free(file_path);
 			free(g_mini.hdoc_files[i]);
 			g_mini.hdoc_files[i] = ft_itoa(i);
 		}
+		free(nbr);
 	}
 }
 
