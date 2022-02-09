@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:00:03 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/07 00:23:01 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:33:29 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 static int	heredoc_loop(t_list *heredoc, int input_hdoc)
 {
 	char	*pth;
+	char	*i;
 
 	while (heredoc)
 	{
 		if (input_hdoc)
 			close(input_hdoc);
-		pth = ft_strjoin((char *)heredoc->content,
-				ft_itoa(++g_mini.hdoc_counter));
+		i = ft_itoa(++g_mini.hdoc_counter);
+		pth = ft_strjoin((char *)heredoc->content, i);
 		pth = temp_path(pth, g_mini.temp_path);
 		input_hdoc = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		heredoc = heredoc->next;
 		free(pth);
+		free(i);
 	}
 	return (input_hdoc);
 }
