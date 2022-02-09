@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/03 23:43:22 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:21:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		clean_processes(void);
 void		re_init(void);
 void		check_and_or_flag(t_cmd *cmd, t_tree *t, int i);
 void		tree_loop(t_tree *t, int i);
+void		create_hdoc_and_pid_arrays(void);
+void		exit_loop(void);
 
 //Fork Functions
 void		exit_fork(void);
