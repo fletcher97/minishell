@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:24:36 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/31 21:53:22 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:29:20 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,22 @@
 # include "utilities.h"
 # include "parser.h"
 
-//Command Execution functions
-int	command_exec(t_cmd *cmd);
-
-//Pipe functions
+/*
+*   Command Execution functions
+*/
+int		command_exec(t_cmd *cmd);
+/*
+*   Pipe functions
+*/
 int		pipe_command(t_cmd *cmd, int fd[2]);
 
-//execute cmd function
+/*
+*execute cmd function
+*/
 int		execute_cmd(t_cmd *cmd);
 
-//Execute bultin functions
-int bultin_exec(t_cmd *cmd);
+/*
+*   Execute bultin functions
+*/
+int		bultin_exec(t_cmd *cmd);
 #endif
