@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 00:57:38 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 01:55:37 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static int	create_hrdoc_file(char *eof_str, char *filename)
 	filename = temp_path(filename, g_mini.temp_path);
 	if (!filename)
 		return (-1);
-	output = open(filename, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR
-			| S_IWUSR | S_IRGRP | S_IROTH);
+	output = open(filename, 02 | 0100 | 01000, 0400 | 0200 | 040 | 04);
 	if (output < 0)
 		return (-1);
 	input = readline("> ");
