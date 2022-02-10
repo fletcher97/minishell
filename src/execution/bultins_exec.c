@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:27:26 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 01:43:08 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 06:26:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	bultin_exec(t_cmd *cmd)
 	if (cmd->in.out)
 	{
 		output = file_output(cmd->in.output, cmd->in.append, cmd->in.out);
-		if (output < 0)
-			dup2(output, 1);
 	}
 	screening_one(cmd->cmd);
 	return (EXIT_SUCCESS);
