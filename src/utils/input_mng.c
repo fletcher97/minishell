@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:00:03 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 00:33:29 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 09:54:37 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	file_input(t_list *input, t_list *heredoc, t_list *in)
 	input_file = 0;
 	input_hdoc = 0;
 	input_file = input_loop(input, input_file);
+	if (input_file == -1)
+		return (-1);
 	input_hdoc = heredoc_loop(heredoc, input_hdoc);
 	if (!ft_strncmp(in->content, "<<", 2))
 	{
