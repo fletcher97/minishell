@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/10 12:24:07 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:48:41 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,19 @@ static void	loop_r(t_tree *t, int *step)
 	while (i < t->lcount)
 	{
 		if (flag && ((((t_cmd *)(t->leafs[i]->content))->cmd_flags & 0x4
-				&& g_mini.exit_status) || (((t_cmd *)(t->leafs[i++]->content))
+				&& g_mini.exit_status) || (((t_cmd *)(t->leafs[i]->content))
 			->cmd_flags & 0x8 && !g_mini.exit_status)))
 		{
+			i++;
 			*step += 10;
 			continue ;
 		}
+		(flag) && (i++);
 		if (i < t->lcount)
-		{
 			*step += 10;
+		if (i < t->lcount)
 			tree_loop(t->leafs[i], !flag || (i > 0 && !(((t_cmd *)
 							t->leafs[i -1]->content)->cmd_flags & 0x40)));
-		}
 		if (i >= t->lcount || !t->leafs[i]->content)
 			break ;
 		flag = 1;
