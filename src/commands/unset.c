@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:38 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/10 11:27:25 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:58:07 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ void	ft_unset(t_dl_list *env, char **argv, int i)
 
 	head = env;
 	temp = NULL;
-	if (!(lst_str_check(env, argv[i + 1])))
+	if (ft_strcmp("_", argv[i + 1]))
 		return ;
-	while (!(ft_strcmp(env->name, argv[i + 1])))
+	if (!env || !(lst_str_check(env, argv[i + 1])))
+		return ;
+	while (env && !(ft_strcmp(env->name, argv[i + 1])))
 	{
 		temp = env;
 		env = env->next;
@@ -77,7 +79,8 @@ void	ft_unset(t_dl_list *env, char **argv, int i)
 		temp2 = env->next;
 	else
 		temp2 = NULL;
-	temp->next = temp2;
+	if (temp)
+		temp->next = temp2;
 	node_destroyer(env);
 	env = head;
 }
