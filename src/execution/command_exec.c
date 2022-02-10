@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:51:31 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 01:33:02 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 05:09:58 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 *    Also, it modifies the STOP variable in case it detects the OR flag;
 *    Also, stops the cmd to be executed in case STOP variable is > 0.
 */
-static int	stop_check(t_cmd *cmd)
-{
-	if (g_mini.stop > 0)
-		return (g_mini.exit_status);
-	return (execute_cmd(cmd));
-}
+// static int	stop_check(t_cmd *cmd)
+// {
+// 	if (g_mini.skip || g_mini.stop > 0)
+// 		return (g_mini.exit_status);
+// 	return (execute_cmd(cmd));
+// }
 
 /*
 *   Modifies STOP variable when there is a &&/|| flag with no command which
@@ -82,9 +82,9 @@ int	command_exec(t_cmd *cmd)
 		return (-2);
 	}
 	if (!cmd_identifier(cmd->cmd) && g_mini.first_cmd
-		&& ((cmd->cmd_flags & 0x10) || (cmd->cmd_flags & 0x20)))
+		&& !(cmd->cmd_flags & 0x40))
 		return (bultin_exec(cmd));
-	ret = stop_check(cmd);
+	ret = execute_cmd(cmd);
 	if (cmd->cmd_flags & 0x40)
 		g_mini.first_cmd = 0;
 	else
