@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 12:24:09 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 16:13:47 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		exit_fork(void);
 //cmd exec
 int			file_input(t_list *input, t_list *heredoc, t_list *in);
 int			file_output(t_list *output, t_list *append, t_list *final_output);
+void		check_input(t_list *input);
 
 //Selector functions
 int			screening_one(char **argv);

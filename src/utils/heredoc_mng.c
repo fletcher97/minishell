@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 11:59:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 16:15:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "ft_conv.h"
 
 #include "minishell.h"
+#include "utilities.h"
 
 /*
 *   The Temp Path function is responsible to create the path for the temporary
@@ -117,6 +118,7 @@ static int	check_loop(t_tree *t)
 	if (!cmd)
 		return (0);
 	g_mini.hdoc_counter = step;
+	check_input(cmd->in.input);
 	check_heredoc_call(cmd);
 	return (1);
 }

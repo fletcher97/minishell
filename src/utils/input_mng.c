@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:00:03 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 09:54:37 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 16:19:50 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	input_loop(t_list *input, int input_file)
 		input_file = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if (input_file == -1)
 		{
-			error_output('i', 0, input->content + 1);
 			ft_free(pth);
 			break ;
 		}
@@ -83,4 +82,28 @@ int	file_input(t_list *input, t_list *heredoc, t_list *in)
 	if (input_hdoc)
 		close(input_hdoc);
 	return (input_file);
+}
+
+void	check_input(t_list *input)
+{
+	char	*pth;
+	int		input_file;
+
+	input_file = 0;
+	while (input)
+	{
+		pth = ft_substr((char *)input->content, 1,
+				ft_strlen((char *)input->content));
+		input_file = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		if (input_file == -1)
+		{
+			error_output('i', 0, input->content + 1);
+			ft_free(pth);
+			break ;
+		}
+		input = input->next;
+		if (input_file > 0)
+			close(input_file);
+	}
+	return ;
 }
