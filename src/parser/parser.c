@@ -13,6 +13,7 @@
 #include <ft_stdlib.h>
 
 #include "ft_string.h"
+#include "ft_stdlib.h"
 
 #include "parser.h"
 #include "utilities.h"
@@ -26,30 +27,30 @@ static void	free_cmd(void *v)
 		return ;
 	cmd = (t_cmd *)v;
 	if (cmd->line)
-		free(cmd->line);
+		ft_free(cmd->line);
 	i = -1;
 	if (cmd->cmd)
 	{
 		while (cmd->cmd[++i])
-			free(cmd->cmd[i]);
-		free(cmd->cmd);
+			ft_free(cmd->cmd[i]);
+		ft_free(cmd->cmd);
 	}
 	if (cmd->in.input)
-		ft_lstclear(&cmd->in.input, free);
+		ft_lstclear(&cmd->in.input, ft_free);
 	if (cmd->in.heredoc)
-		ft_lstclear(&cmd->in.heredoc, free);
+		ft_lstclear(&cmd->in.heredoc, ft_free);
 	if (cmd->in.output)
-		ft_lstclear(&cmd->in.output, free);
+		ft_lstclear(&cmd->in.output, ft_free);
 	if (cmd->in.append)
-		ft_lstclear(&cmd->in.append, free);
+		ft_lstclear(&cmd->in.append, ft_free);
 	ft_free(v);
 }
 
 void	free_command(t_commands *cmd)
 {
-	free(cmd->line);
+	ft_free(cmd->line);
 	ft_treeclear(cmd->tree, free_cmd);
-	free(cmd);
+	ft_free(cmd);
 }
 
 t_commands	*parse(const char *str)

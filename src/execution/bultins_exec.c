@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include <unistd.h>
+#include <stdlib.h>
+
+#include "parser.h"
+
+#include "utilities.h"
 
 /*
 *   It will check for the input files flags. If the file does not exist, it will

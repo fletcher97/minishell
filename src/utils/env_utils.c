@@ -10,6 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
+#include "ft_string.h"
+#include "ft_stdlib.h"
+#include "ft_list.h"
+
+#include "minishell.h"
 #include "utilities.h"
 
 //The Print Env Content prints the content of the provided env variable. It will
@@ -29,7 +36,7 @@ void	print_env_content(t_dl_list *lst, char *name, char free_name)
 			printf("%s", content);
 	}
 	if (free_name == 'y')
-		free(name);
+		ft_free(name);
 }
 
 //The Return Env Content find the inputed variable name on the program internal
@@ -58,7 +65,7 @@ char	*get_name(char *str, char c)
 	x = -1;
 	if (!str)
 		return (NULL);
-	name = malloc(sizeof(char *) * (ft_strlen(str) + 1));
+	name = ft_malloc(sizeof(char *) * (ft_strlen(str) + 1));
 	while (str[++x] && str[x] != c)
 		name[x] = str[x];
 	name[x] = '\0';
@@ -76,7 +83,7 @@ t_dl_list	*get_env(char **env)
 
 	x = -1;
 	g_mini.env = NULL;
-	splited = malloc(sizeof(char *) * 2);
+	splited = ft_malloc(sizeof(char *) * 2);
 	while (env[++x] != NULL)
 	{
 		aux = ft_strichr(env[x], '=');
@@ -102,7 +109,7 @@ int	check_env_names(char *name, char *content)
 	{
 		if (ft_strcmp(name, g_mini.env->name))
 		{
-			free(g_mini.env->content);
+			ft_free(g_mini.env->content);
 			g_mini.env->content = ft_strdup(content);
 			g_mini.env = head;
 			return (1);

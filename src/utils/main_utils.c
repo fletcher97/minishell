@@ -10,6 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
+
+#include "readline.h"
+
+#include "minishell.h"
 #include "utilities.h"
 
 void	hsi(int signal)

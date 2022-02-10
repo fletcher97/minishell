@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <stdio.h>
+
+#include "ft_string.h"
+
+#include "minishell.h"
 
 //Error output function is used to output an error msg based on the error type
 //it received.

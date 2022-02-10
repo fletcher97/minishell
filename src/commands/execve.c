@@ -10,7 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include <unistd.h>
+#include <stdlib.h>
+
+#include "minishell.h"
+#include "utilities.h"
+
+#include "ft_string.h"
+#include "ft_stdlib.h"
 
 /*
 *   The Path Creation function is used to differentiate between built-in program
@@ -32,7 +39,7 @@ static char	*path_creation(char *path, char *cmd)
 	{
 		temp = ft_strjoin(path, "/");
 		new_path = ft_strjoin(temp, cmd);
-		free(temp);
+		ft_free(temp);
 		temp = NULL;
 	}
 	g_mini.env = head;
@@ -49,7 +56,7 @@ static void	create_env_array_loop(char **env)
 	{
 		temp = ft_strjoin(g_mini.env->name, "=");
 		env[++i] = ft_strjoin(temp, g_mini.env->content);
-		free(temp);
+		ft_free(temp);
 		g_mini.env = g_mini.env->next;
 		if (!g_mini.env)
 			break ;
@@ -76,7 +83,7 @@ static char	**temp_env(char **env)
 			break ;
 	}
 	g_mini.env = head;
-	env = (char **)malloc(sizeof(char *) * (size + 1));
+	env = (char **)ft_malloc(sizeof(char *) * (size + 1));
 	create_env_array_loop(env);
 	g_mini.env = head;
 	return (env);
@@ -102,7 +109,7 @@ static int	path_creation_loop(char **cmds, char **path, char *cmd)
 		total = path_creation(path[i], cmd);
 		if ((execve(total, cmds, env) != -1))
 			--j;
-		free(total);
+		ft_free(total);
 		total = NULL;
 		++j;
 	}

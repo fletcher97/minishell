@@ -11,8 +11,20 @@
 /* ************************************************************************** */
 
 #include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdio.h>
+
+#include "readline.h"
+#include "history.h"
+
+#include "ft_stdlib.h"
+#include "ft_string.h"
+
 #include "minishell.h"
 #include "parser.h"
+#include "utilities.h"
+#include "execution.h"
 
 t_mini	g_mini;
 
@@ -22,7 +34,7 @@ t_mini	g_mini;
 */
 static void	struct_init(char **env)
 {
-	g_mini.head = malloc(sizeof(t_dl_list));
+	g_mini.head = ft_malloc(sizeof(t_dl_list));
 	g_mini.env = get_env(env);
 	g_mini.exit = 0;
 	g_mini.exit_status = 0;
@@ -123,7 +135,7 @@ static void	input_loop(char *input)
 	else
 		printf("Syntax error code: %d\n", cmd->error);
 	free_command(cmd);
-	free(input);
+	ft_free(input);
 	re_init();
 	input = NULL;
 }
@@ -148,7 +160,7 @@ int	main(int argc, char **argv, char **env)
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
 		else if (input)
-			free(input);
+			ft_free(input);
 		if (g_mini.exit || !input)
 			exit_loop();
 	}

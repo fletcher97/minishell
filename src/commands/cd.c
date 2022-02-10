@@ -10,7 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include <limits.h>
+#include <unistd.h>
+
+#include "minishell.h"
+#include "utilities.h"
+
+#include "ft_string.h"
+#include "ft_stdlib.h"
 
 //The Change Directory fucntion is responsible to change the directory accordin-
 //gly to the path provided by the used input and passed by the ft_cd functon.
@@ -37,7 +44,7 @@ static int	change_directory(t_dl_list *head, char *path)
 		check_env_names("PWD", path);
 		check_env_names("OLDPWD", old_pwd);
 	}
-	free(path);
+	ft_free(path);
 	return (ret);
 }
 

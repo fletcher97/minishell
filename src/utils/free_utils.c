@@ -10,7 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <unistd.h>
+
+#include "ft_conv.h"
+#include "ft_string.h"
+#include "ft_stdlib.h"
+
+#include "minishell.h"
 
 void	delete_temp(char *path)
 {
@@ -28,11 +34,11 @@ void	delete_temp(char *path)
 		{
 			file_path = ft_strjoin(path, g_mini.hdoc_files[i]);
 			unlink(file_path);
-			free(file_path);
-			free(g_mini.hdoc_files[i]);
+			ft_free(file_path);
+			ft_free(g_mini.hdoc_files[i]);
 			g_mini.hdoc_files[i] = ft_itoa(i);
 		}
-		free(nbr);
+		ft_free(nbr);
 	}
 }
 
@@ -47,7 +53,7 @@ void	free_list_nodes(t_dl_list *lst)
 	while (lst)
 	{
 		temp = lst->next;
-		free(lst);
+		ft_free(lst);
 		lst = NULL;
 		lst = temp;
 	}
@@ -66,10 +72,10 @@ void	free_argv(void)
 	y = -1;
 	while (++y < x)
 	{
-		free(g_mini.argv[y]);
+		ft_free(g_mini.argv[y]);
 		g_mini.argv[y] = NULL;
 	}
-	free(g_mini.argv);
+	ft_free(g_mini.argv);
 }
 
 //The free dl list function will receive and destroy all nodes on a dual linked
@@ -82,9 +88,9 @@ void	free_dl_list(t_dl_list *lst)
 	while (lst)
 	{
 		temp = lst->next;
-		free(lst->content);
-		free(lst->name);
-		free(lst);
+		ft_free(lst->content);
+		ft_free(lst->name);
+		ft_free(lst);
 		lst = temp;
 	}
 }
@@ -101,9 +107,9 @@ void	free_table(char **array)
 		return ;
 	while (array[++i])
 	{
-		free(array[i]);
+		ft_free(array[i]);
 		array[i] = NULL;
 	}
-	free(array);
+	ft_free(array);
 	array = NULL;
 }

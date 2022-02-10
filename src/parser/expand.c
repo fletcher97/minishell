@@ -11,9 +11,11 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <limits.h>
 #include <stdio.h>
 
 #include "ft_string.h"
+#include "ft_stdlib.h"
 #include "ft_ctype.h"
 #include "ft_list.h"
 
@@ -34,10 +36,10 @@ static char	*replace(char *s1, const char *s2, int pos, int len)
 		while (mask[++i])
 			mask[i] |= 0x80;
 	t2 = ft_strjoin(t1, mask);
-	free(mask);
-	free(t1);
+	ft_free(mask);
+	ft_free(t1);
 	t1 = ft_strjoin(t2, s1 + pos + (len & INT_MAX));
-	free(t2);
+	ft_free(t2);
 	return (t1);
 }
 
@@ -61,12 +63,12 @@ static int	expand1(char **str, int start, t_cmd *cmd, int i)
 	var = ft_substr(s, start, i);
 	unmask_str(var);
 	big = ft_listget_dl(var, g_mini.env);
-	free(var);
+	ft_free(var);
 	if (!big)
 		return (0);
 	*str = replace(s, big, start - 1, (i + 1) + ((s[start] & 0x80) * 16777216));
 	i = ft_abs(i - ft_strlen(big));
-	free(s);
+	ft_free(s);
 	return (i);
 }
 

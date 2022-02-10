@@ -10,7 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <fcntl.h>
+
+#include "ft_conv.h"
+#include "ft_string.h"
+#include "ft_stdlib.h"
+
 #include "utilities.h"
+#include "minishell.h"
 
 static int	heredoc_loop(t_list *heredoc, int input_hdoc)
 {
@@ -26,8 +34,8 @@ static int	heredoc_loop(t_list *heredoc, int input_hdoc)
 		pth = temp_path(pth, g_mini.temp_path);
 		input_hdoc = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		heredoc = heredoc->next;
-		free(pth);
-		free(i);
+		ft_free(pth);
+		ft_free(i);
 	}
 	return (input_hdoc);
 }
@@ -46,11 +54,11 @@ static int	input_loop(t_list *input, int input_file)
 		if (input_file == -1)
 		{
 			error_output('i', 0, input->content + 1);
-			free(pth);
+			ft_free(pth);
 			break ;
 		}
 		input = input->next;
-		free(pth);
+		ft_free(pth);
 	}
 	return (input_file);
 }

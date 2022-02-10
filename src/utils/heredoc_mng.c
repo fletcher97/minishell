@@ -10,7 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+#include "readline.h"
+
+#include "ft_string.h"
+#include "ft_stdlib.h"
+#include "ft_conv.h"
+
+#include "minishell.h"
 
 //The Temp Path function is responsible to create the path for the temporary
 //files that hold the heredoc data provided by the user.
@@ -21,7 +31,7 @@ char	*temp_path(char *filename, char *path)
 	if (!filename || !path)
 		return (NULL);
 	pth = ft_strjoin(path, filename);
-	free(g_mini.hdoc_files[g_mini.file_counter]);
+	ft_free(g_mini.hdoc_files[g_mini.file_counter]);
 	g_mini.hdoc_files[g_mini.file_counter++] = filename;
 	return (pth);
 }
@@ -49,12 +59,12 @@ static int	create_hrdoc_file(char *eof_str, char *filename)
 		if (ft_strlen(input) > 0)
 			write(output, input, ft_strlen(input));
 		write(output, "\n", 1);
-		free(input);
+		ft_free(input);
 		input = readline("> ");
 	}
-	free(input);
-	free(eof_str);
-	free(filename);
+	ft_free(input);
+	ft_free(eof_str);
+	ft_free(filename);
 	close(output);
 	return (0);
 }
@@ -77,7 +87,7 @@ static void	check_heredoc_call(t_cmd *cmd)
 		eof = (char *)cmd->in.heredoc->content;
 		i = ft_itoa(++g_mini.hdoc_counter);
 		filename = ft_strjoin(eof, i);
-		free(i);
+		ft_free(i);
 		if (create_hrdoc_file(ft_substr(eof, 2, ft_strlen(eof)), filename) < 0)
 			printf("Error: unable to create heredoc file\n");
 		cmd->in.heredoc = cmd->in.heredoc->next;

@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <stdio.h>
+
+#include "ft_string.h"
+
+#include "minishell.h"
+#include "commands.h"
 
 static int	screening_two(int i)
 {

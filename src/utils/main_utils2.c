@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "utilities.h"
 
 static void	end_flag_condition(void)

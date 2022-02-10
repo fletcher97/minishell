@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <execution.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "minishell.h"
+#include "utilities.h"
 
 /*
 *   It will check for all the input file requests and set the FD for them.

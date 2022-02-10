@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include <limits.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "minishell.h"
 
 //Print the content of the environmental variable "PWD" from the internal
 //env list (dual linked list).
@@ -33,5 +38,5 @@ int	ft_pwd(void)
 void	ft_exit(void)
 {
 	g_mini.exit = 1;
-	write(1, "exit\n", 5);
+	printf("exit\n");
 }

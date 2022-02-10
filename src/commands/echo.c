@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include <stdio.h>
+
+#include "minishell.h"
+
+#include "ft_string.h"
 
 static void	echo_flag(char **argv, int i, int j, int k)
 {

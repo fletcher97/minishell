@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utilities.h"
 #include "execution.h"
+#include "minishell.h"
 
 /*
 *   Checks for the END (;) flag so it can reset the First_cmd variable;
