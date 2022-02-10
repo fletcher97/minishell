@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/09 02:29:43 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 01:03:32 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # include "parser.h"
 
 # define FD_MAX 256
-# define CHILD_MAX 512
+
+# ifndef CHILD_MAX
+#  define CHILD_MAX 512
+# endif
 
 typedef struct s_cd
 {
