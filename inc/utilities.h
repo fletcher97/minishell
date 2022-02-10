@@ -13,17 +13,8 @@
 #ifndef UTILITIES_H
 # define UTILITIES_H
 
-// # include <stdio.h>
-// # include <stdlib.h>
-// # include <fcntl.h>
-
 # include "ft_list.h"
-// # include "ft_stdlib.h"
-// # include "ft_string.h"
 
-// # include "commands.h"
-// # include "execution.h"
-// # include "minishell.h"
 # include "parser.h"
 
 // Error codes

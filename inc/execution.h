@@ -13,12 +13,6 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-// # include <stdio.h>
-// # include <unistd.h>
-
-// # include "commands.h"
-// # include "minishell.h"
-// # include "utilities.h"
 # include "parser.h"
 
 /*

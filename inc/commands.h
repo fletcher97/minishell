@@ -13,21 +13,7 @@
 #ifndef COMMANDS_H
 # define COMMANDS_H
 
-// # include <limits.h>
-// # include <stdio.h>
-// # include <readline/history.h>
-// # include <readline/readline.h>
-// # include <signal.h>
-// # include <stdio.h>
-// # include <sys/wait.h>
-// # include <unistd.h>
-
 # include "ft_list.h"
-// # include "ft_stdlib.h"
-// # include "ft_string.h"
-
-// # include "minishell.h"
-// # include "utilities.h"
 
 //CD cmd functions
 int		ft_cd(char **argv);

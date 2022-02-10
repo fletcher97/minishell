@@ -13,20 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # include <stdio.h>
-// # include <unistd.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
-
-// # include "ft_stdlib.h"
-// # include "ft_string.h"
 # include "ft_list.h"
-// # include "ft_conv.h"
 
-// # include "commands.h"
-// # include "utilities.h"
 # include "parser.h"
-// # include "execution.h"
 
 # define FD_MAX 256
 # define CHILD_MAX 512
