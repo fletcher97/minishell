@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:09:10 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 15:49:39 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 06:14:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int		ft_execve(char **argv, int i);
 //PWD and Exit cmd functions
 int		ft_pwd(void);
 void	ft_exit(void);
-
-//Signal functions
-void	get_signal(int signal);
 
 //Unset cmd functions
 void	ft_unset(t_dl_list *env, char **argv, int i);
