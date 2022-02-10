@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:29 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/07 01:27:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:40:48 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 
 #include "minishell.h"
 
-//Print the content of the environmental variable "PWD" from the internal
-//env list (dual linked list).
-
+/*
+*   Print the content of the environmental variable "PWD" from the internal
+*    env list (dual linked list).
+*/
 int	ft_pwd(void)
 {
 	char	pwd[PATH_MAX];
@@ -31,10 +32,12 @@ int	ft_pwd(void)
 	return (1);
 }
 
-//Exit function is used to flag the exit call to make sure that the main func
-//free up our struct and exit the program successfully.
-//free_struct function is being called inside the main loop now when the exit
-//is called.
+/*
+*   Exit function is used to flag the exit call to make sure that the main func
+*   free up our struct and exit the program successfully.
+*    free_struct function is being called inside the main loop now when the exit
+*    is called.
+*/
 void	ft_exit(void)
 {
 	g_mini.exit = 1;
