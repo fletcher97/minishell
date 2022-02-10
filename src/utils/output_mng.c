@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:43:44 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/27 17:59:31 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:37:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include "ft_stdlib.h"
 #include "ft_list.h"
 
+/*
+*   Checks if there is a file to be used as output and, if so it will create it
+*    and forwared the correct FD to be used.
+*/
 static int	output_loop(t_list *output, int output_file)
 {
 	char	*path;
@@ -35,6 +39,10 @@ static int	output_loop(t_list *output, int output_file)
 	return (output_file);
 }
 
+/*
+*   Checks if there is a file with append option to be used as output and, if so
+*    it will create it and forwared the correct FD to be used.
+*/
 static int	append_loop(t_list *append, int output_file)
 {
 	char	*path;
@@ -81,6 +89,11 @@ static int	final_output_loop(t_list *final_output, int output_file)
 	return (output_file);
 }
 
+/*
+*   It will go through all the outputs that were solicitated on the command,
+*    create them if they do not exist and forwared the correct FD for the final
+*    file.
+*/
 int	file_output(t_list *output, t_list *append, t_list *final_output)
 {
 	int		output_file;
