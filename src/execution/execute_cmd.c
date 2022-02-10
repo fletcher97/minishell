@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:27:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 09:25:23 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:49:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 /*
 *   It will check for all the input file requests and set the FD for them.
 */
-static void file_output_instruction(t_cmd *cmd)
+static void	file_output_instruction(t_cmd *cmd)
 {
 	if (cmd->in.out)
 		g_mini.fd_out = file_output(cmd->in.output, cmd->in.append,
-									cmd->in.out);
+				cmd->in.out);
 	if (g_mini.fd_out == 1)
 		g_mini.fd_out = dup(g_mini.tmp_out);
 	if (g_mini.fd_out < 0)
@@ -36,20 +36,12 @@ static void file_output_instruction(t_cmd *cmd)
 *    it will return 0, which will prevent the command to run and exiting the
 *    command loop.
 */
-static int file_input_instruction(t_cmd *cmd)
+static int	file_input_instruction(t_cmd *cmd)
 {
 	if (cmd->in.in)
 		g_mini.fd_in = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
 	if (g_mini.fd_in < 0)
-	{
-		// printf("%d\n", g_mini.fd_in);
-		// dup2(g_mini.tmp_in, 0);
-		// dup2(g_mini.tmp_out, 1);
-		// close(g_mini.tmp_in);
-		// close(g_mini.tmp_out);
-		// printf("%d\n", g_mini.fd_in);
 		return (0);
-	}
 	if (dup2(g_mini.fd_in, 0) > 0)
 		close(g_mini.fd_in);
 	return (1);
@@ -59,7 +51,7 @@ static int file_input_instruction(t_cmd *cmd)
 *   Check pipe will check for the pipe flag and, if so, it will pipe the fd so
 *    it can successuly save and forward the correct FD's.
 */
-void check_pipe(t_cmd *cmd, int flag)
+static void	check_pipe(t_cmd *cmd, int flag)
 {
 	if ((cmd->cmd_flags & 0x40) && !cmd->in.out)
 	{
@@ -82,9 +74,8 @@ void check_pipe(t_cmd *cmd, int flag)
 *    all child process that are running will be close in case of a successful
 *    execute, ie, will kill all ghost processes.
 */
-int execute_cmd(t_cmd *cmd)
+int	execute_cmd(t_cmd *cmd)
 {
-	//printf("cmd = %s\n", cmd->cmd[0]);
 	file_output_instruction(cmd);
 	if (!file_input_instruction(cmd))
 	{
