@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/10 10:08:38 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:57:22 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 #include "parser.h"
 #include "utilities.h"
 #include "execution.h"
-
-void print_cmd(t_commands *cmd);
 
 t_mini	g_mini;
 
@@ -55,22 +53,48 @@ static void	struct_init(char **env)
 	g_mini.pid_counter = -1;
 }
 
+static void	loop_r(t_tree *t, int *step)
+{
+	int	flag;
+	int	i;
+
+	i = 0;
+	flag = 0;
+	while (i < t->lcount)
+	{
+		if (flag && ((((t_cmd *)(t->leafs[i]->content))->cmd_flags & 0x4
+				&& g_mini.exit_status) || (((t_cmd *)(t->leafs[i++]->content))
+			->cmd_flags & 0x8 && !g_mini.exit_status)))
+		{
+			*step += 10;
+			continue ;
+		}
+		if (i < t->lcount)
+		{
+			*step += 10;
+			tree_loop(t->leafs[i], !flag || (i > 0 && !(((t_cmd *)
+							t->leafs[i -1]->content)->cmd_flags & 0x40)));
+		}
+		if (i >= t->lcount || !t->leafs[i]->content)
+			break ;
+		flag = 1;
+	}
+}
+
 /*
 *   Tree loop function will check the tree leafs for commands. Also, it is
 *    responsible for setting up the FD initial logic and retrieving exit
 *    status variable from child process's.
 */
-void tree_loop(t_tree *t, int i, int init)
+void	tree_loop(t_tree *t, int init)
 {
-	int		status;
-	int flag;
-	static int step = 0;
-	t_cmd	*cmd;
+	int			status;
+	static int	step = 0;
+	t_cmd		*cmd;
 
 	if (!t)
 		return ;
 	cmd = (t_cmd *)t->content;
-	flag = 0;
 	if (cmd && cmd->cmd && cmd->cmd[0])
 	{
 		if (init)
@@ -82,33 +106,13 @@ void tree_loop(t_tree *t, int i, int init)
 			command_exec(cmd);
 			return ;
 		}
-		command_exec(cmd);
-		status = dup_init_and_close('c');
+		((command_exec(cmd)) || 1) && (status = dup_init_and_close('c'));
 		(g_mini.pid > 0) && (waitpid(g_mini.pid, &status, 0));
 		if (WIFEXITED(status))
 			g_mini.exit_status = WEXITSTATUS(status);
-
 	}
 	else
-	{
-		while (i < t->lcount)
-		{
-			if (flag && ((((t_cmd *)(t->leafs[i]->content))->cmd_flags & 0x4 && g_mini.exit_status)
-				|| (((t_cmd *)(t->leafs[i++]->content))->cmd_flags & 0x8 && !g_mini.exit_status)))
-			{
-				step += 10;
-				continue ;
-			}
-			if (i < t->lcount)
-			{
-				step += 10;
-				tree_loop(t->leafs[i], 0, !flag || (i > 0 && !(((t_cmd *)t->leafs[i -1]->content)->cmd_flags & 0x40)));
-			}
-			if (i >= t->lcount || !t->leafs[i]->content)
-				break ;
-			flag = 1;
-		}
-	}
+		loop_r(t, &step);
 }
 
 /*
@@ -127,7 +131,7 @@ static void	input_loop(char *input)
 		g_mini.cmd = cmd;
 		check_heredoc(cmd->tree);
 		g_mini.hdoc_counter = 0;
-		tree_loop(cmd->tree, 0, 0);
+		tree_loop(cmd->tree, 0);
 		delete_temp(g_mini.temp_path);
 	}
 	else
