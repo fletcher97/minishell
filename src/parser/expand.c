@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 06:20:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/10 04:56:24 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:41:30 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	expand1(char **str, int start, t_cmd *cmd, int i)
 	*str = replace(s, big, start - 1, (i + 1) + ((s[start] & 0x80) * 16777216));
 	i = ft_abs(i - ft_strlen(big));
 	ft_free(s);
-	return (i);
+	return (!ft_strlen(big) * -1 + !!ft_strlen(big) * i);
 }
 
 static char	*expand_cmd(char *s, t_cmd *cmd)
@@ -85,7 +85,7 @@ static char	*expand_cmd(char *s, t_cmd *cmd)
 		if (i & 1)
 			continue ;
 		if ((s[i >> 1] & 0x7F) == '$')
-			i += (expand1(&s, (i >> 1) + 1, cmd, 0) << 1);
+			i += (expand1(&s, (i >> 1) + 1, cmd, 0) * 2);
 		else if (s[i >> 1] == '*')
 			i = (wild(i >> 1, &s, cmd, -1) << 1) + (i & 1);
 	}
