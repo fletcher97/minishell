@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/09 02:19:49 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 21:41:31 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ void	tree_loop(t_tree *t, int i)
 	t_cmd	*cmd;
 	t_tree	*t_temp;
 
-	g_mini.tmp_in = dup(0);
-	g_mini.tmp_out = dup(1);
-	g_mini.fd_in = dup(g_mini.tmp_in);
-	cmd = NULL;
+	dup_init_and_close(cmd, 'i');
 	while (++i < t->lcount)
 	{
 		t_temp = t->leafs[i];
@@ -101,11 +98,7 @@ void	tree_loop(t_tree *t, int i)
 				|| cmd->cmd_flags & 0x20))
 			break ;
 	}
-	dup2(g_mini.tmp_in, 0);
-	dup2(g_mini.tmp_out, 1);
-	close(g_mini.tmp_in);
-	close(g_mini.tmp_out);
-	status = 0;
+	status = dupe_init_and_close(cmd, 'c');
 	if (g_mini.pid > 0)
 		waitpid(g_mini.pid, &status, 0);
 	if (WIFEXITED(status))

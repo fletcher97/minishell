@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:47:57 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 02:06:36 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 21:41:14 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,23 @@ void	check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
 		}
 		tree_loop(t, i);
 	}
+}
+
+void int	dup_init_and_close(t_cmd *cmd, char type)
+{
+	if (type == 'i')
+	{
+		g_mini.tmp_in = dup(0);
+		g_mini.tmp_out = dup(1);
+		g_mini.fd_in = dup(g_mini.tmp_in);
+		cmd = NULL;
+	}
+	if (type == 'c')
+	{
+		dup2(g_mini.tmp_in, 0);
+		dup2(g_mini.tmp_out, 1);
+		close(g_mini.tmp_in);
+		close(g_mini.tmp_out);
+	}
+	return (0);
 }
