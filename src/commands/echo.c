@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/27 15:42:17 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:32:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 #include "ft_string.h"
 
+/*
+*   It will check for the exit status flag ($?) and will return it in case of
+*    it finds it. If not, it will print all the strings it finds.
+*/
 static void	echo_flag(char **argv, int i, int j, int k)
 {
 	if (i > k)
@@ -35,9 +39,11 @@ static void	echo_flag(char **argv, int i, int j, int k)
 	}
 }
 
-//The Echo command function is used to print the inputed arguments provided.
-//It will check for the '-n' flag which removes the new line.
-//It will also print environmental varible if they are called.
+/*
+*   The Echo command function is used to print the inputed arguments provided.
+*   It will check for the '-n' flag which removes the new line.
+*   It will also print environmental varible if they are called.
+*/
 void	ft_echo(char **argv)
 {
 	int	i;

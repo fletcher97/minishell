@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 12:20:34 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:24:09 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void		free_table(char **table);
 void		hsi(int signal);
 void		clean_processes(void);
 void		re_init(void);
-void		check_and_or_flag(t_cmd *cmd, t_tree *t, int i);
+void		struct_init(char **env);
 void		tree_loop(t_tree *t, int init);
+
 // void		tree_loop(t_tree *t, int i);
 void		create_hdoc_and_pid_arrays(void);
 void		exit_loop(void);

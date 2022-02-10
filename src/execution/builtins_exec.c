@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:27:26 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 06:26:26 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:36:11 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	file_input_instruction(t_cmd *cmd, int input)
 *   All built in function that are single commands will execute using this
 *    function. It manages all the inputs/outputs.
 */
-int	bultin_exec(t_cmd *cmd)
+int	builtin_exec(t_cmd *cmd)
 {
 	int	output;
 	int	input;

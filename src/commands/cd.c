@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:29:42 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/27 17:05:45 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:34:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 #include "ft_string.h"
 #include "ft_stdlib.h"
 
-//The Change Directory fucntion is responsible to change the directory accordin-
-//gly to the path provided by the used input and passed by the ft_cd functon.
-//It will return "-1" if system function chdir does not resolve successfully.
+/*
+*   The Change Directory fucntion is responsible to change the directory accord-
+*    ingly to the path provided by the used input and passed by the CD function.
+*    It will return "-1" if system function chdir does not resolve successfully.
+*/
 static int	change_directory(t_dl_list *head, char *path)
 {
 	char	old_pwd[PATH_MAX];
@@ -48,9 +50,11 @@ static int	change_directory(t_dl_list *head, char *path)
 	return (ret);
 }
 
-//The cd function is reponsible to forward the path and/or arguments list
-//to the change_directory function. It will be used to receive the return
-//value so it can be fowarded to the internal exit status variable.
+/*
+*   The cd function is reponsible to forward the path and/or arguments list
+*    to the change_directory function. It will be used to receive the return
+*    value so it can be fowarded to the internal exit status variable.
+*/
 int	ft_cd(char **argv)
 {
 	t_dl_list	*head;

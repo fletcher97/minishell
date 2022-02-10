@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:38 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/10/14 15:28:18 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:27:25 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include "ft_stdlib.h"
 #include "ft_string.h"
 
-//Deletes the node where the environmental variable is allocated.
+/*
+*   Deletes the node where the environmental variable is allocated.
+*/
 static void	node_destroyer(t_dl_list *list)
 {
 	ft_free(list->name);
@@ -24,8 +26,10 @@ static void	node_destroyer(t_dl_list *list)
 	list = NULL;
 }
 
-//Searches the list for the name of the variable we want to unset.
-//It's used to make sure we have the variable present on our list.
+/*
+*   Searches the list for the name of the variable we want to unset.
+*   It's used to make sure we have the variable present on our list.
+*/
 static int	lst_str_check(t_dl_list *lst, char *str)
 {
 	t_dl_list	*head;
@@ -48,10 +52,12 @@ static int	lst_str_check(t_dl_list *lst, char *str)
 	return (0);
 }
 
-//Unset fuction is used to remove an environmental variable from our internal
-//env list.
-//The integer 'i' is the index of the command 'unset' on the received args
-//table.
+/*
+*   Unset fuction is used to remove an environmental variable from our internal
+*    env list.
+*   The integer 'i' is the index of the command 'unset' on the received args
+*    table.
+*/
 void	ft_unset(t_dl_list *env, char **argv, int i)
 {
 	t_dl_list	*head;

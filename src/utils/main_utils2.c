@@ -5,113 +5,87 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 01:47:57 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 05:59:36 by fferreir         ###   ########.fr       */
+/*   Created: 2022/02/09 02:06:16 by fferreir          #+#    #+#             */
+/*   Updated: 2022/02/10 10:56:16 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
+#include <stdlib.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "ft_stdlib.h"
+#include "ft_conv.h"
+
 #include "utilities.h"
+#include "minishell.h"
 
-static void	end_flag_condition(void)
+/*
+*   It will be used to free the input variable and exit the fork. This function
+*    is used when a command that tried to use the execve function fails to exe-
+*    cute.
+*/
+void	exit_fork(void)
 {
-	if (g_mini.and_flag > 0 && (g_mini.es_flag || g_mini.exit_status))
-	{
-		if (g_mini.exit_status)
-			g_mini.stop = 3;
-	}
-	else if (g_mini.or_flag > 0 && (!g_mini.es_flag || !g_mini.exit_status))
-	{
-		if (g_mini.exit_status)
-			g_mini.stop = 4;
-		else
-			g_mini.stop = -2;
-	}
+	ft_free(g_mini.input);
+	exit(0);
 }
 
 /*
-*   Modifies the STOP, AND, OR and ES flags if the command flag && or || was
-*    flagged.
+*   It will create and allocate and array with all the possible FDs so it can
+*    later alocate the pathname of each created heredoc file.
+*   It also created, allocate and initialize an array that will hold all the
+*    all the future child pids.
 */
-static void	and_or_flag(t_cmd *cmd)
+void	create_hdoc_and_pid_arrays(void)
 {
-	// if ((cmd->cmd_flags & 0x04 && g_mini.exit_status)
-	// 	|| (cmd->cmd_flags & 0x08 && !g_mini.exit_status))
-	// {
-	// 	// if (cmd->cmd_flags & 0x04)
-	// 		g_mini.and_flag++;
-	// 	// if (cmd->cmd_flags & 0x08)
-	// 	// 	g_mini.or_flag++;
-	// 	g_mini.skip = 1;
-	// }
-	// else
-	// 	g_mini.skip = 0;
-	if ((cmd->cmd_flags & 0x04))
-	{
-		if (g_mini.exit_status != 0)
-		{
-			g_mini.es_flag = g_mini.exit_status;
-			g_mini.and_flag++;
-			g_mini.skip = 1;
-		}
-		else
-			g_mini.and_flag++;
-	}
-	else
-		g_mini.and_flag = 1;
-	if (cmd->cmd_flags & 0x08)
-	{
-		if (!g_mini.exit_status)
-		{
-			g_mini.es_flag = g_mini.exit_status;
-			g_mini.or_flag++;
-			g_mini.skip = 2;
-		}
-		else
-			g_mini.or_flag++;
-	}
+	int	i;
+
+	i = -1;
+	g_mini.hdoc_files = ft_malloc(sizeof(char **) * (FD_MAX + 1));
+	while (++i < FD_MAX)
+		g_mini.hdoc_files[i] = ft_itoa(i);
+	g_mini.hdoc_files[i] = NULL;
+	g_mini.pid_lst = ft_malloc(sizeof(int *) * (CHILD_MAX + 1));
+	i = -1;
+	while (++i < CHILD_MAX)
+		g_mini.pid_lst[i] = -1;
+	g_mini.pid_lst[i] = '\0';
 }
 
 /*
-*   It checks the AND and OR flag in case there is a command so it can call the
-*    tree_loop function and so it can execute the next command. This is necessa-
-*    ry because the commands work inside a while loop that is forked and we
-*    we only have access to the Exit Status of the command after it resolves.
-*   It will also modifies the STOP variable at this stage so that the next
-*    command will not resolve in case the STOP is > 0.
+*   It will call the function that will destroy the dual linked list that holds
+*    the env list and will free all the variables on the global heredoc list.
+*    It also frees the pid_list.
 */
-void	check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
+void	exit_loop(void)
 {
-	if (cmd && !(cmd->cmd_flags & 0x40))
-	{
-		if (cmd->cmd[0])
-		{
-			and_or_flag(cmd);
-			if (cmd->cmd_flags & 0x10)
-				end_flag_condition();
-			else if ((cmd->cmd_flags & 0x20))
-				g_mini.stop = -10;
-		}
-		tree_loop(t, i, 0);
-	}
+	int	i;
+
+	free_dl_list(g_mini.env);
+	i = -1;
+	while (++i < FD_MAX)
+		ft_free(g_mini.hdoc_files[i]);
+	ft_free(g_mini.hdoc_files);
+	ft_free(g_mini.pid_lst);
+	exit(0);
 }
 
-int	dup_init_and_close(char type)
+/*
+*   The Clean Processes function closes all possible open file descriptors and
+*    kill all open processes that were not naturally closed.
+*/
+void	clean_processes(void)
 {
-	if (type == 'i')
+	int	i;
+
+	i = 2;
+	while (++i < MAX_FD)
+		close(i);
+	i = -1;
+	while (g_mini.pid_lst[++i] > 0)
 	{
-		g_mini.tmp_in = dup(0);
-		g_mini.tmp_out = dup(1);
-		g_mini.fd_in = dup(g_mini.tmp_in);
+		kill(g_mini.pid_lst[i], SIGTERM);
+		g_mini.pid_lst[i] = -1;
 	}
-	if (type == 'c')
-	{
-		dup2(g_mini.tmp_in, 0);
-		dup2(g_mini.tmp_out, 1);
-		close(g_mini.tmp_in);
-		close(g_mini.tmp_out);
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/10 10:57:22 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:24:07 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,6 @@
 #include "execution.h"
 
 t_mini	g_mini;
-
-/*
-*   Struct init function is used to initiate the stuct variable and cut down
-*    some lines in the main function body.
-*/
-static void	struct_init(char **env)
-{
-	g_mini.head = ft_malloc(sizeof(t_dl_list));
-	g_mini.env = get_env(env);
-	g_mini.exit = 0;
-	g_mini.exit_status = 0;
-	g_mini.and_flag = 0;
-	g_mini.or_flag = 0;
-	g_mini.es_flag = 0;
-	g_mini.stop = 0;
-	g_mini.skip = 0;
-	g_mini.fd_in = 0;
-	g_mini.fd_out = 1;
-	g_mini.hdoc_counter = 0;
-	g_mini.temp_path = ft_strdup("/tmp/");
-	create_hdoc_and_pid_arrays();
-	g_mini.file_counter = 0;
-	g_mini.cmd_counter = 0;
-	g_mini.pid_counter = -1;
-}
 
 static void	loop_r(t_tree *t, int *step)
 {
