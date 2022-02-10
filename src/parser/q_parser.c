@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "ft_string.h"
+#include "ft_stdlib.h"
 
 #include "parser.h"
 #include "utilities.h"
-
-#include "stdlib.h"
 
 int	unmask_str(char *str)
 {

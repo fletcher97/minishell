@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:42:21 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/24 18:57:50 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 01:04:53 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void	find_bound(int *start, int *end, char *s, int i)
 {
 	*start = 0;
 	*end = 1;
-	while (i - *start > 0 && !isspecial(s[i - *start]))
+	while (i - *start > 0 && !ft_isspecial(s[i - *start]))
 		*start = *start + 1;
-	while (s[i + *end] && !isspecial(s[i + *end]))
+	while (s[i + *end] && !ft_isspecial(s[i + *end]))
 		*end = *end + 1;
-	if (isspecial(s[i - *start]))
+	if (ft_isspecial(s[i - *start]))
 		*start = *start - 1;
-	if (isspecial(s[i + *end]))
+	if (ft_isspecial(s[i + *end]))
 		*end = *end - 1;
 }
 

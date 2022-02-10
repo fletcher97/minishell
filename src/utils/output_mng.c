@@ -6,11 +6,16 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:43:44 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 17:00:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:59:31 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <unistd.h>
+#include <fcntl.h>
+
+#include "ft_string.h"
+#include "ft_stdlib.h"
+#include "ft_list.h"
 
 static int	output_loop(t_list *output, int output_file)
 {
@@ -25,7 +30,7 @@ static int	output_loop(t_list *output, int output_file)
 		output_file = open(path, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR
 				| S_IWUSR | S_IRGRP | S_IROTH);
 		output = output->next;
-		free(path);
+		ft_free(path);
 	}
 	return (output_file);
 }
@@ -43,7 +48,7 @@ static int	append_loop(t_list *append, int output_file)
 		output_file = open(path, O_RDWR | O_CREAT | O_APPEND, S_IRUSR
 				| S_IWUSR | S_IRGRP | S_IROTH);
 		append = append->next;
-		free(path);
+		ft_free(path);
 	}
 	return (output_file);
 }
@@ -70,7 +75,7 @@ static int	final_output_loop(t_list *final_output, int output_file)
 			output_file = open(path, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR
 					| S_IWUSR | S_IRGRP | S_IROTH);
 		}
-		free(path);
+		ft_free(path);
 		final_output = final_output->next;
 	}
 	return (output_file);
@@ -84,6 +89,5 @@ int	file_output(t_list *output, t_list *append, t_list *final_output)
 	output_file = output_loop(output, output_file);
 	output_file = append_loop(append, output_file);
 	output_file = final_output_loop(final_output, output_file);
-	printf("OUTPUT FILE = %d\n", output_file);
 	return (output_file);
 }

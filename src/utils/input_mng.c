@@ -6,27 +6,36 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 17:00:03 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/07 17:10:59 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:33:29 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <fcntl.h>
+
+#include "ft_conv.h"
+#include "ft_string.h"
+#include "ft_stdlib.h"
+
 #include "utilities.h"
+#include "minishell.h"
 
 static int	heredoc_loop(t_list *heredoc, int input_hdoc)
 {
 	char	*pth;
+	char	*i;
 
 	while (heredoc)
 	{
 		if (input_hdoc)
 			close(input_hdoc);
-		pth = ft_strjoin((char *)heredoc->content,
-				ft_itoa(++g_mini.hdoc_counter));
+		i = ft_itoa(++g_mini.hdoc_counter);
+		pth = ft_strjoin((char *)heredoc->content, i);
 		pth = temp_path(pth, g_mini.temp_path);
 		input_hdoc = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		printf("PATH << = %s ;; input = %d\n", pth, input_hdoc);
 		heredoc = heredoc->next;
-		free(pth);
+		ft_free(pth);
+		ft_free(i);
 	}
 	return (input_hdoc);
 }
@@ -42,9 +51,14 @@ static int	input_loop(t_list *input, int input_file)
 		pth = ft_substr((char *)input->content, 1,
 				ft_strlen((char *)input->content));
 		input_file = open(pth, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		printf("PATH < = %s , input = %d\n", pth, input_file);
+		if (input_file == -1)
+		{
+			error_output('i', 0, input->content + 1);
+			ft_free(pth);
+			break ;
+		}
 		input = input->next;
-		free(pth);
+		ft_free(pth);
 	}
 	return (input_file);
 }
@@ -62,11 +76,9 @@ int	file_input(t_list *input, t_list *heredoc, t_list *in)
 	{
 		if (input_file)
 			close(input_file);
-		printf("input heredoc = %d ;; file = %s\n", input_hdoc, in->content);
 		return (input_hdoc);
 	}
 	if (input_hdoc)
 		close(input_hdoc);
-	printf("input file = %d\n", input_file);
 	return (input_file);
 }

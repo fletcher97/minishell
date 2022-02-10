@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_list.h"
+#include "ft_string.h"
+
 #include "utilities.h"
+#include "minishell.h"
 
 //Swap function is used to swap 2 nodes position on a dual linked list.
 static void	swap(t_dl_list *a, t_dl_list *b, t_dl_list *c)

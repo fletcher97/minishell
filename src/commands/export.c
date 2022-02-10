@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include "minishell.h"
+#include "utilities.h"
+
+#include "ft_string.h"
 
 //The Find Char function returns where is the char that we provided in a string.
 //It will return the full length of the string if no char is found.

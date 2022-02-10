@@ -10,13 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include "ft_list.h"
+#include "ft_stdlib.h"
+#include "ft_string.h"
 
 //Deletes the node where the environmental variable is allocated.
 static void	node_destroyer(t_dl_list *list)
 {
-	free(list->name);
-	free(list->content);
+	ft_free(list->name);
+	ft_free(list->content);
 	list->name = NULL;
 	list->content = NULL;
 	list = NULL;

@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include <signal.h>
+#include <unistd.h>
+#include <stdio.h>
+
+#include "readline.h"
 
 //The get signal function is used to change the behavior of each signal.
 //Need to be added the ctrl+c and ctrl+d rules but the rl lib is not working.

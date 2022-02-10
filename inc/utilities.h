@@ -6,32 +6,24 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2021/12/02 19:17:23 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:21:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITIES_H
 # define UTILITIES_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
-
 # include "ft_list.h"
-# include "ft_stdlib.h"
-# include "ft_string.h"
 
-# include "commands.h"
-# include "execution.h"
-# include "minishell.h"
 # include "parser.h"
 
 // Error codes
 # define CHAR_UNHANDLED 1
 # define QUOTES_OPEN 2
+# define MAX_FD 256
 
 //Error mng functions
-void		error_output(char type, int i);
+int			error_output(char type, int i, char *str);
 
 //Export utils functions
 int			env_sorted(void);
@@ -48,9 +40,17 @@ void		free_list_nodes(t_dl_list *lst);
 void		free_argv(void);
 void		free_dl_list(t_dl_list *lst);
 void		delete_temp(char *path);
+void		free_table(char **table);
 
 //Main utils functions
-int			args_counter(void);
+void		hsi(int signal);
+void		clean_processes(void);
+void		re_init(void);
+void		check_and_or_flag(t_cmd *cmd, t_tree *t, int i);
+void		tree_loop(t_tree *t, int i);
+void		create_hdoc_and_pid_arrays(void);
+void		exit_loop(void);
+int			dup_init_and_close(char type);
 
 //Fork Functions
 void		exit_fork(void);

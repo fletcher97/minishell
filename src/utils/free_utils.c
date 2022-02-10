@@ -6,30 +6,39 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/17 17:10:19 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:46:08 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <unistd.h>
+
+#include "ft_conv.h"
+#include "ft_string.h"
+#include "ft_stdlib.h"
+
+#include "minishell.h"
 
 void	delete_temp(char *path)
 {
 	char	*file_path;
+	char	*nbr;
 	int		i;
 
 	if (!path)
 		return ;
 	i = -1;
-	while (++i < (g_mini.file_counter))
+	while (++i < (g_mini.file_counter + 1))
 	{
-		if (g_mini.hdoc_files[i] != ft_itoa(i))
+		nbr = ft_itoa(i);
+		if (ft_strcmp(g_mini.hdoc_files[i], nbr) != 1)
 		{
 			file_path = ft_strjoin(path, g_mini.hdoc_files[i]);
 			unlink(file_path);
-			free(file_path);
-			free(g_mini.hdoc_files[i]);
+			ft_free(file_path);
+			ft_free(g_mini.hdoc_files[i]);
 			g_mini.hdoc_files[i] = ft_itoa(i);
 		}
+		ft_free(nbr);
 	}
 }
 
@@ -44,7 +53,7 @@ void	free_list_nodes(t_dl_list *lst)
 	while (lst)
 	{
 		temp = lst->next;
-		free(lst);
+		ft_free(lst);
 		lst = NULL;
 		lst = temp;
 	}
@@ -63,10 +72,10 @@ void	free_argv(void)
 	y = -1;
 	while (++y < x)
 	{
-		free(g_mini.argv[y]);
+		ft_free(g_mini.argv[y]);
 		g_mini.argv[y] = NULL;
 	}
-	free(g_mini.argv);
+	ft_free(g_mini.argv);
 }
 
 //The free dl list function will receive and destroy all nodes on a dual linked
@@ -79,20 +88,28 @@ void	free_dl_list(t_dl_list *lst)
 	while (lst)
 	{
 		temp = lst->next;
-		if (lst)
-		{
-			free(lst->content);
-			lst->content = NULL;
-			free(lst->name);
-			lst->name = NULL;
-		}
-		if (lst->next == NULL)
-		{
-			free(lst);
-			lst = NULL;
-			break ;
-		}
-		free(lst);
+		ft_free(lst->content);
+		ft_free(lst->name);
+		ft_free(lst);
 		lst = temp;
 	}
+}
+
+/*
+*   Frees up an array of strings that was malloced.
+*/
+void	free_table(char **array)
+{
+	int	i;
+
+	i = -1;
+	if (!array)
+		return ;
+	while (array[++i])
+	{
+		ft_free(array[i]);
+		array[i] = NULL;
+	}
+	ft_free(array);
+	array = NULL;
 }

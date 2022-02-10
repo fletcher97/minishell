@@ -10,11 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
+#include <stdlib.h>
+
+#include "ft_stdlib.h"
+
+#include "minishell.h"
 
 //free_dl_list(g_mini.env);
 void	exit_fork(void)
 {
-	free(g_mini.input);
+	ft_free(g_mini.input);
 	exit(0);
 }

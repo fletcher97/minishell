@@ -6,10 +6,17 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:59:39 by fferreir          #+#    #+#             */
-/*   Updated: 2021/11/08 15:19:24 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/03 23:01:09 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
+#include "ft_string.h"
+#include "ft_stdlib.h"
+#include "ft_list.h"
+
+#include "minishell.h"
 #include "utilities.h"
 
 //The Print Env Content prints the content of the provided env variable. It will
@@ -29,7 +36,7 @@ void	print_env_content(t_dl_list *lst, char *name, char free_name)
 			printf("%s", content);
 	}
 	if (free_name == 'y')
-		free(name);
+		ft_free(name);
 }
 
 //The Return Env Content find the inputed variable name on the program internal
@@ -58,7 +65,7 @@ char	*get_name(char *str, char c)
 	x = -1;
 	if (!str)
 		return (NULL);
-	name = malloc(sizeof(char *) * (ft_strlen(str) + 1));
+	name = ft_malloc(sizeof(char *) * (ft_strlen(str) + 1));
 	while (str[++x] && str[x] != c)
 		name[x] = str[x];
 	name[x] = '\0';
@@ -71,14 +78,21 @@ t_dl_list	*get_env(char **env)
 {
 	t_dl_list	*temp;
 	int			x;
+	char		**splited;
+	int			aux;
 
 	x = -1;
 	g_mini.env = NULL;
+	splited = ft_malloc(sizeof(char *) * 2);
 	while (env[++x] != NULL)
 	{
-		temp = ft_lstnew_dl(ft_split(env[x], '='));
+		aux = ft_strichr(env[x], '=');
+		splited[0] = ft_substr(env[x], 0, aux);
+		splited[1] = ft_substr(env[x], aux + 1, ft_strlen(env[x]) - aux);
+		temp = ft_lstnew_dl(splited);
 		ft_lstadd_back_dl(&g_mini.env, temp);
 	}
+	ft_free(splited);
 	return (g_mini.env);
 }
 
@@ -95,7 +109,8 @@ int	check_env_names(char *name, char *content)
 	{
 		if (ft_strcmp(name, g_mini.env->name))
 		{
-			g_mini.env->content = content;
+			ft_free(g_mini.env->content);
+			g_mini.env->content = ft_strdup(content);
 			g_mini.env = head;
 			return (1);
 		}

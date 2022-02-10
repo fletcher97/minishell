@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "utilities.h"
+#include "ft_string.h"
+#include "ft_stdlib.h"
 
-#include <stdio.h>
+#include "parser.h"
 
 static void	*newcmd(char *key, char *c)
 {

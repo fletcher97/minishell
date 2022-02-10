@@ -6,33 +6,16 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/21 14:48:23 by fferreir         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:42:17 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include <stdio.h>
 
-//The Env Flag Check function will check for the requested env on out internal
-//and it will return its name.
-// static char	*env_flag_check(char **argv, int i)
-// {
-// 	char	*env_name;
-// 	int		j;
+#include "minishell.h"
 
-// 	j = 0;
-// 	env_name = NULL;
-// 	while (argv[i][j])
-// 		j++;
-// 	if (j > 0 && argv[i][0] == '$')
-// 	{
-// 		env_name = ft_substr(argv[i], 1, j);
-// 		return (env_name);
-// 	}
-// 	return (NULL);
-// }
+#include "ft_string.h"
 
-//The Echo Flag function checks for the env varible flag ($) and the exit status
-//($?). It will return its content if it finds it on the program internal list.
 static void	echo_flag(char **argv, int i, int j, int k)
 {
 	if (i > k)
