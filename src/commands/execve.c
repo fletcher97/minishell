@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:30:26 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/09 01:24:58 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:30:22 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ static char	*path_creation(char *path, char *cmd)
 	return (new_path);
 }
 
+/*
+*   Loop just to save lines. It will go through the env linked list and will
+*    save the name and content into an allocated array.
+*/
 static void	create_env_array_loop(char **env)
 {
 	char	*temp;
