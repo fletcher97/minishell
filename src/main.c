@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/10 05:04:16 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:08:38 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,6 @@ static void	struct_init(char **env)
 }
 
 /*
-*   Check cmd calls function will run the command in case it exists on the tree
-*    struct sent by the tree loop function.
-*/
-// static int	check_cmd_calls(t_tree *t)
-// {
-// 	t_cmd		*cmd;
-// 	static int	step;
-
-// 	cmd = (t_cmd *)t->content;
-// 	step += 10;
-// 	if (!cmd)
-// 		return (0);
-// 	g_mini.argv = cmd->cmd;
-// 	g_mini.hdoc_counter = step;
-// 	if (command_exec(cmd) == -1)
-// 		return (-1);
-// 	return (1);
-// }
-
-/*
 *   Tree loop function will check the tree leafs for commands. Also, it is
 *    responsible for setting up the FD initial logic and retrieving exit
 *    status variable from child process's.
@@ -95,23 +75,18 @@ void tree_loop(t_tree *t, int i, int init)
 	{
 		if (init)
 			dup_init_and_close('i');
-		//	printf("init dup\n");
 		g_mini.hdoc_counter = step;
 		g_mini.argv = cmd->cmd;
 		if (cmd->cmd_flags & 0x40)
 		{
 			command_exec(cmd);
-			//printf("Exec pipe cmd %s\n", cmd->cmd[0]);
 			return ;
 		}
 		command_exec(cmd);
-		//printf("Exec cmd %s\n", cmd->cmd[0]);
 		status = dup_init_and_close('c');
-		//printf("close dup\n");
 		(g_mini.pid > 0) && (waitpid(g_mini.pid, &status, 0));
 		if (WIFEXITED(status))
 			g_mini.exit_status = WEXITSTATUS(status);
-		//	g_mini.exit_status = 0;
 
 	}
 	else
@@ -134,46 +109,7 @@ void tree_loop(t_tree *t, int i, int init)
 			flag = 1;
 		}
 	}
-	//printf("%d\n", step);
 }
-// void	tree_loop(t_tree *t, int i)
-// {
-// 	int		status;
-// 	int		ret;
-// 	t_cmd	*cmd;
-// 	t_tree	*t_temp;
-
-// 	cmd = NULL;
-	// dup_init_and_close('i');
-// 	while (++i < t->lcount)
-// 	{
-// 		t_temp = t->leafs[i];
-// 		cmd = (t_cmd *)t_temp->content;
-		// ret = check_cmd_calls(t->leafs[i]);
-// 		if (ret == -1)
-// 			break ;
-// 		if (ret == 0 && t->leafs[i])
-// 			tree_loop(t->leafs[i], -1);
-// 		if (cmd && ((cmd->cmd_flags & 0x04) || (cmd->cmd_flags & 0x08)
-// 				|| cmd->cmd_flags & 0x20))
-// 			break ;
-// 	}
-// 	status = dup_init_and_close('c');
-// 	(g_mini.pid > 0) && (waitpid(g_mini.pid, &status, 0));
-// 	if (WIFEXITED(status))
-// 		g_mini.exit_status = WEXITSTATUS(status);
-// 	check_and_or_flag(cmd, t, i);
-// }
-
-// static void exec(t_commands *cmd)
-// {
-// 	int status;
-
-// 	tree_loop(cmd->tree, -1);
-// 	(g_mini.pid > 0) && (waitpid(g_mini.pid, &status, 0));
-// 	if (WIFEXITED(status))
-// 		g_mini.exit_status = WEXITSTATUS(status);
-// }
 
 /*
 *   The input loop is used to cut down some lines on the main function body.
@@ -186,7 +122,6 @@ static void	input_loop(char *input)
 	g_mini.first_cmd = 1;
 	add_history(input);
 	cmd = parse(input);
-	// print_cmd(cmd);
 	if (!cmd->error)
 	{
 		g_mini.cmd = cmd;
