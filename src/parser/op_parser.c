@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 03:47:09 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/23 15:47:49 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 01:04:26 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ft_string.h"
 #include "ft_ctype.h"
 
-int	isspecial(char s)
+int	ft_isspecial(char s)
 {
 	return (!!ft_strchr(" \t\n\v\f\r<>$\"\'&|()", s));
 }
@@ -25,18 +25,18 @@ int	isspecial(char s)
 static int	input(char *s, t_cmd *cmd, int heredoc)
 {
 	int		i;
-	int		skip;
+	int		skp;
 	t_list	*l;
 	char	*in;
 
-	skip = 0;
+	skp = 0;
 	i = 0;
 	l = NULL;
-	while (s[skip] && ft_isspace(s[skip + i]))
-		skip++;
-	while (s[skip + i] && !ft_isspace(s[skip + i]) && !isspecial(s[skip + i]))
+	while (s[skp] && ft_isspace(s[skp + i]))
+		skp++;
+	while (s[skp + i] && !ft_isspace(s[skp + i]) && !ft_isspecial(s[skp + i]))
 		i++;
-	in = ft_substr(s, skip, i);
+	in = ft_substr(s, skp, i);
 	((!heredoc) && (l = ft_lstnew(ft_strjoin("<", in))))
 		|| (l = ft_lstnew(ft_strjoin("<<", in)));
 	free(in);
@@ -47,8 +47,8 @@ static int	input(char *s, t_cmd *cmd, int heredoc)
 	else
 		ft_lstadd_back(&cmd->in.input, l);
 	cmd->in.in = l;
-	ft_memset(s - (1 + !!heredoc), ' ', skip + i + 1 + !!heredoc);
-	return (skip + i + !!heredoc);
+	ft_memset(s - (1 + !!heredoc), ' ', skp + i + 1 + !!heredoc);
+	return (skp + i + !!heredoc);
 }
 
 static int	output(char *str, t_cmd *cmd, int append)
