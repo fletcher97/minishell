@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:27:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 10:49:34 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:37:49 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	execute_cmd(t_cmd *cmd)
 	{
 		check_pipe(cmd, 1);
 		close(g_mini.fd_in);
+		g_mini.error = 1;
 		return (-1);
 	}
 	check_pipe(cmd, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:18:37 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/10 10:26:07 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:20:42 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_mini
 	char		*temp_path;
 	int			exit;
 	int			skip;
+	int			error;
 	int			exit_status;
 	int			first_cmd;
 	int			fd[2];

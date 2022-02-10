@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/10 14:48:41 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:35:07 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	tree_loop(t_tree *t, int init)
 		g_mini.hdoc_counter = step;
 		g_mini.argv = cmd->cmd;
 		if (cmd->cmd_flags & 0x40)
-		{
 			command_exec(cmd);
+		if (cmd->cmd_flags & 0x40)
 			return ;
-		}
+		g_mini.error = 0;
 		((command_exec(cmd)) || 1) && (status = dup_init_and_close('c'));
 		(g_mini.pid > 0) && (waitpid(g_mini.pid, &status, 0));
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && !g_mini.error)
 			g_mini.exit_status = WEXITSTATUS(status);
 	}
 	else
