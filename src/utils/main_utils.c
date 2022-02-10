@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 01:48:39 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 06:03:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	re_init(void)
 	g_mini.pid_counter = -1;
 	g_mini.first_cmd = 1;
 	g_mini.stop = 0;
+	g_mini.skip = 0;
 	g_mini.and_flag = 0;
 	g_mini.or_flag = 0;
 	g_mini.es_flag = 0;
