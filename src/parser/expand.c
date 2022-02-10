@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 06:20:05 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/24 18:56:46 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 04:56:24 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	expand1(char **str, int start, t_cmd *cmd, int i)
 	big = ft_listget_dl(var, g_mini.env);
 	ft_free(var);
 	if (!big)
-		return (0);
+		big = "";
 	*str = replace(s, big, start - 1, (i + 1) + ((s[start] & 0x80) * 16777216));
 	i = ft_abs(i - ft_strlen(big));
 	ft_free(s);

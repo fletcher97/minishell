@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 22:03:59 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/07 03:37:18 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 04:59:54 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,35 @@ void	free_command(t_commands *cmd)
 	ft_free(cmd);
 }
 
+void	squash_r(t_tree *t)
+{
+	int	i;
+
+	if (!t->lcount)
+		return ;
+	i = -1;
+	while (++i < t->lcount)
+	{
+		if (t->leafs[i]->lcount)
+		{
+			squash_r(t->leafs[i]);
+			if (i + 1 < t->lcount)
+			{
+				if (!t->leafs[i]->content)
+					t->leafs[i]->content = ft_calloc(1, sizeof(t_cmd));
+				((t_cmd *)t->leafs[i]->content)->cmd_flags
+					= ((t_cmd *)t->leafs[i + 1]->content)->cmd_flags;
+			}
+		}
+	}
+}
+
+t_commands	*squash(t_commands *cmd)
+{
+	squash_r(cmd->tree);
+	return (cmd);
+}
+
 t_commands	*parse(const char *str)
 {
 	t_commands	*cmd;
@@ -79,5 +108,5 @@ t_commands	*parse(const char *str)
 		cmd->error = 10000;
 	if (!cmd->error)
 		unmask(cmd->tree);
-	return (cmd);
+	return (squash(cmd));
 }
