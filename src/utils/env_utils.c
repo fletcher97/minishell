@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:59:39 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/03 23:01:09 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:20:12 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 #include "minishell.h"
 #include "utilities.h"
 
-//The Print Env Content prints the content of the provided env variable. It will
-//also free the provided "name" string if we provide the char 'y' on the
-//free_name param.
+/*
+*   The Print Env Content prints the content of the provided env variable. It
+*    will also free the provided "name" string if we provide the char 'y' on the
+*    free_name param.
+*/
 void	print_env_content(t_dl_list *lst, char *name, char free_name)
 {
 	char	*content;
@@ -39,8 +41,10 @@ void	print_env_content(t_dl_list *lst, char *name, char free_name)
 		ft_free(name);
 }
 
-//The Return Env Content find the inputed variable name on the program internal
-//environmental dual linked list and returns its content if found.
+/*
+*   The funciton will find the inputed variable name on the program internal
+*    environmental dual linked list and returns its content if found.
+*/
 char	*return_env_content(t_dl_list *lst, char *name)
 {
 	while (lst)
@@ -54,9 +58,11 @@ char	*return_env_content(t_dl_list *lst, char *name)
 	return (lst->content);
 }
 
-//The Get Name function returns the content of a string that is found before
-//the provided char is found. In this case, is used to find the name of the
-//variable before it find an equal sign ('=').
+/*
+*   The Get Name function returns the content of a string that is found before
+*    the provided char is found. In this case, is used to find the name of the
+*   variable before it find an equal sign ('=').
+*/
 char	*get_name(char *str, char c)
 {
 	char	*name;
@@ -72,8 +78,10 @@ char	*get_name(char *str, char c)
 	return (name);
 }
 
-//The Get Env function will make a copy of the system environmental list and it.
-//The return is as dual linked list. Check Minishell header for the list struct.
+/*
+*   The Get Env function will make a copy of the system environ list and it.
+*   The return is as dual linked list.
+*/
 t_dl_list	*get_env(char **env)
 {
 	t_dl_list	*temp;
@@ -96,10 +104,11 @@ t_dl_list	*get_env(char **env)
 	return (g_mini.env);
 }
 
-//The Check Env names will replace the content of the provided env variable
-//'name; if found on the internal environmental list with the provided
-//string 'content'.
-//free(g_mini.env->content);
+/*
+*   The Check Env names will replace the content of the provided env variable
+*    'name; if found on the internal environmental list with the provided
+*    string 'content'.
+*/
 int	check_env_names(char *name, char *content)
 {
 	t_dl_list	*head;

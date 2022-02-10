@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:22 by mgueifao          #+#    #+#             */
-/*   Updated: 2021/12/27 15:24:58 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:17:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 
 #include "minishell.h"
 
-//Error output function is used to output an error msg based on the error type
-//it received.
+/*
+*   Error output function is used to output an error msg based on the error type
+*    it received.
+*/
 int	error_output(char type, int i, char *str)
 {
 	if (i < 0)
