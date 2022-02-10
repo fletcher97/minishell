@@ -6,7 +6,7 @@
 /*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 23:17:23 by fletcher          #+#    #+#             */
-/*   Updated: 2022/02/10 17:35:07 by mgueifao         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:31:19 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, hsi);
 	while (42)
 	{
+		g_mini.skip = 0;
 		input = readline("minishell: ");
+		g_mini.skip = 1;
 		if (input && ft_strlen(input) != 0)
 			input_loop(input);
 		else if (input)

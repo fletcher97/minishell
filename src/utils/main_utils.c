@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 18:09:01 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 10:42:42 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:31:45 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	hsi(int signal)
 	rl_replace_line("", signal);
 	printf("\n");
 	rl_on_new_line();
-	rl_redisplay();
+	if (!g_mini.skip)
+		rl_redisplay();
 }
 
 /*
