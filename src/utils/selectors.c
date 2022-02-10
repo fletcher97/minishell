@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:28:26 by fferreir          #+#    #+#             */
-/*   Updated: 2022/01/31 22:20:35 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:40:34 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	screening_one(char **argv)
 			ft_echo(argv);
 		else if (ft_strcmp(argv[i], "cd"))
 			i = ft_cd(argv);
-		else if (ft_strcmp(argv[i], " "))
-			printf("\n");
 		else if (ft_strcmp(argv[i], "env"))
 			ft_env(g_mini.env);
 		else
@@ -79,6 +77,10 @@ void	cmd_selector(char **argv)
 	}
 }
 
+/*
+*   Used to identify if the command is a built in that needs to save data into
+*    the internal env list.
+*/
 int	cmd_identifier(char **argv)
 {
 	int	i;
