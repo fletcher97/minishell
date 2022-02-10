@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 22:57:30 by mgueifao          #+#    #+#             */
-/*   Updated: 2022/02/09 00:46:08 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:23:56 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 
 #include "minishell.h"
 
+/*
+*   The function will go through all the hdoc_file array where the heredoc
+*    files path that were created had their paths saved. when it finds one,
+*    it will unlink the file and free the position on the list and reset its
+*    postion again with a another itoa.
+*/
 void	delete_temp(char *path)
 {
 	char	*file_path;
@@ -42,8 +48,10 @@ void	delete_temp(char *path)
 	}
 }
 
-//The free list node will receive a dual linked list and it will free up all its
-//nodes. No malloc used on the nodes content will be freed.
+/*
+*   The free list node will receive a dual linked list and it will free up all
+*    its nodes. No malloc used on the nodes content will be freed.
+*/
 void	free_list_nodes(t_dl_list *lst)
 {
 	t_dl_list	*temp;
@@ -59,8 +67,10 @@ void	free_list_nodes(t_dl_list *lst)
 	}
 }
 
-//The free_argv function will free up all the variable on the arguments array
-//created by the split function. Also free's up the table itself.
+/*
+*    The free_argv function will free up all the variable on the arguments array
+*     created by the split function. Also free's up the table itself.
+*/
 void	free_argv(void)
 {
 	int	x;
@@ -78,9 +88,11 @@ void	free_argv(void)
 	ft_free(g_mini.argv);
 }
 
-//The free dl list function will receive and destroy all nodes on a dual linked
-//list. It will also free up the content on each node that so make sure all
-//the content is set on the heap.
+/*
+*   The function will receive and destroy all nodes on a dual linked list.
+*    It will also free up the content on each node that so make sure all the
+*    content is set on the heap.
+*/
 void	free_dl_list(t_dl_list *lst)
 {
 	t_dl_list	*temp;
