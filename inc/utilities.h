@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:21:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 02:21:36 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 04:02:03 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void		hsi(int signal);
 void		clean_processes(void);
 void		re_init(void);
 void		check_and_or_flag(t_cmd *cmd, t_tree *t, int i);
-void		tree_loop(t_tree *t, int i);
+void tree_loop(t_tree *t, int i, int init);
+// void		tree_loop(t_tree *t, int i);
 void		create_hdoc_and_pid_arrays(void);
 void		exit_loop(void);
 int			dup_init_and_close(char type);
