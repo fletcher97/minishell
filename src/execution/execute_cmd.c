@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgueifao <mgueifao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:27:47 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/10 06:53:50 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 09:25:23 by mgueifao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ static int file_input_instruction(t_cmd *cmd)
 {
 	if (cmd->in.in)
 		g_mini.fd_in = file_input(cmd->in.input, cmd->in.heredoc, cmd->in.in);
-	if (cmd->in.in && g_mini.fd_in < 0)
+	if (g_mini.fd_in < 0)
 	{
-		dup2(g_mini.tmp_in, 0);
-		dup2(g_mini.tmp_out, 1);
-		close(g_mini.tmp_in);
-		close(g_mini.tmp_out);
+		// printf("%d\n", g_mini.fd_in);
+		// dup2(g_mini.tmp_in, 0);
+		// dup2(g_mini.tmp_out, 1);
+		// close(g_mini.tmp_in);
+		// close(g_mini.tmp_out);
+		// printf("%d\n", g_mini.fd_in);
 		return (0);
 	}
 	if (dup2(g_mini.fd_in, 0) > 0)
@@ -57,7 +59,7 @@ static int file_input_instruction(t_cmd *cmd)
 *   Check pipe will check for the pipe flag and, if so, it will pipe the fd so
 *    it can successuly save and forward the correct FD's.
 */
-void check_pipe(t_cmd *cmd)
+void check_pipe(t_cmd *cmd, int flag)
 {
 	if ((cmd->cmd_flags & 0x40) && !cmd->in.out)
 	{
@@ -65,6 +67,8 @@ void check_pipe(t_cmd *cmd)
 		g_mini.fd_in = g_mini.fd[0];
 		g_mini.fd_out = g_mini.fd[1];
 	}
+	if (flag)
+		return ;
 	if (!(cmd->cmd_flags & 0x40) && !cmd->in.out)
 		g_mini.fd_out = dup(g_mini.tmp_out);
 	dup2(g_mini.fd_out, 1);
@@ -83,8 +87,12 @@ int execute_cmd(t_cmd *cmd)
 	//printf("cmd = %s\n", cmd->cmd[0]);
 	file_output_instruction(cmd);
 	if (!file_input_instruction(cmd))
+	{
+		check_pipe(cmd, 1);
+		close(g_mini.fd_in);
 		return (-1);
-	check_pipe(cmd);
+	}
+	check_pipe(cmd, 0);
 	g_mini.pid = fork();
 	g_mini.pid_lst[++g_mini.pid_counter] = g_mini.pid;
 	if (g_mini.pid == 0)
