@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:26:14 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 01:55:37 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:59:35 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 
 #include "minishell.h"
 
-//The Temp Path function is responsible to create the path for the temporary
-//files that hold the heredoc data provided by the user.
+/*
+*   The Temp Path function is responsible to create the path for the temporary
+*    files that hold the heredoc data provided by the user.
+*/
 char	*temp_path(char *filename, char *path)
 {
 	char	*pth;
@@ -36,10 +38,12 @@ char	*temp_path(char *filename, char *path)
 	return (pth);
 }
 
-//The create heredoc file function is to create and save the information
-//provided by the user through input. The temp file name is going to be a
-//joint of the eof provided by the user and a global counter used for heredoc
-//requests count.
+/*
+*   The create heredoc file function is to create and save the information
+*    provided by the user through input. The temp file name is going to be a
+*    joint of the eof provided by the user and a global counter used for heredoc
+*    requests count.
+*/
 static int	create_hrdoc_file(char *eof_str, char *filename)
 {
 	char	*input;
@@ -69,9 +73,11 @@ static int	create_hrdoc_file(char *eof_str, char *filename)
 	return (0);
 }
 
-//The Check heredoc call function will look for a heredoc call on the provided
-//cmd line. If found, it will request the creation of a temporary file that will
-//would the heredoc data.
+/*
+*   The Check heredoc call function will look for a heredoc call on the provided
+*    cmd line. If found, it will request the creation of a temporary file that
+*    will would the heredoc data.
+*/
 static void	check_heredoc_call(t_cmd *cmd)
 {
 	t_list	*head;
@@ -96,9 +102,11 @@ static void	check_heredoc_call(t_cmd *cmd)
 		cmd->in.heredoc = head;
 }
 
-//The Check heredoc function is to run through the command list. If cmd does not
-//point to NULL, it will send it to another function to check for an eventual
-//heredoc call in the cmd line.
+/*
+*   The Check heredoc function is to run through the command list. If cmd does
+*     not point to NULL, it will send it to another function to check for an
+*     eventual heredoc call in the cmd line.
+*/
 static int	check_loop(t_tree *t)
 {
 	t_cmd		*cmd;
@@ -113,6 +121,9 @@ static int	check_loop(t_tree *t)
 	return (1);
 }
 
+/*
+*   Goes through the t_tree list and checks for all the requests heredoc calls.
+*/
 void	check_heredoc(t_tree *t)
 {
 	int	i;
