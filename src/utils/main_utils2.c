@@ -6,7 +6,7 @@
 /*   By: fferreir <fferreir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 01:47:57 by fferreir          #+#    #+#             */
-/*   Updated: 2022/02/09 21:41:14 by fferreir         ###   ########.fr       */
+/*   Updated: 2022/02/10 05:59:36 by fferreir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,24 @@ static void	end_flag_condition(void)
 */
 static void	and_or_flag(t_cmd *cmd)
 {
+	// if ((cmd->cmd_flags & 0x04 && g_mini.exit_status)
+	// 	|| (cmd->cmd_flags & 0x08 && !g_mini.exit_status))
+	// {
+	// 	// if (cmd->cmd_flags & 0x04)
+	// 		g_mini.and_flag++;
+	// 	// if (cmd->cmd_flags & 0x08)
+	// 	// 	g_mini.or_flag++;
+	// 	g_mini.skip = 1;
+	// }
+	// else
+	// 	g_mini.skip = 0;
 	if ((cmd->cmd_flags & 0x04))
 	{
 		if (g_mini.exit_status != 0)
 		{
 			g_mini.es_flag = g_mini.exit_status;
 			g_mini.and_flag++;
-			g_mini.stop = 1;
+			g_mini.skip = 1;
 		}
 		else
 			g_mini.and_flag++;
@@ -56,7 +67,7 @@ static void	and_or_flag(t_cmd *cmd)
 		{
 			g_mini.es_flag = g_mini.exit_status;
 			g_mini.or_flag++;
-			g_mini.stop = 2;
+			g_mini.skip = 2;
 		}
 		else
 			g_mini.or_flag++;
@@ -83,7 +94,7 @@ void	check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
 			else if ((cmd->cmd_flags & 0x20))
 				g_mini.stop = -10;
 		}
-		tree_loop(t, i);
+		tree_loop(t, i, 0);
 	}
 }
 
