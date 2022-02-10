@@ -68,7 +68,7 @@ CREATE_LIB_TARGETS := 1
 CC := clang
 
 # Compiler flags
-CFLAGS := -Wall -Wextra -Werror -Wvla
+CFLAGS := -Wall -Wextra -Werror -Wvla -DREADLINE_LIBRARY
 
 # Generic debug flags
 DFLAGS := -g
@@ -394,7 +394,7 @@ define make_dep_def
 ${1}: ${2}
 	$${AT}printf "\033[38;5;13m[DEP]: \033[38;5;47m$$@\033[0m\n" $${BLOCK}
 	$${AT}mkdir -p $${@D} $${BLOCK}
-	$${AT}$${CC} -MM $$< $${INCS} -MF $$@ $${BLOCK}
+	$${AT}$${CC} $${CFLAGS} -MM $$< $${INCS} -MF $$@ $${BLOCK}
 	$${AT}$${SED} 's|:| $$@ :|' $$@ $${SED_END} $${BLOCK}
 	$${AT}$${SED} '1 s|^|$${@D}/|' $$@ && rm -f $$@.tmp $${BLOCK}
 	$${AT}$${SED} '1 s|^$${DEP_ROOT}|$${OBJ_ROOT}|' $$@\
