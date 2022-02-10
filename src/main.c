@@ -84,7 +84,8 @@ void	tree_loop(t_tree *t, int i)
 	t_cmd	*cmd;
 	t_tree	*t_temp;
 
-	dup_init_and_close(cmd, 'i');
+	cmd = NULL;
+	dup_init_and_close('i');
 	while (++i < t->lcount)
 	{
 		t_temp = t->leafs[i];
@@ -98,9 +99,8 @@ void	tree_loop(t_tree *t, int i)
 				|| cmd->cmd_flags & 0x20))
 			break ;
 	}
-	status = dupe_init_and_close(cmd, 'c');
-	if (g_mini.pid > 0)
-		waitpid(g_mini.pid, &status, 0);
+	status = dup_init_and_close('c');
+	(g_mini.pid > 0) && (waitpid(g_mini.pid, &status, 0));
 	if (WIFEXITED(status))
 		g_mini.exit_status = WEXITSTATUS(status);
 	check_and_or_flag(cmd, t, i);

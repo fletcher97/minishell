@@ -50,6 +50,7 @@ void		check_and_or_flag(t_cmd *cmd, t_tree *t, int i);
 void		tree_loop(t_tree *t, int i);
 void		create_hdoc_and_pid_arrays(void);
 void		exit_loop(void);
+int			dup_init_and_close(char type);
 
 //Fork Functions
 void		exit_fork(void);

@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+
 #include "minishell.h"
 #include "utilities.h"
 
@@ -85,14 +87,13 @@ void	check_and_or_flag(t_cmd *cmd, t_tree *t, int i)
 	}
 }
 
-void int	dup_init_and_close(t_cmd *cmd, char type)
+int	dup_init_and_close(char type)
 {
 	if (type == 'i')
 	{
 		g_mini.tmp_in = dup(0);
 		g_mini.tmp_out = dup(1);
 		g_mini.fd_in = dup(g_mini.tmp_in);
-		cmd = NULL;
 	}
 	if (type == 'c')
 	{
