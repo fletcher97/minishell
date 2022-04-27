@@ -53,6 +53,8 @@ void	free_command(t_commands *cmd)
 	ft_free(cmd);
 }
 
+
+// Too many if statements for my liking!!!
 t_commands	*parse(const char *str)
 {
 	t_commands	*cmd;
